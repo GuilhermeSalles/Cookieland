@@ -386,67 +386,60 @@ document.getElementById("submit-order").addEventListener("click", function () {
 
 /*=============== INFO ITENS ===============*/
 
-// Dados dos itens com suas descrições, ajustando os caminhos das imagens
+// Item data with descriptions, adjusting image paths
 const itemInfo = {
-  Marguerita: {
-    img: "assets/img/Marguerita.png",
+  "Lotus Cookie": {
+    img: "assets/img/cookie-lutus-info.png",
     description:
-      "A classic pizza made with rich tomato sauce, oregano and mozzarella cheese, offering a simple yet timeless flavour.",
+      "A delightful cookie filled with Lotus cream, perfect for fans of unique flavours.",
   },
-  Peperoni: {
-    img: "assets/img/Peperoni.png",
+  "Lindt Cookie": {
+    img: "assets/img/cookie-lindt-info.png",
     description:
-      "A delicious pizza topped with spicy peperoni slices, oregano, mozzarella cheese, and black olives, all on a tomato base.",
+      "An irresistible cookie filled with the rich Lindor chocolate by Lindt.",
   },
-  "Pesto & courgette": {
-    img: "assets/img/Pesto.png",
+  "Oreo Cookie": {
+    img: "assets/img/cookie-oreo-info.png",
     description:
-      "A fresh and flavourful pizza featuring a pesto sauce base, oregano, mozzarella cheese, courgettes, and black olives.",
+      "A crunchy cookie with an irresistible blend of Oreo biscuit and chocolate.",
   },
-  "Calabresa especial": {
-    img: "assets/img/Calabresa-especial.png",
+  "100% Cocoa Cookie": {
+    img: "assets/img/cookie-cacau-info.png",
     description:
-      "A savoury pizza with tomato sauce, mozzarella cheese, oregano, special calabresa sausage, onions, and black olives.",
+      "An intensely flavoured cookie with a blend of 100% pure cocoa.",
   },
-  "Chicken Hawai BBQ": {
-    img: "assets/img/Chicken-Hawai-BBQ.png",
+  "KitKat Cookie": {
+    img: "assets/img/cookie-kitkat-info.png",
     description:
-      "A tropical BBQ pizza with mozzarella cheese, oregano, shredded chicken, sweet corn, bacon, pineapple, and black olives on a BBQ sauce base.",
+      "A crunchy cookie filled with the unmistakable crunch of KitKat.",
   },
-  "Chicken special": {
-    img: "assets/img/Chicken_special.png",
-    description:
-      "A hearty pizza with tomato sauce, mozzarella cheese, oregano, sweet corn, shredded chicken, bacon, and black olives.",
+  "Churro Cookie": {
+    img: "assets/img/cookie-churro-info.png",
+    description: "A perfect combination of churro biscuit and dulce de leche.",
   },
-  "Pizza doce Oreo": {
-    img: "assets/img/Oreo-Pizza.png",
-    description:
-      "A decadent dessert pizza with melted mozzarella cheese, milk chocolate, crunchy Oreo cookies, and creamy white chocolate with hazelnuts for a sweet indulgence.",
+  "Traditional Cookie": {
+    img: "assets/img/cookie-tradicional-info.png",
+    description: "The classic cookie with a timeless taste.",
   },
-  "Strogonoff special": {
-    img: "assets/img/Strogonoff-special.png",
+  "Kinder Bueno Cookie": {
+    img: "assets/img/cookie-avela-info.png",
     description:
-      "Inspired by the famous stroganoff dish, this pizza comes with mozzarella cheese, oregano, minced beef in a creamy sauce, crispy potato sticks, and black olives.",
+      "A cookie filled with hazelnut cream inspired by the famous Kinder Bueno.",
   },
-  "Portuguesa especial": {
-    img: "assets/img/Portuguesa-especial.png",
+  "Red Velvet Cookie": {
+    img: "assets/img/cookie-ganache-info.png",
     description:
-      "A traditional Portuguese pizza with tomato sauce, mozzarella cheese, ham, palm hearts, oregano, fresh tomatoes, egg, onions, oregano, and black olives.",
+      "An elegant Red Velvet cookie with a rich chocolate ganache filling.",
   },
-  "Romeu & Julieta": {
-    img: "assets/img/Romeu-Julieta.png",
+  "Nutella Cookie": {
+    img: "assets/img/cookie-nutella-info.png",
     description:
-      "A sweet and savoury dessert pizza topped with mozzarella cheese, and guava paste, perfect for fans of the classic 'Romeo and Juliet' combination.",
+      "A cookie filled with the classic Nutella hazelnut cream for an unmistakable treat.",
   },
-  "Banana & Nutella": {
-    img: "assets/img/Banana-Nutella.png",
+  "Dubai Cookie": {
+    img: "assets/img/cookie-pistache-info.png",
     description:
-      "A rich dessert pizza made with mozzarella cheese, homemade fresh cheese,powder milk ,Nutella spread, and banana slices, offering a delightful mix of fruit and chocolate.",
-  },
-  Mineira: {
-    img: "assets/img/Mineira.png",
-    description:
-      "A delicious pizza topped with tomato sauce, mozzarella cheese, Paris mushroom, corn, smoked bacon, Catupiry, and parmesan cheese, and black olives.",
+      "A refined cookie filled with pistachio cream, inspired by the exotic flavours of Dubai.",
   },
 };
 

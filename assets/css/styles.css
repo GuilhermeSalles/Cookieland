@@ -148,13 +148,7 @@ img {
 }
 
 .nav__logo img {
-  width: 45px;
-}
-
-.nav__logo div {
-  background-color: #c6000b;
-  padding: 1px;
-  border-radius: 0.5rem;
+  width: 200px;
 }
 
 .nav__toggle,
@@ -328,7 +322,7 @@ img {
 
 .button {
   display: inline-flex;
-  background-color: var(--cookie-color);
+  background-color: black;
   color: var(--white-color);
   padding: 1rem 1.5rem;
   font-family: var(--second-font);
@@ -337,7 +331,7 @@ img {
 }
 
 .button:hover {
-  box-shadow: 0 8px 24px hsl(22deg 97.45% 24% / 59%);
+  box-shadow: 0 8px 24px hsla(0, 1%, 31%, 0.59);
 }
 
 /*=============== RECIPE ===============*/
@@ -493,7 +487,7 @@ img {
   background-color: var(--second-color);
   color: var(--white-color);
   padding: 2px;
-  border-radius: 0.5rem;
+  border-radius: 1.5rem;
   font-size: 1rem;
   display: inline-flex;
   cursor: pointer;
@@ -1307,11 +1301,19 @@ img {
 
 .info-modal-img {
   width: 100%;
-  max-width: 200px;
+  max-width: 260px;
   height: auto;
-  border-radius: 8px;
+  background-color: black;
+  border-radius: 50%; /* Torna a imagem perfeitamente circular */
   display: block;
-  margin-bottom: 20px;
+  margin: 0 auto 20px; /* Centraliza e define o espaçamento inferior */
+  box-shadow: 0px 4px 8px rgb(169 162 162); /* Sombra suave para profundidade */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Efeito de transição suave */
+}
+
+.info-modal-img:hover {
+  transform: scale(1.05); /* Aumenta a imagem levemente ao passar o mouse */
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2); /* Aumenta a intensidade da sombra */
 }
 
 #info-modal-title {
