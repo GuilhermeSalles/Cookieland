@@ -362,7 +362,7 @@ document.getElementById("submit-order").addEventListener("click", function () {
       2
     )}`;
   } else if (serviceType === "Pick-up") {
-    message += `\n\n *Pick-up Day:* ${pickupDay}\n *Pick-up Time:* ${pickupTime}`;
+    message += `\n\n *Pick-up Day:* ${pickupDay}\n *Pick-up Time:* ${pickupTime}\n *Adress:* Revolut Ltd 7 Westferry Circus, E14 4HD, London, United Kingdom`;
   }
 
   const total = cartSubtotal + addOnsTotal + deliveryFee;
@@ -375,13 +375,13 @@ document.getElementById("submit-order").addEventListener("click", function () {
   )}\nTotal: ${total.toFixed(2)}`;
 
   if (paymentMethod === "Bank Transfer") {
-    message += `\n\n *Payment Method:* Bank Transfer\n\n*Here are my Nationwide account details:*\n\n*Name:* MR Tomas Recchia\n*Sort code:* 07-04-36\n*Account number:* 26000636`;
+    message += `\n\n *Payment Method:* Bank Transfer (British Pound)\n\n*Here are the account details:*\n\n*Beneficiary:* Veronica Martins\n*Sort code:* 04-00-75\n*Account number:* 75095661`;
   } else if (paymentMethod === "Cash") {
     message += `\n\n *Payment Method: Cash*`;
   }
 
   const whatsappMessage = encodeURIComponent(message);
-  window.open(`https://wa.me/447707763804?text=${whatsappMessage}`, "_blank");
+  window.open(`https://wa.me/447850988160?text=${whatsappMessage}`, "_blank");
 });
 
 /*=============== INFO ITENS ===============*/
@@ -574,26 +574,25 @@ document.getElementById("service-type").addEventListener("change", function () {
 });
 /*=============== SELECT TIMES FOR DELIVERY OR PICK-UP ===============*/
 // Função para preencher horários no select
-function populateTimeSelect(selectId) {
+function populateTimeSelect(selectId, endHour) {
   const timeSelect = document.getElementById(selectId);
   if (!timeSelect) {
     console.error(`Select element with ID "${selectId}" not found.`);
     return;
   }
-  timeSelect.innerHTML = "";
+  timeSelect.innerHTML = ""; // Limpa o conteúdo do select
 
   const startTime = 18; // 6 PM
-  const startMinutes = 30; // 30 minutes
-  const endTime = 22; // 10 PM
+  const startMinutes = 30; // 30 minutos
   const interval = 20; // Intervalo em minutos
 
-  for (let hour = startTime; hour <= endTime; hour++) {
+  for (let hour = startTime; hour <= endHour; hour++) {
     for (
       let minutes = hour === startTime ? startMinutes : 0;
       minutes < 60;
       minutes += interval
     ) {
-      if (hour === endTime && minutes > 0) break; // Garante que não ultrapasse 22:00
+      if (hour === endHour && minutes > 0) break; // Garante que não ultrapasse o horário final
 
       const formattedHour = hour > 12 ? hour - 12 : hour;
       const period = hour >= 12 ? "PM" : "AM";
@@ -607,3 +606,30 @@ function populateTimeSelect(selectId) {
     }
   }
 }
+
+// Função para atualizar os horários com base no dia selecionado
+function updateTimeSelect(daySelectId, timeSelectId) {
+  const daySelect = document.getElementById(daySelectId);
+  const timeSelect = document.getElementById(timeSelectId);
+
+  if (!daySelect || !timeSelect) {
+    console.error(`Elementos não encontrados: ${daySelectId}, ${timeSelectId}`);
+    return;
+  }
+
+  daySelect.addEventListener("change", () => {
+    const selectedDay = daySelect.value;
+    const endHour = selectedDay === "Sunday" ? 21 : 22; // Até 9 PM aos domingos, 10 PM nos outros dias
+    populateTimeSelect(timeSelectId, endHour);
+  });
+
+  // Atualiza imediatamente com o valor inicial
+  const initialDay = daySelect.value;
+  const initialEndHour = initialDay === "Sunday" ? 21 : 22;
+  populateTimeSelect(timeSelectId, initialEndHour);
+}
+
+// Inicializa os selects de horários
+updateTimeSelect("delivery-day-select", "delivery-time-select");
+updateTimeSelect("pickup-day-select", "pickup-time-select");
+

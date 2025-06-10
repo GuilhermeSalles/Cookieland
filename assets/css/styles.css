@@ -1063,7 +1063,7 @@ img {
   background-color: var(--first-color);
   color: var(--white-color);
   padding: 1rem;
-  border-radius: 50%;
+  border-radius: 28%;
   z-index: 99;
   display: flex;
   justify-content: center;
@@ -1103,7 +1103,7 @@ img {
   max-width: 600px;
   position: relative;
   border-radius: 12px;
-  max-height: 80%;
+  max-height: 90%;
   overflow-y: auto;
   /* Permite rolar apenas o modal */
   box-sizing: border-box;
