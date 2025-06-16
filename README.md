@@ -1,5 +1,5 @@
 # 🍪 CookieLand
-[![NPM](https://img.shields.io/npm/l/react)](https://github.com/GuilhermeSalles/Cookieland/blob/main/LICENSE) 
+[![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/GuilhermeSalles/Cookieland/blob/main/LICENSE)
 
 ## 📝 Visão Geral
 Este projeto é o site oficial da **CookieLand**, desenvolvido para oferecer uma plataforma online onde os clientes podem explorar deliciosos cookies artesanais, conhecer a história da marca e, em breve, fazer pedidos diretamente pelo site.
