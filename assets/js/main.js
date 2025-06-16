@@ -358,21 +358,21 @@ document.getElementById("submit-order").addEventListener("click", function () {
     if (deliveryLocation === "Dungannon") deliveryFee = 30.0;
     if (deliveryLocation === "Belfast") deliveryFee = 30.0;
 
-    message += `\n\n *Delivery Day:* ${deliveryDay}\n *Delivery Time:* ${deliveryTime}\n *Delivery Location:* ${deliveryLocation}\n *Delivery Fee:* ${deliveryFee.toFixed(
+    message += `\n\n *Delivery Day:* ${deliveryDay}\n *Delivery Time:* ${deliveryTime}\n *Delivery Location:* ${deliveryLocation}\n *Delivery Fee:* £ ${deliveryFee.toFixed(
       2
     )}`;
   } else if (serviceType === "Pick-up") {
-    message += `\n\n *Pick-up Day:* ${pickupDay}\n *Pick-up Time:* ${pickupTime}\n *Adress:* Revolut Ltd 7 Westferry Circus, E14 4HD, London, United Kingdom`;
+    message += `\n\n *Pick-up Day:* ${pickupDay}\n *Pick-up Time:* ${pickupTime}\n *Address:* 107 Baltylum Meadows, BT62 4BW, Craigavon, Northern Ireland`;
   }
 
   const total = cartSubtotal + addOnsTotal + deliveryFee;
 
   // Adicionar resumo
-  message += `\n\n *Summary*\n\nSubtotal: ${cartSubtotal.toFixed(
+  message += `\n\n *Summary*\n\nSubtotal: £ ${cartSubtotal.toFixed(
     2
-  )}\nAdd-ons: ${addOnsTotal.toFixed(2)}\nDelivery: ${deliveryFee.toFixed(
+  )}\nAdd-ons: £ ${addOnsTotal.toFixed(2)}\nDelivery: £ ${deliveryFee.toFixed(
     2
-  )}\nTotal: ${total.toFixed(2)}`;
+  )}\nTotal: £ ${total.toFixed(2)}`;
 
   if (paymentMethod === "Bank Transfer") {
     message += `\n\n *Payment Method:* Bank Transfer (British Pound)\n\n*Here are the account details:*\n\n*Beneficiary:* Veronica Martins\n*Sort code:* 04-00-75\n*Account number:* 75095661`;
@@ -535,6 +535,104 @@ function updateButtonAndCartState() {
 // Verificar o estado no carregamento da página
 window.onload = updateButtonAndCartState;
 
+// /*=============== MODAL DELIVERY OU PICK-UP ===============*/
+// document.getElementById("service-type").addEventListener("change", function () {
+//   const deliveryDay = document.getElementById("delivery-day");
+//   const deliveryTime = document.getElementById("delivery-time");
+//   const deliveryLocation = document.getElementById("delivery-location");
+//   const pickupDay = document.getElementById("pickup-day");
+//   const pickupTime = document.getElementById("pickup-time");
+
+//   if (this.value === "Delivery") {
+//     // Mostrar selects para o dia, horário e cidade de entrega
+//     deliveryDay.style.display = "block";
+//     deliveryTime.style.display = "block";
+//     deliveryLocation.style.display = "block";
+//     pickupDay.style.display = "none";
+//     pickupTime.style.display = "none";
+
+//     // Preencher horários de entrega
+//     populateTimeSelect("delivery-time-select");
+//   } else if (this.value === "Pick-up") {
+//     // Mostrar selects para o dia e horário de coleta
+//     deliveryDay.style.display = "none";
+//     deliveryTime.style.display = "none";
+//     deliveryLocation.style.display = "none";
+//     pickupDay.style.display = "block";
+//     pickupTime.style.display = "block";
+
+//     // Preencher horários de coleta
+//     populateTimeSelect("pickup-time-select");
+//   } else {
+//     // Ocultar todos os selects
+//     deliveryDay.style.display = "none";
+//     deliveryTime.style.display = "none";
+//     deliveryLocation.style.display = "none";
+//     pickupDay.style.display = "none";
+//     pickupTime.style.display = "none";
+//   }
+// });
+// /*=============== SELECT TIMES FOR DELIVERY OR PICK-UP ===============*/
+// // Função para preencher horários no select
+// function populateTimeSelect(selectId, endHour) {
+//   const timeSelect = document.getElementById(selectId);
+//   if (!timeSelect) {
+//     console.error(`Select element with ID "${selectId}" not found.`);
+//     return;
+//   }
+//   timeSelect.innerHTML = ""; // Limpa o conteúdo do select
+
+//   const startTime = 18; // 6 PM
+//   const startMinutes = 30; // 30 minutos
+//   const interval = 20; // Intervalo em minutos
+
+//   for (let hour = startTime; hour <= endHour; hour++) {
+//     for (
+//       let minutes = hour === startTime ? startMinutes : 0;
+//       minutes < 60;
+//       minutes += interval
+//     ) {
+//       if (hour === endHour && minutes > 0) break; // Garante que não ultrapasse o horário final
+
+//       const formattedHour = hour > 12 ? hour - 12 : hour;
+//       const period = hour >= 12 ? "PM" : "AM";
+//       const timeOption = `${formattedHour}:${
+//         minutes < 10 ? "0" + minutes : minutes
+//       } ${period}`;
+//       const option = document.createElement("option");
+//       option.value = timeOption;
+//       option.textContent = timeOption;
+//       timeSelect.appendChild(option);
+//     }
+//   }
+// }
+
+// // Função para atualizar os horários com base no dia selecionado
+// function updateTimeSelect(daySelectId, timeSelectId) {
+//   const daySelect = document.getElementById(daySelectId);
+//   const timeSelect = document.getElementById(timeSelectId);
+
+//   if (!daySelect || !timeSelect) {
+//     console.error(`Elementos não encontrados: ${daySelectId}, ${timeSelectId}`);
+//     return;
+//   }
+
+//   daySelect.addEventListener("change", () => {
+//     const selectedDay = daySelect.value;
+//     const endHour = selectedDay === "Sunday" ? 21 : 22; // Até 9 PM aos domingos, 10 PM nos outros dias
+//     populateTimeSelect(timeSelectId, endHour);
+//   });
+
+//   // Atualiza imediatamente com o valor inicial
+//   const initialDay = daySelect.value;
+//   const initialEndHour = initialDay === "Sunday" ? 21 : 22;
+//   populateTimeSelect(timeSelectId, initialEndHour);
+// }
+
+// // Inicializa os selects de horários
+// updateTimeSelect("delivery-day-select", "delivery-time-select");
+// updateTimeSelect("pickup-day-select", "pickup-time-select");
+
 /*=============== MODAL DELIVERY OU PICK-UP ===============*/
 document.getElementById("service-type").addEventListener("change", function () {
   const deliveryDay = document.getElementById("delivery-day");
@@ -574,25 +672,26 @@ document.getElementById("service-type").addEventListener("change", function () {
 });
 /*=============== SELECT TIMES FOR DELIVERY OR PICK-UP ===============*/
 // Função para preencher horários no select
-function populateTimeSelect(selectId, endHour) {
+function populateTimeSelect(selectId) {
   const timeSelect = document.getElementById(selectId);
   if (!timeSelect) {
     console.error(`Select element with ID "${selectId}" not found.`);
     return;
   }
-  timeSelect.innerHTML = ""; // Limpa o conteúdo do select
+  timeSelect.innerHTML = "";
 
   const startTime = 18; // 6 PM
-  const startMinutes = 30; // 30 minutos
+  const startMinutes = 30; // 30 minutes
+  const endTime = 22; // 10 PM
   const interval = 20; // Intervalo em minutos
 
-  for (let hour = startTime; hour <= endHour; hour++) {
+  for (let hour = startTime; hour <= endTime; hour++) {
     for (
       let minutes = hour === startTime ? startMinutes : 0;
       minutes < 60;
       minutes += interval
     ) {
-      if (hour === endHour && minutes > 0) break; // Garante que não ultrapasse o horário final
+      if (hour === endTime && minutes > 0) break; // Garante que não ultrapasse 22:00
 
       const formattedHour = hour > 12 ? hour - 12 : hour;
       const period = hour >= 12 ? "PM" : "AM";
@@ -606,30 +705,3 @@ function populateTimeSelect(selectId, endHour) {
     }
   }
 }
-
-// Função para atualizar os horários com base no dia selecionado
-function updateTimeSelect(daySelectId, timeSelectId) {
-  const daySelect = document.getElementById(daySelectId);
-  const timeSelect = document.getElementById(timeSelectId);
-
-  if (!daySelect || !timeSelect) {
-    console.error(`Elementos não encontrados: ${daySelectId}, ${timeSelectId}`);
-    return;
-  }
-
-  daySelect.addEventListener("change", () => {
-    const selectedDay = daySelect.value;
-    const endHour = selectedDay === "Sunday" ? 21 : 22; // Até 9 PM aos domingos, 10 PM nos outros dias
-    populateTimeSelect(timeSelectId, endHour);
-  });
-
-  // Atualiza imediatamente com o valor inicial
-  const initialDay = daySelect.value;
-  const initialEndHour = initialDay === "Sunday" ? 21 : 22;
-  populateTimeSelect(timeSelectId, initialEndHour);
-}
-
-// Inicializa os selects de horários
-updateTimeSelect("delivery-day-select", "delivery-time-select");
-updateTimeSelect("pickup-day-select", "pickup-time-select");
-

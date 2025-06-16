@@ -1003,7 +1003,7 @@ img {
   .contact__data {
     grid-template-columns: repeat(2, max-content);
     text-align: initial;
-    gap: 4.5rem 2rem;
+    gap: 4.5rem 0px;
     order: 1;
   }
 
