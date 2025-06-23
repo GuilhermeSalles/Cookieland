@@ -88,7 +88,7 @@ sr.reveal(".recipe__data, .delivery__data, .contact__data", {
 });
 sr.reveal(".popular__card", { interval: 100 });
 
-/*=============== SACOLA E MODAL ===============*/
+/*=============== CARRINHO DE COMPRAS ===============*/
 let cart = [];
 const cartIcon = document.getElementById("cart-icon");
 const cartCount = document.getElementById("cart-count");
@@ -97,75 +97,218 @@ const closeModal = document.getElementById("close-modal");
 const cartItemsContainer = document.getElementById("cart-items");
 const cartTotal = document.getElementById("cart-total");
 
+// Preços definidos
+const pricing = {
+  single: 2.70,
+  box4: 10,
+  box6: 15
+};
+
 // Função para adicionar item ao carrinho
 function addToCart(item) {
-  const existingItem = cart.find((cartItem) => cartItem.name === item.name);
-
-  if (existingItem) {
-    existingItem.quantity += 1;
-  } else {
-    cart.push({ ...item, quantity: 1 });
+  const card = item.card;
+  const boxSelector = card.querySelector('.box-selector');
+  const boxType = boxSelector ? boxSelector.value : 'single';
+  
+  let name = item.name;
+  let price = item.price;
+  let quantity = 1; // Sempre 1 unidade (box ou cookie único)
+  let isBox = false;
+  
+  // Ajusta nome e preço para boxes
+  switch(boxType) {
+    case 'box4':
+      name = `${item.name} (Box of 4)`;
+      price = pricing.box4;
+      isBox = true;
+      break;
+    case 'box6':
+      name = `${item.name} (Box of 6)`;
+      price = pricing.box6;
+      isBox = true;
+      break;
+    default:
+      // Mantém como cookie único
+      price = pricing.single;
   }
+
+  // Verifica se já existe no carrinho
+  const existingItemIndex = cart.findIndex((cartItem) => cartItem.name === name);
+  
+  if (existingItemIndex !== -1) {
+    // Item já existe, atualiza quantidade
+    cart[existingItemIndex].quantity += quantity;
+  } else {
+    // Adiciona novo item
+    cart.push({ 
+      name, 
+      price, 
+      image: item.image,
+      quantity,
+      isBox,
+      basePrice: pricing.single, // Preço unitário original
+      boxType: isBox ? boxType : null,
+      originalName: item.name // Guarda o nome original sem "Box of X"
+    });
+  }
+  
   updateCartCount();
   updateCartModal();
+  showAddToCartFeedback(card);
+}
+
+// Mostrar feedback visual ao adicionar ao carrinho
+function showAddToCartFeedback(card) {
+  const button = card.querySelector('.popular__button');
+  button.innerHTML = '<i class="ri-check-line"></i>';
+  button.style.backgroundColor = 'hsl(130, 60%, 50%)';
+  
+  setTimeout(() => {
+    button.innerHTML = '<i class="ri-shopping-bag-3-fill"></i>';
+    button.style.backgroundColor = '';
+  }, 1000);
 }
 
 // Atualizar contador de itens no ícone da sacola
 function updateCartCount() {
   const itemCount = cart.reduce((acc, item) => acc + item.quantity, 0);
   cartCount.textContent = itemCount;
+  
+  // Efeito de animação ao atualizar
+  cartCount.style.transform = 'scale(1.2)';
+  setTimeout(() => {
+    cartCount.style.transform = 'scale(1)';
+  }, 200);
 }
 
 // Atualizar o conteúdo do modal
 function updateCartModal() {
-  cartItemsContainer.innerHTML = ""; // Limpar itens anteriores
+  cartItemsContainer.innerHTML = "";
   let total = 0;
+  let hasBoxes = false;
 
-  cart.forEach((item) => {
-    total += item.quantity * item.price;
+  // Ordena para mostrar boxes primeiro
+  const sortedCart = [...cart].sort((a, b) => b.isBox - a.isBox);
+
+  sortedCart.forEach((item) => {
+    const itemTotal = item.price * item.quantity;
+    total += itemTotal;
+    
+    let savingsInfo = '';
+    let eachPrice = '';
+    
+    if (item.isBox) {
+      hasBoxes = true;
+      const cookiesInBox = item.boxType === 'box4' ? 4 : 6;
+      const normalPrice = (item.basePrice * cookiesInBox).toFixed(2);
+      const savings = (normalPrice - item.price).toFixed(2);
+      savingsInfo = `<span class="savings-badge">Save £${savings}</span>`;
+      eachPrice = `<span class="each-price">£${(item.price/cookiesInBox).toFixed(2)} each</span>`;
+    }
+
     cartItemsContainer.innerHTML += `
-            <div class="cart-item">
-                <img src="${item.image}" alt="${item.name}">
-                <div class="cart-item-details">
-                    <h3>${item.name}</h3>
-                    <p>$${item.price} x ${item.quantity}</p>
-                </div>
-                <div class="cart-item-controls">
-                    <button onclick="updateQuantity('${item.name}', -1)">-</button>
-                    <span>${item.quantity}</span>
-                    <button onclick="updateQuantity('${item.name}', 1)">+</button>
-                </div>
-            </div>
-        `;
+      <div class="cart-item ${item.isBox ? 'box-item' : ''}">
+        <img src="${item.image}" alt="${item.name}" class="cart-item-img">
+        <div class="cart-item-details">
+          <div class="item-header">
+            <h3>${item.isBox ? item.originalName : item.name}</h3>
+            ${item.isBox ? `<span class="box-size">${item.boxType === 'box4' ? '4-pack' : '6-pack'}</span>` : ''}
+            ${savingsInfo}
+          </div>
+          <p>£${item.price.toFixed(2)} ${item.isBox ? eachPrice : ''}</p>
+        </div>
+        <div class="cart-item-controls">
+          <button class="quantity-btn" onclick="updateQuantity('${item.name}', -1)">
+            <i class="ri-subtract-line"></i>
+          </button>
+          <span class="quantity">${item.quantity}</span>
+          <button class="quantity-btn" onclick="updateQuantity('${item.name}', 1)">
+            <i class="ri-add-line"></i>
+          </button>
+          <button class="remove-btn" onclick="removeItem('${item.name}')">
+            <i class="ri-delete-bin-6-line"></i>
+          </button>
+        </div>
+      </div>
+    `;
   });
+
+  // Mostra o resumo de economia se houver boxes
+  if (hasBoxes) {
+    const savingsSummary = calculateTotalSavings();
+    cartItemsContainer.innerHTML += `
+      <div class="savings-summary">
+        <i class="ri-coins-line"></i>
+        <span>Total savings: £${savingsSummary}</span>
+      </div>
+    `;
+  }
 
   cartTotal.textContent = total.toFixed(2);
 }
 
+// Calcular economia total com boxes
+function calculateTotalSavings() {
+  return cart.reduce((total, item) => {
+    if (item.isBox) {
+      const cookiesInBox = item.boxType === 'box4' ? 4 : 6;
+      const normalPrice = item.basePrice * cookiesInBox * item.quantity;
+      const boxPrice = item.price * item.quantity;
+      return total + (normalPrice - boxPrice);
+    }
+    return total;
+  }, 0).toFixed(2);
+}
+
 // Atualizar quantidade de itens no carrinho
 function updateQuantity(name, change) {
-  const item = cart.find((cartItem) => cartItem.name === name);
-
-  if (item) {
-    item.quantity += change;
-
-    if (item.quantity <= 0) {
-      cart = cart.filter((cartItem) => cartItem.name !== name);
+  const itemIndex = cart.findIndex((cartItem) => cartItem.name === name);
+  
+  if (itemIndex !== -1) {
+    const item = cart[itemIndex];
+    const newQuantity = item.quantity + change;
+    
+    if (newQuantity <= 0) {
+      // Remove item se quantidade for zero ou menos
+      cart.splice(itemIndex, 1);
+    } else {
+      // Atualiza quantidade normalmente (1 em 1)
+      item.quantity = newQuantity;
     }
-
+    
     updateCartCount();
     updateCartModal();
   }
 }
 
-// Exibir modal
-cartIcon.addEventListener("click", () => {
-  cartModal.style.display = "block";
-});
+// Remover item completamente do carrinho
+function removeItem(name) {
+  cart = cart.filter((item) => item.name !== name);
+  updateCartCount();
+  updateCartModal();
+}
 
-// Fechar modal
-closeModal.addEventListener("click", () => {
+// Exibir modal do carrinho
+function showCartModal() {
+  cartModal.style.display = "block";
+  document.body.style.overflow = "hidden"; // Impede scroll da página
+}
+
+// Fechar modal do carrinho
+function hideCartModal() {
   cartModal.style.display = "none";
+  document.body.style.overflow = ""; // Restaura scroll
+}
+
+// Event Listeners
+cartIcon.addEventListener("click", showCartModal);
+closeModal.addEventListener("click", hideCartModal);
+
+// Fechar modal ao clicar fora
+window.addEventListener("click", (event) => {
+  if (event.target === cartModal) {
+    hideCartModal();
+  }
 });
 
 // Adicionar evento nos botões de adicionar ao carrinho
@@ -178,7 +321,26 @@ document.querySelectorAll(".popular__button").forEach((button) => {
     );
     const image = card.querySelector("img").src;
 
-    addToCart({ name, price, image });
+    addToCart({ 
+      name, 
+      price, 
+      image,
+      card // Passa o card completo para acessar o seletor de box
+    });
+  });
+});
+
+// Inicializar selects de box
+document.querySelectorAll('.box-selector').forEach(select => {
+  select.addEventListener('change', function() {
+    // Destaca visualmente quando uma box é selecionada
+    if (this.value !== 'single') {
+      this.style.borderColor = 'hsl(130, 60%, 50%)';
+      this.style.boxShadow = '0 0 0 2px hsla(130, 60%, 50%, 0.2)';
+    } else {
+      this.style.borderColor = 'var(--first-color)';
+      this.style.boxShadow = 'none';
+    }
   });
 });
 // =================== VARIÁVEIS ===================
