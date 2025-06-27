@@ -54,7 +54,7 @@
             <ul class="nav__list">
                <li><a href="#home" class="nav__link active-link">Home</a></li>
                <!-- <li><a href="#recipe" class="nav__link">Recipe</a></li> -->
-               <li><a href="#popular" class="nav__link">Popular</a></li>
+               <li><a href="#popular" class="nav__link">Cookies</a></li>
                <li><a href="#delivery" class="nav__link">Delivery</a></li>
                <li><a href="#contact" class="nav__link">Contact</a></li>
             </ul>
@@ -97,13 +97,16 @@
                   <br><br>
                   <span style="font-weight: bold;">Planning a party?</span> Let us know at least <span
                      style="font-weight: bold;">5 days in advance</span> to ensure everything is just right!
+                  <br><br>
+                  <span style="color: red; font-weight: bold; font-size: 1.1rem;">
+                     Allergen Advice: May contain nuts, peanuts, sesame.
+                  </span>
                </p>
 
                <a href="#popular" class="button">Order Now!</a>
 
                <img src="assets/img/sticker-pepi.svg" alt="image of a delicious cookie" class="home__sticker">
             </div>
-
 
 
             <div class="home__images">
@@ -468,10 +471,11 @@
    <!--==================== FOOTER ====================-->
    <footer class="footer">
       <div class="footer__container container grid">
-         <a href="" class="footer__logo">Cookieland’s</a>
-         <div class="footer__content grid">
-            <a href="" class="footer__link" style="visibility: hidden;">Terms & Agreements</a>
-            <a href="" class="footer__link" style="visibility: hidden;">Privacy Policy</a>
+         <a href="\" class="footer__logo">Cookieland's</a>
+
+         <div class="footer__content">
+            <a href="terms/" class="footer__link">Terms & Agreements</a>
+            <a href="privacy/" class="footer__link">Privacy Policy</a>
 
             <div class="footer__social">
                <a href="https://api.whatsapp.com/send?phone=447850988160&text=Hello, I need more information!"
@@ -492,6 +496,11 @@
                   <i class="ri-facebook-fill" style="color: hsla(220, 37%, 56%, 0.65);"></i>
                </a>
             </div>
+         </div>
+
+         <!-- Selo de classificação (como cartão aceito) -->
+         <div class="footer__badge">
+            <img src="assets/img/foodRating.png" alt="Food Hygiene Rating" class="footer__badge-img">
          </div>
       </div>
 
@@ -557,11 +566,11 @@
                   <strong>additional</strong> charge of <strong>£2 per mile.</strong>
                </p>
                <select id="delivery-location-select">
-                  <option value="Portadown">Portadown - £5</option>
+                  <option value="Portadown">Portadown - £3</option>
                   <option value="Lugan">Lugan - £5</option>
-                  <option value="Craigavon">Craigavon - £5</option>
-                  <option value="Dungannon">Dungannon - £2.700</option>
-                  <option value="Belfast">Belfast - £2.700</option>
+                  <option value="Craigavon">Craigavon - £4</option>
+                  <option value="Dungannon">Dungannon - £30</option>
+                  <option value="Belfast">Belfast - £30</option>
                   <option value="Other">Other locations</option>
                </select>
             </div>
@@ -623,18 +632,18 @@
                <div class="addon-item cart-item" style="flex-direction: row;">
                   <img src="assets/img/coke.png" alt="Coke" class="addon-img">
                   <span>Coke</span>
-                  <span>£1.5</span>
+                  <span>£1.10</span>
                   <button class="addon-decrement" data-item="Coke">-</button>
                   <span class="addon-quantity" data-item="Coke">0</span>
                   <button class="addon-increment" data-item="Coke">+</button>
                </div>
                <div class="addon-item cart-item" style="flex-direction: row;">
-                  <img src="assets/img/coke_zero.png" alt="Coke Zero" class="addon-img">
-                  <span>Coke Zero</span>
-                  <span>£1.5</span>
-                  <button class="addon-decrement" data-item="Coke Zero">-</button>
-                  <span class="addon-quantity" data-item="Coke Zero">0</span>
-                  <button class="addon-increment" data-item="Coke Zero">+</button>
+                  <img src="assets/img/fanta-laranja.png" alt="Fanta" class="addon-img">
+                  <span>Fanta</span>
+                  <span>£1.10</span>
+                  <button class="addon-decrement" data-item="Fanta">-</button>
+                  <span class="addon-quantity" data-item="Fanta">0</span>
+                  <button class="addon-increment" data-item="Fanta">+</button>
                </div>
             </div>
 
@@ -644,7 +653,7 @@
             </p>
             <div id="cream-cheese" class="addon-section" style="display: none;">
                <div class="addon-item cart-item">
-                  <img src="assets/img/cream_cheese.png" alt="Coke Zero" class="addon-img">
+                  <img src="assets/img/cream_cheese.png" alt="Fanta" class="addon-img">
                   <span>Catupiry</span>
                   <span>£2.0</span>
                   <button class="addon-decrement" data-item="Catupiry">-</button>
@@ -652,7 +661,7 @@
                   <button class="addon-increment" data-item="Catupiry">+</button>
                </div>
                <div class="addon-item cart-item">
-                  <img src="assets/img/nutella.png" alt="Coke Zero" class="addon-img">
+                  <img src="assets/img/nutella.png" alt="Fanta" class="addon-img">
                   <span>Nutella Border</span>
                   <span>£2.0</span>
                   <button class="addon-decrement" data-item="Nutella Border">-</button>

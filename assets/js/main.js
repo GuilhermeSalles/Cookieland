@@ -347,7 +347,7 @@ document.querySelectorAll('.box-selector').forEach(select => {
 let addOns = {
   drinks: {
     Coke: 0,
-    "Coke Zero": 0,
+    "Fanta": 0,
   },
   extras: {
     Catupiry: 0,
@@ -356,8 +356,8 @@ let addOns = {
 };
 
 const itemPrices = {
-  Coke: 1.5,
-  "Coke Zero": 1.5,
+  Coke: 1.10,
+  "Fanta": 1.10,
   Catupiry: 2.0,
   "Nutella Border": 2.0,
 };
@@ -514,9 +514,9 @@ document.getElementById("submit-order").addEventListener("click", function () {
   }
 
   if (serviceType === "Delivery") {
-    if (deliveryLocation === "Portadown") deliveryFee = 5.0;
+    if (deliveryLocation === "Portadown") deliveryFee = 3.0;
     if (deliveryLocation === "Lugan") deliveryFee = 5.0;
-    if (deliveryLocation === "Craigavon") deliveryFee = 5.0;
+    if (deliveryLocation === "Craigavon") deliveryFee = 4.0;
     if (deliveryLocation === "Dungannon") deliveryFee = 30.0;
     if (deliveryLocation === "Belfast") deliveryFee = 30.0;
 
