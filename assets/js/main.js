@@ -99,38 +99,16 @@ const cartTotal = document.getElementById("cart-total");
 
 // Preços definidos
 const pricing = {
-  single: 2.70,
+  single: 2.7,
   box4: 10,
   box6: 15
 };
 
 // Função para adicionar item ao carrinho
 function addToCart(item) {
-  const card = item.card;
-  const boxSelector = card.querySelector('.box-selector');
-  const boxType = boxSelector ? boxSelector.value : 'single';
-  
-  let name = item.name;
-  let price = item.price;
-  let quantity = 1; // Sempre 1 unidade (box ou cookie único)
-  let isBox = false;
-  
-  // Ajusta nome e preço para boxes
-  switch(boxType) {
-    case 'box4':
-      name = `${item.name} (Box of 4)`;
-      price = pricing.box4;
-      isBox = true;
-      break;
-    case 'box6':
-      name = `${item.name} (Box of 6)`;
-      price = pricing.box6;
-      isBox = true;
-      break;
-    default:
-      // Mantém como cookie único
-      price = pricing.single;
-  }
+  const name = item.name;
+  const price = pricing.single;
+  const quantity = 1;
 
   // Verifica se já existe no carrinho
   const existingItemIndex = cart.findIndex((cartItem) => cartItem.name === name);
@@ -142,19 +120,16 @@ function addToCart(item) {
     // Adiciona novo item
     cart.push({ 
       name, 
-      price, 
+      price,
       image: item.image,
       quantity,
-      isBox,
-      basePrice: pricing.single, // Preço unitário original
-      boxType: isBox ? boxType : null,
-      originalName: item.name // Guarda o nome original sem "Box of X"
+      originalName: item.name
     });
   }
   
   updateCartCount();
   updateCartModal();
-  showAddToCartFeedback(card);
+  showAddToCartFeedback(item.card);
 }
 
 // Mostrar feedback visual ao adicionar ao carrinho
@@ -174,7 +149,6 @@ function updateCartCount() {
   const itemCount = cart.reduce((acc, item) => acc + item.quantity, 0);
   cartCount.textContent = itemCount;
   
-  // Efeito de animação ao atualizar
   cartCount.style.transform = 'scale(1.2)';
   setTimeout(() => {
     cartCount.style.transform = 'scale(1)';
@@ -184,38 +158,28 @@ function updateCartCount() {
 // Atualizar o conteúdo do modal
 function updateCartModal() {
   cartItemsContainer.innerHTML = "";
+  const totalCookies = cart.reduce((acc, item) => acc + item.quantity, 0);
   let total = 0;
-  let hasBoxes = false;
 
-  // Ordena para mostrar boxes primeiro
-  const sortedCart = [...cart].sort((a, b) => b.isBox - a.isBox);
+  // Calcular total baseado em boxes exatas
+  if (totalCookies === 4) {
+    total = pricing.box4; // £10 para 4 cookies
+  } else if (totalCookies === 6) {
+    total = pricing.box6; // £15 para 6 cookies
+  } else {
+    total = totalCookies * pricing.single; // £2.70 por cookie para outras quantidades
+  }
 
-  sortedCart.forEach((item) => {
-    const itemTotal = item.price * item.quantity;
-    total += itemTotal;
-    
-    let savingsInfo = '';
-    let eachPrice = '';
-    
-    if (item.isBox) {
-      hasBoxes = true;
-      const cookiesInBox = item.boxType === 'box4' ? 4 : 6;
-      const normalPrice = (item.basePrice * cookiesInBox).toFixed(2);
-      const savings = (normalPrice - item.price).toFixed(2);
-      savingsInfo = `<span class="savings-badge">Save £${savings}</span>`;
-      eachPrice = `<span class="each-price">£${(item.price/cookiesInBox).toFixed(2)} each</span>`;
-    }
-
+  // Mostrar itens no carrinho
+  cart.forEach((item) => {
     cartItemsContainer.innerHTML += `
-      <div class="cart-item ${item.isBox ? 'box-item' : ''}">
+      <div class="cart-item">
         <img src="${item.image}" alt="${item.name}" class="cart-item-img">
         <div class="cart-item-details">
           <div class="item-header">
-            <h3>${item.isBox ? item.originalName : item.name}</h3>
-            ${item.isBox ? `<span class="box-size">${item.boxType === 'box4' ? '4-pack' : '6-pack'}</span>` : ''}
-            ${savingsInfo}
+            <h3>${item.name}</h3>
           </div>
-          <p>£${item.price.toFixed(2)} ${item.isBox ? eachPrice : ''}</p>
+          <p>£${item.price.toFixed(2)} each × ${item.quantity}</p>
         </div>
         <div class="cart-item-controls">
           <button class="quantity-btn" onclick="updateQuantity('${item.name}', -1)">
@@ -233,31 +197,21 @@ function updateCartModal() {
     `;
   });
 
-  // Mostra o resumo de economia se houver boxes
-  if (hasBoxes) {
-    const savingsSummary = calculateTotalSavings();
+  // Mostrar economia apenas para boxes exatas
+  if (totalCookies === 4 || totalCookies === 6) {
+    const boxType = totalCookies === 6 ? '6-pack' : '4-pack';
+    const normalPrice = totalCookies * pricing.single;
+    const savings = (normalPrice - total).toFixed(2);
+    
     cartItemsContainer.innerHTML += `
       <div class="savings-summary">
         <i class="ri-coins-line"></i>
-        <span>Total savings: £${savingsSummary}</span>
+        <span>Applied ${boxType} box discount (saving £${savings})</span>
       </div>
     `;
   }
 
   cartTotal.textContent = total.toFixed(2);
-}
-
-// Calcular economia total com boxes
-function calculateTotalSavings() {
-  return cart.reduce((total, item) => {
-    if (item.isBox) {
-      const cookiesInBox = item.boxType === 'box4' ? 4 : 6;
-      const normalPrice = item.basePrice * cookiesInBox * item.quantity;
-      const boxPrice = item.price * item.quantity;
-      return total + (normalPrice - boxPrice);
-    }
-    return total;
-  }, 0).toFixed(2);
 }
 
 // Atualizar quantidade de itens no carrinho
@@ -269,10 +223,8 @@ function updateQuantity(name, change) {
     const newQuantity = item.quantity + change;
     
     if (newQuantity <= 0) {
-      // Remove item se quantidade for zero ou menos
       cart.splice(itemIndex, 1);
     } else {
-      // Atualiza quantidade normalmente (1 em 1)
       item.quantity = newQuantity;
     }
     
@@ -291,20 +243,19 @@ function removeItem(name) {
 // Exibir modal do carrinho
 function showCartModal() {
   cartModal.style.display = "block";
-  document.body.style.overflow = "hidden"; // Impede scroll da página
+  document.body.style.overflow = "hidden";
 }
 
 // Fechar modal do carrinho
 function hideCartModal() {
   cartModal.style.display = "none";
-  document.body.style.overflow = ""; // Restaura scroll
+  document.body.style.overflow = "";
 }
 
 // Event Listeners
 cartIcon.addEventListener("click", showCartModal);
 closeModal.addEventListener("click", hideCartModal);
 
-// Fechar modal ao clicar fora
 window.addEventListener("click", (event) => {
   if (event.target === cartModal) {
     hideCartModal();
@@ -316,38 +267,20 @@ document.querySelectorAll(".popular__button").forEach((button) => {
   button.addEventListener("click", () => {
     const card = button.closest(".popular__card");
     const name = card.querySelector(".popular__title").textContent.trim();
-    const price = parseFloat(
-      card.querySelector(".popular__price").textContent.replace("£", "")
-    );
     const image = card.querySelector("img").src;
 
     addToCart({ 
       name, 
-      price, 
       image,
-      card // Passa o card completo para acessar o seletor de box
+      card
     });
-  });
-});
-
-// Inicializar selects de box
-document.querySelectorAll('.box-selector').forEach(select => {
-  select.addEventListener('change', function() {
-    // Destaca visualmente quando uma box é selecionada
-    if (this.value !== 'single') {
-      this.style.borderColor = 'hsl(130, 60%, 50%)';
-      this.style.boxShadow = '0 0 0 2px hsla(130, 60%, 50%, 0.2)';
-    } else {
-      this.style.borderColor = 'var(--first-color)';
-      this.style.boxShadow = 'none';
-    }
   });
 });
 // =================== VARIÁVEIS ===================
 let addOns = {
   drinks: {
     Coke: 0,
-    "Fanta": 0,
+    Fanta: 0,
   },
   extras: {
     Catupiry: 0,
@@ -356,8 +289,8 @@ let addOns = {
 };
 
 const itemPrices = {
-  Coke: 1.10,
-  "Fanta": 1.10,
+  Coke: 1.1,
+  Fanta: 1.1,
   Catupiry: 2.0,
   "Nutella Border": 2.0,
 };
@@ -439,22 +372,16 @@ document.getElementById("submit-order").addEventListener("click", function () {
   const address = document.getElementById("customer-address").value;
   const serviceType = document.getElementById("service-type").value;
   const paymentMethod = document.getElementById("payment-method").value;
-  const observation = document.getElementById("customer-observation").value; // Geral
-  const addonsObservation = document.getElementById(
-    "cream-cheese-observation"
-  ).value; // Sobre addons
+  const observation = document.getElementById("customer-observation").value;
+  const addonsObservation = document.getElementById("cream-cheese-observation").value;
   const deliveryDay = document.getElementById("delivery-day-select").value;
   const deliveryTime = document.getElementById("delivery-time-select").value;
-  const deliveryLocation = document.getElementById(
-    "delivery-location-select"
-  ).value;
+  const deliveryLocation = document.getElementById("delivery-location-select").value;
   const pickupDay = document.getElementById("pickup-day-select").value;
   const pickupTime = document.getElementById("pickup-time-select").value;
 
   if (!name || !address || cart.length === 0) {
-    alert(
-      "Please fill out all required fields and make sure you have items in your cart."
-    );
+    alert("Please fill out all required fields and make sure you have items in your cart.");
     return;
   }
 
@@ -472,29 +399,58 @@ document.getElementById("submit-order").addEventListener("click", function () {
     .format(now)
     .replace(",", " -");
 
-  // Resumo de valores
-  const { cartSubtotal, addOnsTotal } = updateCartTotal();
+  // Calcular total de cookies e verificar se forma box
+  const totalCookies = cart.reduce((acc, item) => acc + item.quantity, 0);
+  let cartSubtotal = 0;
+  let boxMessage = "";
+  
+  if (totalCookies === 4) {
+    cartSubtotal = pricing.box4;
+    boxMessage = "Box of 4 cookies: £10.00\n";
+  } else if (totalCookies === 6) {
+    cartSubtotal = pricing.box6;
+    boxMessage = "Box of 6 cookies: £15.00\n";
+  } else {
+    cartSubtotal = totalCookies * pricing.single;
+  }
+
+  const { addOnsTotal } = updateCartTotal();
   let deliveryFee = 0;
 
-  // Informações de entrega
-  let message = `${currentDate}\n\n *Service type:* ${serviceType}\n-------------------------------------------\nHello, my name is ${name}, I'd like to place an order.\n *Address:* ${address}\n\n *Products:*\n${cart
-    .map((item) => `${item.name}: ${item.price} x ${item.quantity}`)
-    .join("\n")}`;
+  // Construir mensagem do WhatsApp
+  let message = `${currentDate}\n\n *Service type:* ${serviceType}\n-------------------------------------------\nHello, my name is ${name}, I'd like to place an order.\n *Address:* ${address}\n\n *Products:*\n`;
+
+  // Adicionar box ou cookies individuais
+  if (boxMessage) {
+    message += boxMessage;
+  } else {
+    cart.forEach(item => {
+      message += `${item.name}: £${item.price.toFixed(2)} × ${item.quantity}\n`;
+    });
+  }
+
+  // Listar sabores se for box
+  if (totalCookies === 4 || totalCookies === 6) {
+    message += "\n *Flavors included:*\n";
+    cart.forEach(item => {
+      message += `- ${item.name} × ${item.quantity}\n`;
+    });
+  }
 
   // Detalhes dos add-ons
-  let addOnsMessage = "\n\n *Add-ons:*\n";
+  let addOnsMessage = "\n *Add-ons:*\n";
   let hasAddOns = false;
 
   for (const drink in addOns.drinks) {
     if (addOns.drinks[drink] > 0) {
-      addOnsMessage += `${drink}: ${itemPrices[drink]} x ${addOns.drinks[drink]}\n`;
+      addOnsMessage += `${drink}: ${itemPrices[drink]} × ${addOns.drinks[drink]}\n`;
       hasAddOns = true;
     }
   }
 
   for (const extra in addOns.extras) {
     if (addOns.extras[extra] > 0) {
-      addOnsMessage += `${extra}: ${itemPrices[extra]} x ${addOns.extras[extra]}\n`;
+      addOnsMessage += `${extra}: ${itemPrices[extra]} × ${addOns.extras[extra]}\n`;
       hasAddOns = true;
     }
   }
@@ -505,7 +461,7 @@ document.getElementById("submit-order").addEventListener("click", function () {
 
   message += addOnsMessage;
 
-  // Adicionar observações após os produtos e add-ons
+  // Adicionar observações
   if (observation) {
     message += `\n*Observation:* ${observation}`;
   }
@@ -513,31 +469,36 @@ document.getElementById("submit-order").addEventListener("click", function () {
     message += `\n*Add-ons Observation:* ${addonsObservation}`;
   }
 
+  // Informações de entrega/retirada
   if (serviceType === "Delivery") {
     if (deliveryLocation === "Portadown") deliveryFee = 3.0;
-    if (deliveryLocation === "Lugan") deliveryFee = 5.0;
-    if (deliveryLocation === "Craigavon") deliveryFee = 4.0;
-    if (deliveryLocation === "Dungannon") deliveryFee = 30.0;
-    if (deliveryLocation === "Belfast") deliveryFee = 30.0;
+    else if (deliveryLocation === "Lugan") deliveryFee = 5.0;
+    else if (deliveryLocation === "Craigavon") deliveryFee = 4.0;
+    else if (deliveryLocation === "Dungannon") deliveryFee = 30.0;
+    else if (deliveryLocation === "Belfast") deliveryFee = 30.0;
 
-    message += `\n\n *Delivery Day:* ${deliveryDay}\n *Delivery Time:* ${deliveryTime}\n *Delivery Location:* ${deliveryLocation}\n *Delivery Fee:* £ ${deliveryFee.toFixed(
-      2
-    )}`;
+    message += `\n\n *Delivery Details:*\n- Day: ${deliveryDay}\n- Time: ${deliveryTime}\n- Location: ${deliveryLocation}\n- Fee: £${deliveryFee.toFixed(2)}`;
   } else if (serviceType === "Pick-up") {
-    message += `\n\n *Pick-up Day:* ${pickupDay}\n *Pick-up Time:* ${pickupTime}\n *Address:* 107 Baltylum Meadows, BT62 4BW, Craigavon, Northern Ireland`;
+    message += `\n\n *Pick-up Details:*\n- Day: ${pickupDay}\n- Time: ${pickupTime}\n- Address: 107 Baltylum Meadows, BT62 4BW, Craigavon, Northern Ireland`;
   }
 
+  // Resumo financeiro
   const total = cartSubtotal + addOnsTotal + deliveryFee;
+  message += `\n\n *Order Summary:*\n- Cookies: £${cartSubtotal.toFixed(2)}`;
+  
+  if (totalCookies === 4 || totalCookies === 6) {
+    const normalPrice = totalCookies * pricing.single;
+    const savings = (normalPrice - cartSubtotal).toFixed(2);
+    message += ` (Saved £${savings} with box discount)`;
+  }
+  
+  message += `\n- Add-ons: £${addOnsTotal.toFixed(2)}`;
+  message += `\n- Delivery: £${deliveryFee.toFixed(2)}`;
+  message += `\n- *Total: £${total.toFixed(2)}*`;
 
-  // Adicionar resumo
-  message += `\n\n *Summary*\n\nSubtotal: £ ${cartSubtotal.toFixed(
-    2
-  )}\nAdd-ons: £ ${addOnsTotal.toFixed(2)}\nDelivery: £ ${deliveryFee.toFixed(
-    2
-  )}\nTotal: £ ${total.toFixed(2)}`;
-
+  // Informações de pagamento
   if (paymentMethod === "Bank Transfer") {
-    message += `\n\n *Payment Method:* Bank Transfer (British Pound)\n\n*Here are the account details:*\n\n*Beneficiary:* Veronica Martins\n*Sort code:* 04-00-75\n*Account number:* 75095661`;
+    message += `\n\n *Payment Method:* Bank Transfer (British Pound)\n\n*Account Details:*\n- Beneficiary: Veronica Martins\n- Sort code: 04-00-75\n- Account number: 75095661`;
   } else if (paymentMethod === "Cash") {
     message += `\n\n *Payment Method: Cash*`;
   }
@@ -545,8 +506,6 @@ document.getElementById("submit-order").addEventListener("click", function () {
   const whatsappMessage = encodeURIComponent(message);
   window.open(`https://wa.me/447850988160?text=${whatsappMessage}`, "_blank");
 });
-
-/*=============== INFO ITENS ===============*/
 
 // Item data with descriptions, adjusting image paths
 const itemInfo = {

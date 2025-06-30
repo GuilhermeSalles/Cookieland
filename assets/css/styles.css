@@ -2096,3 +2096,34 @@ label {
     padding: 2rem;
   }
 }
+
+.savings-summary {
+  background-color: hsl(50, 100%, 90%);
+  padding: 0.8rem;
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.savings-summary i {
+  color: var(--first-color);
+  font-size: 1.2rem;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.cart-item-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  margin-right: 1rem;
+}
