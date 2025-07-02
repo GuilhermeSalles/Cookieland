@@ -99,34 +99,37 @@ const cartTotal = document.getElementById("cart-total");
 
 // Preços definidos
 const pricing = {
-  single: 2.7,
-  box4: 10,
-  box6: 15
+  single: 2.7, // Preço por cookie individual
+  box4: 10, // Box com 4 cookies
+  box6: 15, // Box com 6 cookies
+  potCookie: 3.0, // Produtos especiais (não afetados pelo desconto de box)
 };
-
 // Função para adicionar item ao carrinho
 function addToCart(item) {
   const name = item.name;
-  const price = pricing.single;
+  // Verifica se é um produto especial (como potCookie) ou usa o preço single
+  const price = item.price || pricing.single; // Usa o preço passado ou o padrão
   const quantity = 1;
 
   // Verifica se já existe no carrinho
-  const existingItemIndex = cart.findIndex((cartItem) => cartItem.name === name);
-  
+  const existingItemIndex = cart.findIndex(
+    (cartItem) => cartItem.name === name
+  );
+
   if (existingItemIndex !== -1) {
     // Item já existe, atualiza quantidade
     cart[existingItemIndex].quantity += quantity;
   } else {
     // Adiciona novo item
-    cart.push({ 
-      name, 
+    cart.push({
+      name,
       price,
       image: item.image,
       quantity,
-      originalName: item.name
+      originalName: item.name,
     });
   }
-  
+
   updateCartCount();
   updateCartModal();
   showAddToCartFeedback(item.card);
@@ -134,13 +137,13 @@ function addToCart(item) {
 
 // Mostrar feedback visual ao adicionar ao carrinho
 function showAddToCartFeedback(card) {
-  const button = card.querySelector('.popular__button');
+  const button = card.querySelector(".popular__button");
   button.innerHTML = '<i class="ri-check-line"></i>';
-  button.style.backgroundColor = 'hsl(130, 60%, 50%)';
-  
+  button.style.backgroundColor = "hsl(130, 60%, 50%)";
+
   setTimeout(() => {
     button.innerHTML = '<i class="ri-shopping-bag-3-fill"></i>';
-    button.style.backgroundColor = '';
+    button.style.backgroundColor = "";
   }, 1000);
 }
 
@@ -148,30 +151,28 @@ function showAddToCartFeedback(card) {
 function updateCartCount() {
   const itemCount = cart.reduce((acc, item) => acc + item.quantity, 0);
   cartCount.textContent = itemCount;
-  
-  cartCount.style.transform = 'scale(1.2)';
+
+  cartCount.style.transform = "scale(1.2)";
   setTimeout(() => {
-    cartCount.style.transform = 'scale(1)';
+    cartCount.style.transform = "scale(1)";
   }, 200);
 }
 
 // Atualizar o conteúdo do modal
 function updateCartModal() {
   cartItemsContainer.innerHTML = "";
-  const totalCookies = cart.reduce((acc, item) => acc + item.quantity, 0);
   let total = 0;
+  let cookieCount = 0; // Contador apenas para cookies individuais (não produtos especiais)
 
-  // Calcular total baseado em boxes exatas
-  if (totalCookies === 4) {
-    total = pricing.box4; // £10 para 4 cookies
-  } else if (totalCookies === 6) {
-    total = pricing.box6; // £15 para 6 cookies
-  } else {
-    total = totalCookies * pricing.single; // £2.70 por cookie para outras quantidades
-  }
-
-  // Mostrar itens no carrinho
+  // Mostrar itens no carrinho e calcular total
   cart.forEach((item) => {
+    // Verifica se é um cookie individual (preço igual a pricing.single)
+    if (item.price === pricing.single) {
+      cookieCount += item.quantity;
+    }
+
+    total += item.price * item.quantity;
+
     cartItemsContainer.innerHTML += `
       <div class="cart-item">
         <img src="${item.image}" alt="${item.name}" class="cart-item-img">
@@ -182,11 +183,15 @@ function updateCartModal() {
           <p>£${item.price.toFixed(2)} each × ${item.quantity}</p>
         </div>
         <div class="cart-item-controls">
-          <button class="quantity-btn" onclick="updateQuantity('${item.name}', -1)">
+          <button class="quantity-btn" onclick="updateQuantity('${
+            item.name
+          }', -1)">
             <i class="ri-subtract-line"></i>
           </button>
           <span class="quantity">${item.quantity}</span>
-          <button class="quantity-btn" onclick="updateQuantity('${item.name}', 1)">
+          <button class="quantity-btn" onclick="updateQuantity('${
+            item.name
+          }', 1)">
             <i class="ri-add-line"></i>
           </button>
           <button class="remove-btn" onclick="removeItem('${item.name}')">
@@ -197,12 +202,16 @@ function updateCartModal() {
     `;
   });
 
-  // Mostrar economia apenas para boxes exatas
-  if (totalCookies === 4 || totalCookies === 6) {
-    const boxType = totalCookies === 6 ? '6-pack' : '4-pack';
-    const normalPrice = totalCookies * pricing.single;
-    const savings = (normalPrice - total).toFixed(2);
-    
+  // Mostrar economia apenas para boxes de cookies individuais
+  if (cookieCount === 4 || cookieCount === 6) {
+    const boxPrice = cookieCount === 6 ? pricing.box6 : pricing.box4;
+    const normalPrice = cookieCount * pricing.single;
+    const savings = (normalPrice - boxPrice).toFixed(2);
+    const boxType = cookieCount === 6 ? "6-pack" : "4-pack";
+
+    // Ajusta o total para considerar a box
+    total = total - cookieCount * pricing.single + boxPrice;
+
     cartItemsContainer.innerHTML += `
       <div class="savings-summary">
         <i class="ri-coins-line"></i>
@@ -217,17 +226,17 @@ function updateCartModal() {
 // Atualizar quantidade de itens no carrinho
 function updateQuantity(name, change) {
   const itemIndex = cart.findIndex((cartItem) => cartItem.name === name);
-  
+
   if (itemIndex !== -1) {
     const item = cart[itemIndex];
     const newQuantity = item.quantity + change;
-    
+
     if (newQuantity <= 0) {
       cart.splice(itemIndex, 1);
     } else {
       item.quantity = newQuantity;
     }
-    
+
     updateCartCount();
     updateCartModal();
   }
@@ -269,10 +278,10 @@ document.querySelectorAll(".popular__button").forEach((button) => {
     const name = card.querySelector(".popular__title").textContent.trim();
     const image = card.querySelector("img").src;
 
-    addToCart({ 
-      name, 
+    addToCart({
+      name,
       image,
-      card
+      card,
     });
   });
 });
@@ -373,15 +382,21 @@ document.getElementById("submit-order").addEventListener("click", function () {
   const serviceType = document.getElementById("service-type").value;
   const paymentMethod = document.getElementById("payment-method").value;
   const observation = document.getElementById("customer-observation").value;
-  const addonsObservation = document.getElementById("cream-cheese-observation").value;
+  const addonsObservation = document.getElementById(
+    "cream-cheese-observation"
+  ).value;
   const deliveryDay = document.getElementById("delivery-day-select").value;
   const deliveryTime = document.getElementById("delivery-time-select").value;
-  const deliveryLocation = document.getElementById("delivery-location-select").value;
+  const deliveryLocation = document.getElementById(
+    "delivery-location-select"
+  ).value;
   const pickupDay = document.getElementById("pickup-day-select").value;
   const pickupTime = document.getElementById("pickup-time-select").value;
 
   if (!name || !address || cart.length === 0) {
-    alert("Please fill out all required fields and make sure you have items in your cart.");
+    alert(
+      "Please fill out all required fields and make sure you have items in your cart."
+    );
     return;
   }
 
@@ -399,19 +414,31 @@ document.getElementById("submit-order").addEventListener("click", function () {
     .format(now)
     .replace(",", " -");
 
-  // Calcular total de cookies e verificar se forma box
-  const totalCookies = cart.reduce((acc, item) => acc + item.quantity, 0);
+  // Calcular totais
+  let cookieCount = 0; // Apenas cookies individuais
   let cartSubtotal = 0;
   let boxMessage = "";
-  
-  if (totalCookies === 4) {
-    cartSubtotal = pricing.box4;
-    boxMessage = "Box of 4 cookies: £10.00\n";
-  } else if (totalCookies === 6) {
-    cartSubtotal = pricing.box6;
-    boxMessage = "Box of 6 cookies: £15.00\n";
-  } else {
-    cartSubtotal = totalCookies * pricing.single;
+  let hasBox = false;
+
+  // Primeiro calculamos o subtotal normal
+  cart.forEach((item) => {
+    cartSubtotal += item.price * item.quantity;
+    // Contamos apenas cookies individuais (preço igual a pricing.single)
+    if (item.price === pricing.single) {
+      cookieCount += item.quantity;
+    }
+  });
+
+  // Verificamos se podemos aplicar desconto de box
+  if (cookieCount === 4 || cookieCount === 6) {
+    const boxPrice = cookieCount === 6 ? pricing.box6 : pricing.box4;
+    const normalPrice = cookieCount * pricing.single;
+    const savings = (normalPrice - boxPrice).toFixed(2);
+
+    // Ajustamos o subtotal para refletir o desconto da box
+    cartSubtotal = cartSubtotal - normalPrice + boxPrice;
+    hasBox = true;
+    boxMessage = `Box of ${cookieCount} cookies: £${boxPrice.toFixed(2)}\n`;
   }
 
   const { addOnsTotal } = updateCartTotal();
@@ -420,20 +447,26 @@ document.getElementById("submit-order").addEventListener("click", function () {
   // Construir mensagem do WhatsApp
   let message = `${currentDate}\n\n *Service type:* ${serviceType}\n-------------------------------------------\nHello, my name is ${name}, I'd like to place an order.\n *Address:* ${address}\n\n *Products:*\n`;
 
-  // Adicionar box ou cookies individuais
-  if (boxMessage) {
+  // Adicionar box se aplicável
+  if (hasBox) {
     message += boxMessage;
-  } else {
-    cart.forEach(item => {
-      message += `${item.name}: £${item.price.toFixed(2)} × ${item.quantity}\n`;
-    });
   }
 
-  // Listar sabores se for box
-  if (totalCookies === 4 || totalCookies === 6) {
-    message += "\n *Flavors included:*\n";
-    cart.forEach(item => {
-      message += `- ${item.name} × ${item.quantity}\n`;
+  // Adicionar todos os itens ao message
+  cart.forEach((item) => {
+    // Se for um cookie individual e tiver box, não listamos individualmente
+    if (!(item.price === pricing.single && hasBox)) {
+      message += `${item.name}: £${item.price.toFixed(2)} × ${item.quantity}\n`;
+    }
+  });
+
+  // Listar sabores se tiver box
+  if (hasBox) {
+    message += "\n *Cookies included in box:*\n";
+    cart.forEach((item) => {
+      if (item.price === pricing.single) {
+        message += `- ${item.name} × ${item.quantity}\n`;
+      }
     });
   }
 
@@ -477,21 +510,25 @@ document.getElementById("submit-order").addEventListener("click", function () {
     else if (deliveryLocation === "Dungannon") deliveryFee = 30.0;
     else if (deliveryLocation === "Belfast") deliveryFee = 30.0;
 
-    message += `\n\n *Delivery Details:*\n- Day: ${deliveryDay}\n- Time: ${deliveryTime}\n- Location: ${deliveryLocation}\n- Fee: £${deliveryFee.toFixed(2)}`;
+    message += `\n\n *Delivery Details:*\n- Day: ${deliveryDay}\n- Time: ${deliveryTime}\n- Location: ${deliveryLocation}\n- Fee: £${deliveryFee.toFixed(
+      2
+    )}`;
   } else if (serviceType === "Pick-up") {
     message += `\n\n *Pick-up Details:*\n- Day: ${pickupDay}\n- Time: ${pickupTime}\n- Address: 107 Baltylum Meadows, BT62 4BW, Craigavon, Northern Ireland`;
   }
 
   // Resumo financeiro
   const total = cartSubtotal + addOnsTotal + deliveryFee;
-  message += `\n\n *Order Summary:*\n- Cookies: £${cartSubtotal.toFixed(2)}`;
-  
-  if (totalCookies === 4 || totalCookies === 6) {
-    const normalPrice = totalCookies * pricing.single;
-    const savings = (normalPrice - cartSubtotal).toFixed(2);
+  message += `\n\n *Order Summary:*\n- Products: £${cartSubtotal.toFixed(2)}`;
+
+  if (hasBox) {
+    const normalPrice = cookieCount * pricing.single;
+    const savings = (
+      normalPrice - (cookieCount === 6 ? pricing.box6 : pricing.box4)
+    ).toFixed(2);
     message += ` (Saved £${savings} with box discount)`;
   }
-  
+
   message += `\n- Add-ons: £${addOnsTotal.toFixed(2)}`;
   message += `\n- Delivery: £${deliveryFee.toFixed(2)}`;
   message += `\n- *Total: £${total.toFixed(2)}*`;
@@ -826,3 +863,60 @@ function populateTimeSelect(selectId) {
     }
   }
 }
+
+// ==================== CAROUSEL ====================
+const track = document.querySelector(".carousel-track");
+const slides = Array.from(track.children);
+const nextButton = document.querySelector(".carousel-button.next");
+const prevButton = document.querySelector(".carousel-button.prev");
+
+let currentSlide = 0;
+
+function updateSlide() {
+  track.style.transform = `translateX(-${currentSlide * 100}%)`;
+  slides.forEach((slide, index) => {
+    slide.classList.toggle("active", index === currentSlide);
+
+    // Atualiza o conteúdo do produto conforme o slide
+    if (index === currentSlide) {
+      const titles = [
+        "Pot Classic Cookies with Nutella",
+        "Double Chocolate Delight",
+        "Red Velvet Special",
+      ];
+      const prices = ["3.00", "3.50", "3.25"];
+
+      document.querySelector(".new__title").textContent = titles[index];
+      document.querySelector(".new__price").textContent = `£${prices[index]}`;
+    }
+  });
+}
+
+nextButton.addEventListener("click", () => {
+  currentSlide = (currentSlide + 1) % slides.length;
+  updateSlide();
+});
+
+prevButton.addEventListener("click", () => {
+  currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+  updateSlide();
+});
+
+updateSlide();
+
+// ==================== ADD TO CART ====================
+document.querySelector(".new__button").addEventListener("click", function () {
+  const card = this.closest(".new__content");
+  const name = card.querySelector(".new__title").textContent.trim();
+  const price = parseFloat(
+    card.querySelector(".new__price").textContent.replace("£", "")
+  );
+  const image = document.querySelector(".carousel-slide.active img").src;
+
+  addToCart({
+    name,
+    price, // Agora passamos o preço específico
+    image,
+    card: this.closest(".new__container"),
+  });
+});
