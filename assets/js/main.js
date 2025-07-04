@@ -876,20 +876,11 @@ function updateSlide() {
   track.style.transform = `translateX(-${currentSlide * 100}%)`;
   slides.forEach((slide, index) => {
     slide.classList.toggle("active", index === currentSlide);
-
-    // Atualiza o conteúdo do produto conforme o slide
-    if (index === currentSlide) {
-      const titles = [
-        "Pot Classic Cookies with Nutella",
-        "Double Chocolate Delight",
-        "Red Velvet Special",
-      ];
-      const prices = ["3.00", "3.50", "3.25"];
-
-      document.querySelector(".new__title").textContent = titles[index];
-      document.querySelector(".new__price").textContent = `£${prices[index]}`;
-    }
   });
+
+  // Nome e preço fixos
+  document.querySelector(".new__title").textContent = "Pot Classic Cookies with Nutella";
+  document.querySelector(".new__price").textContent = "£3.00";
 }
 
 nextButton.addEventListener("click", () => {
@@ -907,15 +898,13 @@ updateSlide();
 // ==================== ADD TO CART ====================
 document.querySelector(".new__button").addEventListener("click", function () {
   const card = this.closest(".new__content");
-  const name = card.querySelector(".new__title").textContent.trim();
-  const price = parseFloat(
-    card.querySelector(".new__price").textContent.replace("£", "")
-  );
+  const name = "Pot Classic Cookies with Nutella";
+  const price = 3.0;
   const image = document.querySelector(".carousel-slide.active img").src;
 
   addToCart({
     name,
-    price, // Agora passamos o preço específico
+    price,
     image,
     card: this.closest(".new__container"),
   });
