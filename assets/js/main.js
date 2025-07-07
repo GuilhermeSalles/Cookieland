@@ -863,7 +863,6 @@ function populateTimeSelect(selectId) {
     }
   }
 }
-
 // ==================== CAROUSEL ====================
 const track = document.querySelector(".carousel-track");
 const slides = Array.from(track.children);
@@ -878,9 +877,10 @@ function updateSlide() {
     slide.classList.toggle("active", index === currentSlide);
   });
 
-  // Nome e preço fixos
-  document.querySelector(".new__title").textContent = "Pot Classic Cookies with Nutella";
-  document.querySelector(".new__price").textContent = "£3.00";
+  // Nome e preço atualizados (fixos)
+  document.querySelector(".new__title").textContent =
+    "The golden bites";
+  document.querySelector(".new__price").textContent = "£12.00";
 }
 
 nextButton.addEventListener("click", () => {
@@ -897,9 +897,8 @@ updateSlide();
 
 // ==================== ADD TO CART ====================
 document.querySelector(".new__button").addEventListener("click", function () {
-  const card = this.closest(".new__content");
-  const name = "Pot Classic Cookies with Nutella";
-  const price = 3.0;
+  const name = "The golden bites";
+  const price = 12;
   const image = document.querySelector(".carousel-slide.active img").src;
 
   addToCart({
