@@ -1283,8 +1283,8 @@ img {
   }
 
   .cart-item img {
-    width: 35px;
-    height: 35px;
+    width: 60px;
+    height: 60px;
   }
 
   .cart-item-controls button {
@@ -2003,8 +2003,7 @@ label {
   }
 
   .cart-item-controls {
-    width: 100%;
-    justify-content: space-between;
+    width: 28%;
     margin-top: 0.5rem;
   }
 
@@ -2115,7 +2114,8 @@ label {
   display: flex;
   align-items: center;
   padding: 1rem 0;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #232323;
+  flex-direction: row;
 }
 
 .cart-item-img {

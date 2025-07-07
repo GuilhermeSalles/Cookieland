@@ -194,9 +194,6 @@ function updateCartModal() {
           }', 1)">
             <i class="ri-add-line"></i>
           </button>
-          <button class="remove-btn" onclick="removeItem('${item.name}')">
-            <i class="ri-delete-bin-6-line"></i>
-          </button>
         </div>
       </div>
     `;
@@ -863,24 +860,50 @@ function populateTimeSelect(selectId) {
     }
   }
 }
+
 // ==================== CAROUSEL ====================
 const track = document.querySelector(".carousel-track");
 const slides = Array.from(track.children);
 const nextButton = document.querySelector(".carousel-button.next");
 const prevButton = document.querySelector(".carousel-button.prev");
 
+const titleElement = document.querySelector(".new__title");
+const priceElement = document.querySelector(".new__price");
+const noteElement = document.querySelector(".new__note");
+
 let currentSlide = 0;
+
+const productData = [
+ 
+  {
+    name: "The golden bites",
+    price: 12.5,
+    showNote: true,
+  },
+   {
+    name: "Pot Classic Cookies with Nutella",
+    price: 3.0,
+    showNote: false,
+  },
+  // {
+  //   name: "Pot Classic Cookies with Nutella",
+  //   price: 3.0,
+  //   showNote: false,
+  // },
+];
 
 function updateSlide() {
   track.style.transform = `translateX(-${currentSlide * 100}%)`;
+
   slides.forEach((slide, index) => {
     slide.classList.toggle("active", index === currentSlide);
   });
 
-  // Nome e preço atualizados (fixos)
-  document.querySelector(".new__title").textContent =
-    "The golden bites";
-  document.querySelector(".new__price").textContent = "£12.00";
+  const { name, price, showNote } = productData[currentSlide];
+
+  titleElement.textContent = name;
+  priceElement.textContent = `£${price.toFixed(2)}`;
+  noteElement.style.display = showNote ? "block" : "none";
 }
 
 nextButton.addEventListener("click", () => {
@@ -897,8 +920,7 @@ updateSlide();
 
 // ==================== ADD TO CART ====================
 document.querySelector(".new__button").addEventListener("click", function () {
-  const name = "The golden bites";
-  const price = 12;
+  const { name, price } = productData[currentSlide];
   const image = document.querySelector(".carousel-slide.active img").src;
 
   addToCart({
