@@ -275,13 +275,21 @@ document.querySelectorAll(".popular__button").forEach((button) => {
     const name = card.querySelector(".popular__title").textContent.trim();
     const image = card.querySelector("img").src;
 
+    // NOVO: ler preço do card, se existir
+    let priceText = card.querySelector(".popular__price")?.textContent || "";
+    priceText = priceText.replace(/[£\s]/g, "");
+    const parsed = parseFloat(priceText);
+    const price = isNaN(parsed) ? undefined : parsed;
+
     addToCart({
       name,
       image,
+      price, // passa preço quando houver; senão cai no pricing.single
       card,
     });
   });
 });
+
 // =================== VARIÁVEIS ===================
 let addOns = {
   drinks: {
@@ -544,57 +552,92 @@ document.getElementById("submit-order").addEventListener("click", function () {
 // Item data with descriptions, adjusting image paths
 const itemInfo = {
   "Lotus Cookie": {
-    img: "assets/img/cookie-lutus-info.png",
+    img: "assets/img/cookie-lutus.jpg",
     description:
       "A delightful cookie filled with Lotus cream, perfect for fans of unique flavours.",
   },
   "Lindt Cookie": {
-    img: "assets/img/cookie-lindt-info.png",
+    img: "assets/img/cookie-lindt.jpg",
     description:
       "An irresistible cookie filled with the rich Lindor chocolate by Lindt.",
   },
   "Oreo Cookie": {
-    img: "assets/img/cookie-oreo-info.png",
+    img: "assets/img/cookie-oreo.jpg",
     description:
       "A crunchy cookie with an irresistible blend of Oreo biscuit and chocolate.",
   },
   "100% Cocoa Cookie": {
-    img: "assets/img/cookie-cacau-info.png",
+    img: "assets/img/cookie-cacau.jpg",
     description:
       "An intensely flavoured cookie with a blend of 100% pure cocoa.",
   },
   "KitKat Cookie": {
-    img: "assets/img/cookie-kitkat-info.png",
+    img: "assets/img/cookie-kitkat.jpg",
     description:
       "A crunchy cookie filled with the unmistakable crunch of KitKat.",
   },
   "Churro Cookie": {
-    img: "assets/img/cookie-churro-info.png",
+    img: "assets/img/cookie-churro.jpg",
     description: "A perfect combination of churro biscuit and dulce de leche.",
   },
   "Traditional Cookie": {
-    img: "assets/img/cookie-tradicional-info.png",
+    img: "assets/img/cookie-tradicional.jpg",
     description: "The classic cookie with a timeless taste.",
   },
   "Kinder Bueno Cookie": {
-    img: "assets/img/cookie-avela-info.png",
+    img: "assets/img/cookie-avela.jpg",
     description:
       "A cookie filled with hazelnut cream inspired by the famous Kinder Bueno.",
   },
   "Red Velvet Cookie": {
-    img: "assets/img/cookie-ganache-info.png",
+    img: "assets/img/cookie-ganache.jpg",
     description:
       "An elegant Red Velvet cookie with a rich chocolate ganache filling.",
   },
   "Nutella Cookie": {
-    img: "assets/img/cookie-nutella-info.png",
+    img: "assets/img/cookie-nutella.jpg",
     description:
       "A cookie filled with the classic Nutella hazelnut cream for an unmistakable treat.",
   },
   "Dubai Cookie": {
-    img: "assets/img/cookie-pistache-info.png",
+    img: "assets/img/cookie-pistache.jpg",
     description:
       "A refined cookie filled with pistachio cream, inspired by the exotic flavours of Dubai.",
+  },
+  "The golden bites": {
+    img: "assets/img/new-product-2.jpg",
+    description:
+      "Our special trio box with Kinder, Nutella & Lotus. You can ask for all 3 in the same flavour in Observations.",
+  },
+  "Pot Classic Cookies with Nutella": {
+    img: "assets/img/new-product-1.jpg",
+    description:
+      "A creamy Nutella pot with classic cookie pieces. Perfect as an add-on or a quick treat.",
+  },
+  "Ninho & Nutella Sandwich Cookie": {
+    img: "assets/img/sandu-ninho.jpg",
+    description:
+      "Soft cookie sandwich with Nutella filling. You may ask for an outer coating of milk powder (Ninho) or leave it plain.",
+  },
+  "Chocolate Sandwich Cookie": {
+    img: "assets/img/sandu-choco.jpg",
+    description:
+      "A rich, chocolate-filled cookie sandwich — smooth, indulgent and perfect with a coffee.",
+  },
+  "Duo Sandwich Cookie": {
+    img: "assets/img/sandu-duo.jpg",
+    description:
+      "Two complementary flavours in one sandwich cookie for a balanced bite.",
+  },
+  "Love Sandwich Cookie": {
+    img: "assets/img/sandu-love.jpg",
+    description:
+      "Heart-shaped cookie sandwich with a creamy filling — made to share (or not!).",
+  },
+  "Pistachio Sandwich Cookie": {
+    img: "assets/img/sandu-pista.jpg",
+    description:
+      "Pistachio cream filling with a delicate nutty finish inside our soft cookie sandwich.",
   },
 };
 
@@ -874,13 +917,12 @@ const noteElement = document.querySelector(".new__note");
 let currentSlide = 0;
 
 const productData = [
- 
   {
     name: "The golden bites",
     price: 12.5,
     showNote: true,
   },
-   {
+  {
     name: "Pot Classic Cookies with Nutella",
     price: 3.0,
     showNote: false,

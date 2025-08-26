@@ -54,7 +54,7 @@
             <ul class="nav__list">
                <li><a href="#home" class="nav__link active-link">Home</a></li>
                <!-- <li><a href="#recipe" class="nav__link">Recipe</a></li> -->
-               <li><a href="#new" class="nav__link">New Product</a></li>
+               <li><a href="#sandwiches" class="nav__link">Cookie Sandwiches</a></li>
                <li><a href="#popular" class="nav__link">Cookies</a></li>
                <li><a href="#delivery" class="nav__link">Delivery</a></li>
                <li><a href="#contact" class="nav__link">Contact</a></li>
@@ -113,79 +113,179 @@
             <div class="home__images">
                <img src="assets/img/home-cookie.png" alt="image" class="home__burger">
 
-               <img src="assets/img/avela.png" alt="image" class="home__ingredient home__potato-1">
-               <img src="assets/img/avela.png" alt="image" class="home__ingredient home__potato-2">
-               <img src="assets/img/oreo.png" alt="image" class="home__ingredient home__tomato-1">
-               <img src="assets/img/oreo.png" alt="image" class="home__ingredient home__tomato-2">
-               <img src="assets/img/pistache.png" alt="image" class="home__ingredient home__lettuce-1">
-               <img src="assets/img/chocolate.png" alt="image" class="home__ingredient home__lettuce-2">
+               <img src="assets/img/avela.png" style="display: none;" alt="image"
+                  class="home__ingredient home__potato-1">
+               <img src="assets/img/avela.png" style="display: none;" alt="image"
+                  class="home__ingredient home__potato-2">
+               <img src="assets/img/oreo.png" style="display: none;" alt="image"
+                  class="home__ingredient home__tomato-1">
+               <img src="assets/img/oreo.png" style="display: none;" alt="image"
+                  class="home__ingredient home__tomato-2">
+               <img src="assets/img/pistache.png" style="display: none;" alt="image"
+                  class="home__ingredient home__lettuce-1">
+               <img src="assets/img/chocolate.png" style="display: none;" alt="image"
+                  class="home__ingredient home__lettuce-2">
             </div>
 
          </div>
       </section>
 
-      <!--==================== NEW ====================-->
-      <section class="new section" id="new">
-         <h2 class="section__title">New This Week</h2>
-         <h3 class="popular__subtitle">Discover our special creations</h3>
 
-         <div class="new__container container">
-            <div class="carousel-wrapper">
-               <button class="carousel-button prev">
-                  <i class="ri-arrow-left-s-line"></i>
+      <!--==================== COOKIE SANDWICHES ====================-->
+      <section class="popular section" id="cookie-sandwiches">
+         <h2 class="section__title">Cookie <br> Sandwiches</h2>
+
+         <div class="popular__container container grid">
+            <!-- Ninho + Nutella -->
+            <article class="popular__card" data-sku="sandwich-ninho-nutella">
+               <span class="badge badge--new">NEW</span>
+
+               <img src="assets/img/sandu-ninho.jpg"
+                  alt="Ninho & Nutella Sandwich Cookie — soft cookie filled with Nutella, optionally coated in milk powder"
+                  class="popular__img">
+
+               <button class="info__button"><i class="ri-information-fill"></i></button>
+
+               <h2 class="popular__title">Ninho & Nutella Sandwich Cookie</h2>
+               <span class="popular__price">£3.50</span>
+
+               <!-- UX note as a toggle button -->
+               <button class="note-toggle" aria-expanded="false" aria-controls="note-sandwich-ninho">
+                  <i class="ri-alert-line" aria-hidden="true"></i>
+                  Important: coating preference
+                  <i class="ri-arrow-down-s-line chevron" aria-hidden="true"></i>
                </button>
 
-               <div class="carousel-track-container">
-                  <ul class="carousel-track">
-                     <li class="carousel-slide active">
-                        <img src="assets/img/new-product-2.png" alt="Box Special with Kinder, Nutella & Lotus"
-                           class="new__img">
-                     </li>
-
-                     <li class="carousel-slide">
-                        <img src="assets/img/new-product-1.png" alt="Pot Classic Cookies with Nutella" class="new__img">
-                     </li>
-                     
-                     <!-- <li class="carousel-slide">
-                        <img src="assets/img/new-product-3.jpg" alt="Product 3" class="new__img">
-                     </li> -->
-                  </ul>
+               <div class="note-panel" id="note-sandwich-ninho" hidden>
+                  You can ask to have the sandwich cookie <em>coated in milk powder (Ninho)</em> or <em>plain</em>.
+                  Add your preference in <strong>Observations</strong>.
                </div>
 
-               <button class="carousel-button next">
-                  <i class="ri-arrow-right-s-line"></i>
+               <button class="popular__button">
+                  <i class="ri-shopping-bag-3-fill"></i>
                </button>
-            </div>
+            </article>
 
-            <div class="new__content">
-               <h3 class="new__title"></h3>
-               <p class="new__note"
-                  style="display: none; font-size: 0.875rem; color: hsl(28, 80%, 40%); margin: 0.5rem 0 1rem;">
-                  ⚠️ If you'd like all 3 cookies in the same flavour, please specify it in the *Observations* field in
-                  your cart. For example: <em>“Box Special: only Nutella”</em>
-               </p>
-               <span class="new__price"></span>
-               <button class="button--flex new__button">
-                  <i class="ri-shopping-bag-3-line button__icon"></i> Add to Cart
+            <!-- Chocolate -->
+            <article class="popular__card" data-sku="sandwich-chocolate">
+               <span class="badge badge--new">NEW</span>
+
+               <img src="assets/img/sandu-choco.jpg"
+                  alt="Chocolate Sandwich Cookie — rich chocolate filling between two soft cookies"
+                  class="popular__img">
+
+               <button class="info__button"><i class="ri-information-fill"></i></button>
+
+               <h2 class="popular__title">Chocolate Sandwich Cookie</h2>
+               <span class="popular__price">£3.50</span>
+
+               <button class="popular__button">
+                  <i class="ri-shopping-bag-3-fill"></i>
                </button>
-            </div>
+            </article>
+
+            <!-- Duo (two flavours) -->
+            <article class="popular__card" data-sku="sandwich-duo">
+               <span class="badge badge--new">NEW</span>
+
+               <img src="assets/img/sandu-duo.jpg"
+                  alt="Duo Sandwich Cookie — two complementary flavours in one cookie sandwich" class="popular__img">
+
+               <button class="info__button"><i class="ri-information-fill"></i></button>
+
+               <h2 class="popular__title">Duo Sandwich Cookie</h2>
+               <span class="popular__price">£3.50</span>
+
+               <button class="popular__button">
+                  <i class="ri-shopping-bag-3-fill"></i>
+               </button>
+            </article>
+
+            <!-- Love (heart-shaped) -->
+            <article class="popular__card" data-sku="sandwich-love">
+               <span class="badge badge--new">NEW</span>
+
+               <img src="assets/img/sandu-love.jpg"
+                  alt="Love Sandwich Cookie — heart-shaped cookie sandwich with a creamy filling" class="popular__img">
+
+               <button class="info__button"><i class="ri-information-fill"></i></button>
+
+               <h2 class="popular__title">Love Sandwich Cookie</h2>
+               <span class="popular__price">£3.50</span>
+
+               <button class="popular__button">
+                  <i class="ri-shopping-bag-3-fill"></i>
+               </button>
+            </article>
+
+            <!-- Pistachio -->
+            <article class="popular__card" data-sku="sandwich-pistachio">
+               <span class="badge badge--new">NEW</span>
+
+               <img src="assets/img/sandu-pista.jpg"
+                  alt="Pistachio Sandwich Cookie — pistachio cream filling with a nutty finish" class="popular__img">
+
+               <button class="info__button"><i class="ri-information-fill"></i></button>
+
+               <h2 class="popular__title">Pistachio Sandwich Cookie</h2>
+               <span class="popular__price">£3.50</span>
+
+               <button class="popular__button">
+                  <i class="ri-shopping-bag-3-fill"></i>
+               </button>
+            </article>
          </div>
       </section>
 
-
-      <!--==================== POPULAR ====================-->
+      <!--==================== COOKIES ====================-->
       <section class="popular section" id="popular">
          <h2 class="section__title">Most Loved <br> Cookies</h2>
 
-         <!-- <h3 class="popular__subtitle">illustrative images
-            <br>
-            One size Pizza: <span style="font-weight: bold;">12 inches / 30cm.</span>
-         </h3> -->
 
          <div class="popular__container container grid">
+            <!-- NEW ITEMS MOVED FROM 'NEW' CAROUSEL -->
+            <article class="popular__card" data-sku="golden-bites">
+               <span class="badge badge--new">NEW</span>
+
+               <img src="assets/img/new-product-2.jpg" alt="The golden bites: Box Special with Kinder, Nutella & Lotus"
+                  class="popular__img">
+               <button class="info__button"><i class="ri-information-fill"></i></button>
+               <h2 class="popular__title">The golden bites</h2>
+               <span class="popular__price">£12.50</span>
+
+               <!-- UX note kept visible -->
+               <!-- UX note as a toggle button -->
+               <button class="note-toggle" aria-expanded="false" aria-controls="note-golden-bites">
+                  <i class="ri-alert-line" aria-hidden="true"></i>
+                  Important: flavour selection
+                  <i class="ri-arrow-down-s-line chevron" aria-hidden="true"></i>
+               </button>
+
+               <div class="note-panel" id="note-golden-bites" hidden>
+                  If you’d like all 3 cookies in the same flavour, add it in <em>Observations</em>.
+                  e.g. “Box Special: only Nutella”.
+               </div>
+
+
+               <button class="popular__button">
+                  <i class="ri-shopping-bag-3-fill"></i>
+               </button>
+            </article>
+
+            <article class="popular__card" data-sku="pot-classic-nutella">
+               <span class="badge badge--new">NEW</span>
+
+               <img src="assets/img/new-product-1.jpg" alt="Pot Classic Cookies with Nutella" class="popular__img">
+               <button class="info__button"><i class="ri-information-fill"></i></button>
+               <h2 class="popular__title">Pot Classic Cookies with Nutella</h2>
+               <span class="popular__price">£3.00</span>
+               <button class="popular__button">
+                  <i class="ri-shopping-bag-3-fill"></i>
+               </button>
+            </article>
 
             <article class="popular__card">
-               <img src="assets/img/cookie-lutus.png" alt="Lotus Cookie" class="popular__img">
+               <img src="assets/img/cookie-lutus.jpg" alt="Lotus Cookie" class="popular__img">
                <button class="info__button">
                   <i class="ri-information-fill"></i>
                </button>
@@ -198,7 +298,7 @@
             </article>
 
             <article class="popular__card">
-               <img src="assets/img/cookie-lindt.png" alt="Lindt Cookie" class="popular__img">
+               <img src="assets/img/cookie-lindt.jpg" alt="Lindt Cookie" class="popular__img">
                <button class="info__button">
                   <i class="ri-information-fill"></i>
                </button>
@@ -211,7 +311,7 @@
             </article>
 
             <article class="popular__card">
-               <img src="assets/img/cookie-oreo.png" alt="Oreo Cookie" class="popular__img">
+               <img src="assets/img/cookie-oreo.jpg" alt="Oreo Cookie" class="popular__img">
                <button class="info__button">
                   <i class="ri-information-fill"></i>
                </button>
@@ -224,7 +324,7 @@
             </article>
 
             <article class="popular__card">
-               <img src="assets/img/cookie-cacau.png" alt="100% Cocoa Cookie" class="popular__img">
+               <img src="assets/img/cookie-cacau.jpg" alt="100% Cocoa Cookie" class="popular__img">
                <button class="info__button">
                   <i class="ri-information-fill"></i>
                </button>
@@ -237,7 +337,7 @@
             </article>
 
             <article class="popular__card">
-               <img src="assets/img/cookie-kitkat.png" alt="KitKat Cookie" class="popular__img">
+               <img src="assets/img/cookie-kitkat.jpg" alt="KitKat Cookie" class="popular__img">
                <button class="info__button">
                   <i class="ri-information-fill"></i>
                </button>
@@ -250,7 +350,7 @@
             </article>
 
             <article class="popular__card">
-               <img src="assets/img/cookie-churro.png" alt="Churro Cookie" class="popular__img">
+               <img src="assets/img/cookie-churro.jpg" alt="Churro Cookie" class="popular__img">
                <button class="info__button">
                   <i class="ri-information-fill"></i>
                </button>
@@ -263,7 +363,7 @@
             </article>
 
             <article class="popular__card">
-               <img src="assets/img/cookie-tradicional.png" alt="Traditional Cookie" class="popular__img">
+               <img src="assets/img/cookie-tradicional.jpg" alt="Traditional Cookie" class="popular__img">
                <button class="info__button">
                   <i class="ri-information-fill"></i>
                </button>
@@ -276,7 +376,7 @@
             </article>
 
             <article class="popular__card">
-               <img src="assets/img/cookie-avela.png" alt="Kinder Bueno Cookie" class="popular__img">
+               <img src="assets/img/cookie-avela.jpg" alt="Kinder Bueno Cookie" class="popular__img">
                <button class="info__button">
                   <i class="ri-information-fill"></i>
                </button>
@@ -289,7 +389,7 @@
             </article>
 
             <article class="popular__card">
-               <img src="assets/img/cookie-ganache.png" alt="Red Velvet Cookie" class="popular__img">
+               <img src="assets/img/cookie-ganache.jpg" alt="Red Velvet Cookie" class="popular__img">
                <button class="info__button">
                   <i class="ri-information-fill"></i>
                </button>
@@ -302,7 +402,7 @@
             </article>
 
             <article class="popular__card">
-               <img src="assets/img/cookie-nutella.png" alt="Nutella Cookie" class="popular__img">
+               <img src="assets/img/cookie-nutella.jpg" alt="Nutella Cookie" class="popular__img">
                <button class="info__button">
                   <i class="ri-information-fill"></i>
                </button>
@@ -315,7 +415,7 @@
             </article>
 
             <article class="popular__card">
-               <img src="assets/img/cookie-pistache.png" alt="Dubai Cookie" class="popular__img">
+               <img src="assets/img/cookie-pistache.jpg" alt="Dubai Cookie" class="popular__img">
                <button class="info__button">
                   <i class="ri-information-fill"></i>
                </button>
@@ -326,6 +426,7 @@
                   <i class="ri-shopping-bag-3-fill"></i>
                </button>
             </article>
+
 
          </div>
 
@@ -672,6 +773,18 @@
 
       // Verifica o status da loja ao carregar a página
       document.addEventListener("DOMContentLoaded", checkStoreStatus);
+
+      // Toggle das notas de aviso (disclosure)
+      document.querySelectorAll(".note-toggle").forEach((btn) => {
+         btn.addEventListener("click", () => {
+            const panelId = btn.getAttribute("aria-controls");
+            const panel = document.getElementById(panelId);
+            const isOpen = btn.getAttribute("aria-expanded") === "true";
+            btn.setAttribute("aria-expanded", String(!isOpen));
+            if (panel) panel.hidden = isOpen;
+         });
+      });
+
    </script>
 
 </body>
