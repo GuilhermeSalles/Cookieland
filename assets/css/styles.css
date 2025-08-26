@@ -2403,3 +2403,10 @@ label {
 .popular__card {
   position: relative;
 }
+
+.section__notice {
+  font-size: 0.9rem;
+  color: #b94a48; /* vermelho aviso */
+  margin: 0.5rem 0 1rem;
+  text-align: center;
+}
