@@ -614,30 +614,30 @@ const itemInfo = {
     description:
       "A creamy Nutella pot with classic cookie pieces. Perfect as an add-on or a quick treat.",
   },
-  "Ninho & Nutella Sandwich Cookie": {
-    img: "assets/img/sandu-ninho.jpg",
-    description:
-      "Soft cookie sandwich with Nutella filling. You may ask for an outer coating of milk powder (Ninho) or leave it plain.",
-  },
-  "Chocolate Sandwich Cookie": {
-    img: "assets/img/sandu-choco.jpg",
-    description:
-      "A rich, chocolate-filled cookie sandwich — smooth, indulgent and perfect with a coffee.",
-  },
-  "Duo Sandwich Cookie": {
-    img: "assets/img/sandu-duo.jpg",
-    description:
-      "Two complementary flavours in one sandwich cookie for a balanced bite.",
-  },
-  "Love Sandwich Cookie": {
+  "Love Sandwich": {
     img: "assets/img/sandu-love.jpg",
     description:
-      "Heart-shaped cookie sandwich with a creamy filling — made to share (or not!).",
+      "Red Velvet cookie sandwich with vanilla and strawberry brigadeiro in the middle.",
   },
-  "Pistachio Sandwich Cookie": {
+  "Ninho Sandwich": {
+    img: "assets/img/sandu-ninho.jpg",
+    description:
+      "Milk powder brigadeiro with Nutella in the middle. Optionally topped with milk powder outside.",
+  },
+  "Chocolate Sandwich": {
+    img: "assets/img/sandu-choco.jpg",
+    description:
+      "Chocolate brigadeiro sandwich filled with chocolate chips on the outside.",
+  },
+  "Duo Sandwich": {
+    img: "assets/img/sandu-duo.jpg",
+    description:
+      "Half chocolate brigadeiro and half Ninho brigadeiro for a perfect duo.",
+  },
+  "Pistachio Sandwich": {
     img: "assets/img/sandu-pista.jpg",
     description:
-      "Pistachio cream filling with a delicate nutty finish inside our soft cookie sandwich.",
+      "Pistachio cookie sandwich filled with creamy pistachio brigadeiro.",
   },
 };
 

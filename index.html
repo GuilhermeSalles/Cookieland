@@ -37,7 +37,7 @@
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.min.css">
 
    <!--=============== CSS ===============-->
-   <link rel="stylesheet" href="assets/css/styles.css">
+   <link rel="stylesheet" href="assets/css/styles.css?v=2.0.7">
 
 </head>
 
@@ -54,7 +54,7 @@
             <ul class="nav__list">
                <li><a href="#home" class="nav__link active-link">Home</a></li>
                <!-- <li><a href="#recipe" class="nav__link">Recipe</a></li> -->
-               <li><a href="#sandwiches" class="nav__link">Cookie Sandwiches</a></li>
+               <li><a href="#sandwich" class="nav__link">Cookie Sandwiches</a></li>
                <li><a href="#popular" class="nav__link">Cookies</a></li>
                <li><a href="#delivery" class="nav__link">Delivery</a></li>
                <li><a href="#contact" class="nav__link">Contact</a></li>
@@ -131,109 +131,62 @@
       </section>
 
 
-      <!--==================== COOKIE SANDWICHES ====================-->
-      <section class="popular section" id="cookie-sandwiches">
-         <h2 class="section__title">Cookie <br> Sandwiches</h2>
+      <!--==================== SANDWICH COOKIES ====================-->
+      <section class="popular section" id="sandwich">
+         <h2 class="section__title">Sandwich <br> Cookies</h2>
 
          <div class="popular__container container grid">
-            <!-- Ninho + Nutella -->
-            <article class="popular__card" data-sku="sandwich-ninho-nutella">
+
+            <article class="popular__card" data-sku="love-sandwich">
                <span class="badge badge--new">NEW</span>
-
-               <img src="assets/img/sandu-ninho.jpg"
-                  alt="Ninho & Nutella Sandwich Cookie — soft cookie filled with Nutella, optionally coated in milk powder"
-                  class="popular__img">
-
-               <button class="info__button"><i class="ri-information-fill"></i></button>
-
-               <h2 class="popular__title">Ninho & Nutella Sandwich Cookie</h2>
-               <span class="popular__price">£3.50</span>
-
-               <!-- UX note as a toggle button -->
-               <button class="note-toggle" aria-expanded="false" aria-controls="note-sandwich-ninho">
-                  <i class="ri-alert-line" aria-hidden="true"></i>
-                  Important: coating preference
-                  <i class="ri-arrow-down-s-line chevron" aria-hidden="true"></i>
-               </button>
-
-               <div class="note-panel" id="note-sandwich-ninho" hidden>
-                  You can ask to have the sandwich cookie <em>coated in milk powder (Ninho)</em> or <em>plain</em>.
-                  Add your preference in <strong>Observations</strong>.
-               </div>
-
-               <button class="popular__button">
-                  <i class="ri-shopping-bag-3-fill"></i>
-               </button>
-            </article>
-
-            <!-- Chocolate -->
-            <article class="popular__card" data-sku="sandwich-chocolate">
-               <span class="badge badge--new">NEW</span>
-
-               <img src="assets/img/sandu-choco.jpg"
-                  alt="Chocolate Sandwich Cookie — rich chocolate filling between two soft cookies"
-                  class="popular__img">
-
-               <button class="info__button"><i class="ri-information-fill"></i></button>
-
-               <h2 class="popular__title">Chocolate Sandwich Cookie</h2>
-               <span class="popular__price">£3.50</span>
-
-               <button class="popular__button">
-                  <i class="ri-shopping-bag-3-fill"></i>
-               </button>
-            </article>
-
-            <!-- Duo (two flavours) -->
-            <article class="popular__card" data-sku="sandwich-duo">
-               <span class="badge badge--new">NEW</span>
-
-               <img src="assets/img/sandu-duo.jpg"
-                  alt="Duo Sandwich Cookie — two complementary flavours in one cookie sandwich" class="popular__img">
-
-               <button class="info__button"><i class="ri-information-fill"></i></button>
-
-               <h2 class="popular__title">Duo Sandwich Cookie</h2>
-               <span class="popular__price">£3.50</span>
-
-               <button class="popular__button">
-                  <i class="ri-shopping-bag-3-fill"></i>
-               </button>
-            </article>
-
-            <!-- Love (heart-shaped) -->
-            <article class="popular__card" data-sku="sandwich-love">
-               <span class="badge badge--new">NEW</span>
-
                <img src="assets/img/sandu-love.jpg"
-                  alt="Love Sandwich Cookie — heart-shaped cookie sandwich with a creamy filling" class="popular__img">
-
+                  alt="Love Sandwich - Red Velvet with Vanilla & Strawberry Brigadeiro" class="popular__img">
                <button class="info__button"><i class="ri-information-fill"></i></button>
-
-               <h2 class="popular__title">Love Sandwich Cookie</h2>
+               <h2 class="popular__title">Love Sandwich</h2>
                <span class="popular__price">£3.50</span>
-
-               <button class="popular__button">
-                  <i class="ri-shopping-bag-3-fill"></i>
-               </button>
+               <button class="popular__button"><i class="ri-shopping-bag-3-fill"></i></button>
             </article>
 
-            <!-- Pistachio -->
-            <article class="popular__card" data-sku="sandwich-pistachio">
+            <article class="popular__card" data-sku="ninho-sandwich">
                <span class="badge badge--new">NEW</span>
-
-               <img src="assets/img/sandu-pista.jpg"
-                  alt="Pistachio Sandwich Cookie — pistachio cream filling with a nutty finish" class="popular__img">
-
+               <img src="assets/img/sandu-ninho.jpg" alt="Ninho Sandwich - Milk Powder Brigadeiro with Nutella"
+                  class="popular__img">
                <button class="info__button"><i class="ri-information-fill"></i></button>
-
-               <h2 class="popular__title">Pistachio Sandwich Cookie</h2>
+               <h2 class="popular__title">Ninho Sandwich</h2>
                <span class="popular__price">£3.50</span>
-
-               <button class="popular__button">
-                  <i class="ri-shopping-bag-3-fill"></i>
-               </button>
+               <button class="popular__button"><i class="ri-shopping-bag-3-fill"></i></button>
             </article>
+
+            <article class="popular__card" data-sku="chocolate-sandwich">
+               <span class="badge badge--new">NEW</span>
+               <img src="assets/img/sandu-choco.jpg" alt="Chocolate Sandwich - Chocolate Brigadeiro with Chips"
+                  class="popular__img">
+               <button class="info__button"><i class="ri-information-fill"></i></button>
+               <h2 class="popular__title">Chocolate Sandwich</h2>
+               <span class="popular__price">£3.50</span>
+               <button class="popular__button"><i class="ri-shopping-bag-3-fill"></i></button>
+            </article>
+
+            <article class="popular__card" data-sku="duo-sandwich">
+               <span class="badge badge--new">NEW</span>
+               <img src="assets/img/sandu-duo.jpg" alt="Duo Sandwich - Half Chocolate Brigadeiro, Half Ninho Brigadeiro"
+                  class="popular__img">
+               <button class="info__button"><i class="ri-information-fill"></i></button>
+               <h2 class="popular__title">Duo Sandwich</h2>
+               <span class="popular__price">£3.50</span>
+               <button class="popular__button"><i class="ri-shopping-bag-3-fill"></i></button>
+            </article>
+
+            <article class="popular__card" data-sku="pistachio-sandwich">
+               <span class="badge badge--new">NEW</span>
+               <img src="assets/img/sandu-pista.jpg"
+                  alt="Pistachio Sandwich - Pistachio Cookie with Pistachio Brigadeiro" class="popular__img">
+               <button class="info__button"><i class="ri-information-fill"></i></button>
+               <h2 class="popular__title">Pistachio Sandwich</h2>
+               <span class="popular__price">£3.50</span>
+               <button class="popular__button"><i class="ri-shopping-bag-3-fill"></i></button>
+            </article>
+
          </div>
       </section>
 
@@ -278,7 +231,7 @@
                <img src="assets/img/new-product-1.jpg" alt="Pot Classic Cookies with Nutella" class="popular__img">
                <button class="info__button"><i class="ri-information-fill"></i></button>
                <h2 class="popular__title">Pot Classic Cookies with Nutella</h2>
-               <span class="popular__price">£3.00</span>
+               <span class="popular__price">£4.00</span>
                <button class="popular__button">
                   <i class="ri-shopping-bag-3-fill"></i>
                </button>
@@ -743,7 +696,7 @@
 
 
    <!--=============== SCROLLREVEAL ===============-->
-   <script src="assets/js/scrollreveal.min.js"></script>
+   <script src="assets/js/scrollreveal.min.js?v=2.0.7"></script>
 
    <!--=============== MAIN JS ===============-->
    <script src="assets/js/main.js?v=2.0.7"></script>
