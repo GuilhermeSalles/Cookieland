@@ -37,7 +37,7 @@
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.min.css">
 
    <!--=============== CSS ===============-->
-   <link rel="stylesheet" href="assets/css/styles.css">
+   <link rel="stylesheet" href="assets/css/styles.css?v=1.0">
 
 </head>
 
@@ -111,7 +111,7 @@
 
 
             <div class="home__images">
-               <img src="assets/img/home-cookie.png" alt="image" class="home__burger">
+               <img src="assets/img/home-removebg-preview.png" alt="image" class="home__burger">
 
                <img src="assets/img/avela.png" style="display: none;" alt="image"
                   class="home__ingredient home__potato-1">
@@ -147,7 +147,22 @@
                <button class="info__button"><i class="ri-information-fill"></i></button>
                <h2 class="popular__title">Love Sandwich</h2>
                <span class="popular__price">£3.50</span>
-               <button class="popular__button"><i class="ri-shopping-bag-3-fill"></i></button>
+
+               <!-- UX note as a toggle button -->
+               <button class="note-toggle" aria-expanded="false" aria-controls="note-sandwich-ninho">
+                  <i class="ri-alert-line" aria-hidden="true"></i>
+                  Important: coating preference
+                  <i class="ri-arrow-down-s-line chevron" aria-hidden="true"></i>
+               </button>
+
+               <div class="note-panel" id="note-sandwich-ninho" hidden>
+                  You can ask to have the sandwich cookie <em>coated in milk powder (Ninho)</em> or <em>plain</em>.
+                  Add your preference in <strong>Observations</strong>.
+               </div>
+
+               <button class="popular__button">
+                  <i class="ri-shopping-bag-3-fill"></i>
+               </button>
             </article>
 
             <article class="popular__card" data-sku="ninho-sandwich">
@@ -218,7 +233,7 @@
                </button>
 
                <div class="note-panel" id="note-golden-bites" hidden>
-                  If you’d like all 3 cookies in the same flavour, add it in <em>Observations</em>.
+                  If you’d like all 3 cookies in the same flavour, add it in <strong>Observations</strong>.
                   e.g. “Box Special: only Nutella”.
                </div>
 
@@ -702,7 +717,7 @@
    <script src="assets/js/scrollreveal.min.js"></script>
 
    <!--=============== MAIN JS ===============-->
-   <script src="assets/js/main.js"></script>
+   <script src="assets/js/main.js?v=1.0"></script>
 
    <script>
       // Função para verificar o status da loja e atualizar a página
