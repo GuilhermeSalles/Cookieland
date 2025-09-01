@@ -639,6 +639,11 @@ const itemInfo = {
     description:
       "Pistachio cookie sandwich filled with creamy pistachio brigadeiro.",
   },
+  "Alpino Black": {
+    img: "assets/img/alpino_black.jpg",
+    description:
+      "Alpino cookie sandwich filled with smooth white chocolate and rich dark chocolate.",
+  },
 };
 
 // Função para abrir o modal com as informações do item
