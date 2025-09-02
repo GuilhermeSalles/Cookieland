@@ -642,7 +642,7 @@ const itemInfo = {
   "Alpino Black": {
     img: "assets/img/alpino_black.jpg",
     description:
-      "Alpino cookie sandwich filled with smooth white chocolate and rich dark chocolate.",
+      "Cookie with chunks of smooth white chocolate and rich semi-sweet chocolate.",
   },
 };
 
