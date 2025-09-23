@@ -37,7 +37,7 @@
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.min.css">
 
    <!--=============== CSS ===============-->
-   <link rel="stylesheet" href="assets/css/styles.css?v=1.0">
+   <link rel="stylesheet" href="assets/css/styles.css?v=2.0">
 
 </head>
 
@@ -84,25 +84,29 @@
                </h1>
                <p class="home__description">
                   Experience pure joy with handmade cookies! <br>
-                  Open every Friday and Saturday from <br>
+                  Pick-ups and deliveries are now available only on <br>
+                  <span style="font-weight: bold;">Fridays</span> from
                   <span style="font-weight: bold;">6:30 PM</span> till
                   <span style="font-weight: bold;">10:00 PM</span>.
 
                   <br><br>
-                  Just drop by or place your order online during these days. <br>
-                  Choose from <span style="font-weight: bold;">11 irresistible flavours</span>, all crafted with <span
-                     style="font-weight: bold;">100% natural ingredients</span> and baked to perfection.
+                  Orders for our <span style="font-weight: bold;">Cookie Sandwiches</span>
+                  must be placed by <span style="font-weight: bold;">Thursday</span>. <br>
+                  Orders placed after Thursday will not be accepted.
+                  <br><br>
+                  Regular cookies can be ordered until <span style="font-weight: bold;">Friday</span>.
+                  <br><br>
+                  Choose from <span style="font-weight: bold;">11 irresistible flavours</span>, all crafted with
+                  <span style="font-weight: bold;">100% natural ingredients</span> and baked to perfection.
                   <br><br>
                   Whether you love classic chocolate chip or crave something unique, we’ve got the perfect cookie for
                   you!
-                  <br><br>
-                  <span style="font-weight: bold;">Planning a party?</span> Let us know at least <span
-                     style="font-weight: bold;">5 days in advance</span> to ensure everything is just right!
                   <br><br>
                   <span style="color: red; font-weight: bold; font-size: 1.1rem;">
                      Allergen Advice: May contain nuts, peanuts, sesame.
                   </span>
                </p>
+
 
                <a href="#popular" class="button">Order Now!</a>
 
@@ -181,9 +185,9 @@
             <article class="popular__card" data-sku="pot-classic-nutella">
                <span class="badge badge--new">NEW</span>
 
-               <img src="assets/img/alpino_black.jpg" alt="Alpino Black" class="popular__img">
+               <img src="assets/img/alpino_black.jpg" alt="Alpine Black" class="popular__img">
                <button class="info__button"><i class="ri-information-fill"></i></button>
-               <h2 class="popular__title">Alpino Black</h2>
+               <h2 class="popular__title">Alpine Black</h2>
                <span class="popular__price">£2.70</span>
                <button class="popular__button">
                   <i class="ri-shopping-bag-3-fill"></i>
@@ -357,18 +361,6 @@
                <h2 class="popular__title">Love Sandwich</h2>
                <span class="popular__price">£3.50</span>
 
-               <!-- UX note as a toggle button -->
-               <button class="note-toggle" aria-expanded="false" aria-controls="note-sandwich-ninho">
-                  <i class="ri-alert-line" aria-hidden="true"></i>
-                  Important: coating preference
-                  <i class="ri-arrow-down-s-line chevron" aria-hidden="true"></i>
-               </button>
-
-               <div class="note-panel" id="note-sandwich-ninho" hidden>
-                  You can ask to have the sandwich cookie <em>coated in milk powder (Ninho)</em> or <em>plain</em>.
-                  Add your preference in <strong>Observations</strong>.
-               </div>
-
                <button class="popular__button">
                   <i class="ri-shopping-bag-3-fill"></i>
                </button>
@@ -381,6 +373,17 @@
                <button class="info__button"><i class="ri-information-fill"></i></button>
                <h2 class="popular__title">Ninho Sandwich</h2>
                <span class="popular__price">£3.50</span>
+               <!-- UX note as a toggle button -->
+               <button class="note-toggle" aria-expanded="false" aria-controls="note-sandwich-ninho">
+                  <i class="ri-alert-line" aria-hidden="true"></i>
+                  Important: coating preference
+                  <i class="ri-arrow-down-s-line chevron" aria-hidden="true"></i>
+               </button>
+
+               <div class="note-panel" id="note-sandwich-ninho" hidden>
+                  You can ask to have the sandwich cookie <em>coated in milk powder (Ninho)</em> or <em>plain</em>.
+                  Add your preference in <strong>Observations</strong>.
+               </div>
                <button class="popular__button"><i class="ri-shopping-bag-3-fill"></i></button>
             </article>
 
@@ -629,7 +632,6 @@
                <label for="delivery-day-select">Choose a delivery day:</label>
                <select id="delivery-day-select">
                   <option value="Friday">Friday</option>
-                  <option value="Saturday">Saturday</option>
                </select>
             </div>
 
@@ -646,7 +648,6 @@
                <label for="pickup-day-select">Choose a pick-up day:</label>
                <select id="pickup-day-select">
                   <option value="Friday">Friday</option>
-                  <option value="Saturday">Saturday</option>
                </select>
             </div>
 
@@ -732,7 +733,7 @@
    <script src="assets/js/scrollreveal.min.js"></script>
 
    <!--=============== MAIN JS ===============-->
-   <script src="assets/js/main.js?v=1.0"></script>
+   <script src="assets/js/main.js?v=2.0"></script>
 
    <script>
       // Função para verificar o status da loja e atualizar a página

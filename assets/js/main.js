@@ -639,7 +639,7 @@ const itemInfo = {
     description:
       "Pistachio cookie sandwich filled with creamy pistachio brigadeiro.",
   },
-  "Alpino Black": {
+  "Alpine Black": {
     img: "assets/img/alpino_black.jpg",
     description:
       "Cookie with chunks of smooth white chocolate and rich semi-sweet chocolate.",
