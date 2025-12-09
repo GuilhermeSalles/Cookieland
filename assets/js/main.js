@@ -97,6 +97,19 @@ const closeModal = document.getElementById("close-modal");
 const cartItemsContainer = document.getElementById("cart-items");
 const cartTotal = document.getElementById("cart-total");
 
+// Delegação de eventos para os botões + e - dentro do carrinho
+cartItemsContainer.addEventListener("click", (event) => {
+  const btn = event.target.closest(".quantity-btn");
+  if (!btn) return;
+
+  const name = decodeURIComponent(btn.dataset.name || "");
+  const change = parseInt(btn.dataset.change, 10);
+
+  if (!name || isNaN(change)) return;
+
+  updateQuantity(name, change);
+});
+
 // Preços definidos
 const pricing = {
   single: 2.7, // Preço por cookie individual
@@ -104,6 +117,50 @@ const pricing = {
   box6: 15, // Box com 6 cookies
   potCookie: 3.0, // Produtos especiais (não afetados pelo desconto de box)
 };
+
+// Calcula o subtotal dos cookies já com desconto de box (4 ou 6)
+function calculateBoxAdjustedSubtotal() {
+  let cartSubtotal = 0;
+  let cookieCount = 0;
+
+  cart.forEach((item) => {
+    cartSubtotal += item.price * item.quantity;
+    if (item.price === pricing.single) {
+      cookieCount += item.quantity;
+    }
+  });
+
+  let boxApplied = false;
+  let boxPrice = 0;
+  let savings = 0;
+
+  if (cookieCount === 4 || cookieCount === 6) {
+    boxPrice = cookieCount === 6 ? pricing.box6 : pricing.box4;
+    const normalPrice = cookieCount * pricing.single;
+    savings = normalPrice - boxPrice;
+
+    // Ajusta subtotal para considerar o valor do pack
+    cartSubtotal = cartSubtotal - normalPrice + boxPrice;
+    boxApplied = true;
+  }
+
+  return { cartSubtotal, cookieCount, boxApplied, boxPrice, savings };
+}
+
+// Calcula o total dos add-ons (bebidas, extras, etc.)
+function calculateAddOnsTotal() {
+  let addOnsTotal = 0;
+
+  for (const drink in addOns.drinks) {
+    addOnsTotal += addOns.drinks[drink] * itemPrices[drink];
+  }
+  for (const extra in addOns.extras) {
+    addOnsTotal += addOns.extras[extra] * itemPrices[extra];
+  }
+
+  return addOnsTotal;
+}
+
 // Função para adicionar item ao carrinho
 function addToCart(item) {
   const name = item.name;
@@ -132,6 +189,7 @@ function addToCart(item) {
 
   updateCartCount();
   updateCartModal();
+  updateCartTotal(); // <<< garante total certo com box + addons
   showAddToCartFeedback(item.card);
 }
 
@@ -161,17 +219,10 @@ function updateCartCount() {
 // Atualizar o conteúdo do modal
 function updateCartModal() {
   cartItemsContainer.innerHTML = "";
-  let total = 0;
-  let cookieCount = 0; // Contador apenas para cookies individuais (não produtos especiais)
 
-  // Mostrar itens no carrinho e calcular total
+  // Renderiza os itens do carrinho
   cart.forEach((item) => {
-    // Verifica se é um cookie individual (preço igual a pricing.single)
-    if (item.price === pricing.single) {
-      cookieCount += item.quantity;
-    }
-
-    total += item.price * item.quantity;
+    const encodedName = encodeURIComponent(item.name);
 
     cartItemsContainer.innerHTML += `
       <div class="cart-item">
@@ -183,15 +234,15 @@ function updateCartModal() {
           <p>£${item.price.toFixed(2)} each × ${item.quantity}</p>
         </div>
         <div class="cart-item-controls">
-          <button class="quantity-btn" onclick="updateQuantity('${
-            item.name
-          }', -1)">
+          <button class="quantity-btn"
+                  data-name="${encodedName}"
+                  data-change="-1">
             <i class="ri-subtract-line"></i>
           </button>
           <span class="quantity">${item.quantity}</span>
-          <button class="quantity-btn" onclick="updateQuantity('${
-            item.name
-          }', 1)">
+          <button class="quantity-btn"
+                  data-name="${encodedName}"
+                  data-change="1">
             <i class="ri-add-line"></i>
           </button>
         </div>
@@ -199,25 +250,23 @@ function updateCartModal() {
     `;
   });
 
-  // Mostrar economia apenas para boxes de cookies individuais
-  if (cookieCount === 4 || cookieCount === 6) {
-    const boxPrice = cookieCount === 6 ? pricing.box6 : pricing.box4;
-    const normalPrice = cookieCount * pricing.single;
-    const savings = (normalPrice - boxPrice).toFixed(2);
-    const boxType = cookieCount === 6 ? "6-pack" : "4-pack";
+  // Mostra economia do box (4 ou 6) usando o helper
+  const { cookieCount, boxApplied, savings } = calculateBoxAdjustedSubtotal();
 
-    // Ajusta o total para considerar a box
-    total = total - cookieCount * pricing.single + boxPrice;
+  if (boxApplied) {
+    const boxType = cookieCount === 6 ? "6-pack" : "4-pack";
 
     cartItemsContainer.innerHTML += `
       <div class="savings-summary">
         <i class="ri-coins-line"></i>
-        <span>Applied ${boxType} box discount (saving £${savings})</span>
+        <span>Applied ${boxType} box discount (saving £${savings.toFixed(
+      2
+    )})</span>
       </div>
     `;
   }
 
-  cartTotal.textContent = total.toFixed(2);
+  // Valor final continua sendo calculado em updateCartTotal()
 }
 
 // Atualizar quantidade de itens no carrinho
@@ -236,6 +285,7 @@ function updateQuantity(name, change) {
 
     updateCartCount();
     updateCartModal();
+    updateCartTotal(); // <<< recalcula total sempre
   }
 }
 
@@ -244,6 +294,7 @@ function removeItem(name) {
   cart = cart.filter((item) => item.name !== name);
   updateCartCount();
   updateCartModal();
+  updateCartTotal(); // <<< garante consistência
 }
 
 // Exibir modal do carrinho
@@ -311,24 +362,15 @@ const itemPrices = {
 
 // =================== FUNÇÕES ===================
 
-// Atualizar o valor total do carrinho
+// Atualizar o valor total do carrinho (pack + add-ons)
 function updateCartTotal() {
-  let cartSubtotal = cart.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0
-  );
+  const { cartSubtotal } = calculateBoxAdjustedSubtotal();
+  const addOnsTotal = calculateAddOnsTotal();
 
-  let addOnsTotal = 0;
-  for (const drink in addOns.drinks) {
-    addOnsTotal += addOns.drinks[drink] * itemPrices[drink];
-  }
-  for (const extra in addOns.extras) {
-    addOnsTotal += addOns.extras[extra] * itemPrices[extra];
-  }
+  const total = cartSubtotal + addOnsTotal;
 
-  const total = (cartSubtotal + addOnsTotal).toFixed(2);
-  document.getElementById("cart-total").textContent = `${total}`;
-  return { cartSubtotal, addOnsTotal, total }; // Retorna valores para uso posterior
+  document.getElementById("cart-total").textContent = total.toFixed(2);
+  return { cartSubtotal, addOnsTotal, total };
 }
 
 // Alternar entre os passos do formulário
@@ -381,6 +423,7 @@ document
     });
   });
 // =================== ENVIAR PEDIDO ===================
+// =================== ENVIAR PEDIDO ===================
 document.getElementById("submit-order").addEventListener("click", function () {
   const name = document.getElementById("customer-name").value;
   const address = document.getElementById("customer-address").value;
@@ -419,35 +462,18 @@ document.getElementById("submit-order").addEventListener("click", function () {
     .format(now)
     .replace(",", " -");
 
-  // Calcular totais
-  let cookieCount = 0; // Apenas cookies individuais
-  let cartSubtotal = 0;
+  // Usa o helper do pack
+  const { cartSubtotal, cookieCount, boxApplied, boxPrice, savings } =
+    calculateBoxAdjustedSubtotal();
+  const addOnsTotal = calculateAddOnsTotal();
+  let deliveryFee = 0;
+
   let boxMessage = "";
-  let hasBox = false;
+  let hasBox = boxApplied;
 
-  // Primeiro calculamos o subtotal normal
-  cart.forEach((item) => {
-    cartSubtotal += item.price * item.quantity;
-    // Contamos apenas cookies individuais (preço igual a pricing.single)
-    if (item.price === pricing.single) {
-      cookieCount += item.quantity;
-    }
-  });
-
-  // Verificamos se podemos aplicar desconto de box
-  if (cookieCount === 4 || cookieCount === 6) {
-    const boxPrice = cookieCount === 6 ? pricing.box6 : pricing.box4;
-    const normalPrice = cookieCount * pricing.single;
-    const savings = (normalPrice - boxPrice).toFixed(2);
-
-    // Ajustamos o subtotal para refletir o desconto da box
-    cartSubtotal = cartSubtotal - normalPrice + boxPrice;
-    hasBox = true;
+  if (boxApplied) {
     boxMessage = `Box of ${cookieCount} cookies: £${boxPrice.toFixed(2)}\n`;
   }
-
-  const { addOnsTotal } = updateCartTotal();
-  let deliveryFee = 0;
 
   // Construir mensagem do WhatsApp
   let message = `${currentDate}\n\n *Service type:* ${serviceType}\n-------------------------------------------\nHello, my name is ${name}, I'd like to place an order.\n *Address:* ${address}\n\n *Products:*\n`;
@@ -459,7 +485,7 @@ document.getElementById("submit-order").addEventListener("click", function () {
 
   // Adicionar todos os itens ao message
   cart.forEach((item) => {
-    // Se for um cookie individual e tiver box, não listamos individualmente
+    // Se for um cookie individual e tiver box, não listamos individualmente no resumo principal
     if (!(item.price === pricing.single && hasBox)) {
       message += `${item.name}: £${item.price.toFixed(2)} × ${item.quantity}\n`;
     }
@@ -527,11 +553,7 @@ document.getElementById("submit-order").addEventListener("click", function () {
   message += `\n\n *Order Summary:*\n- Products: £${cartSubtotal.toFixed(2)}`;
 
   if (hasBox) {
-    const normalPrice = cookieCount * pricing.single;
-    const savings = (
-      normalPrice - (cookieCount === 6 ? pricing.box6 : pricing.box4)
-    ).toFixed(2);
-    message += ` (Saved £${savings} with box discount)`;
+    message += ` (Saved £${savings.toFixed(2)} with box discount)`;
   }
 
   message += `\n- Add-ons: £${addOnsTotal.toFixed(2)}`;
@@ -549,6 +571,7 @@ document.getElementById("submit-order").addEventListener("click", function () {
   window.open(`https://wa.me/447850988160?text=${whatsappMessage}`, "_blank");
 });
 
+/*=============== MODAL INFORMAÇÕES DOS ITENS ===============*/
 // Item data with descriptions, adjusting image paths
 const itemInfo = {
   "Lotus Cookie": {
@@ -560,16 +583,6 @@ const itemInfo = {
     img: "assets/img/cookie-lindt.jpg",
     description:
       "An irresistible cookie filled with the rich Lindor chocolate by Lindt.",
-  },
-  "Oreo Cookie": {
-    img: "assets/img/cookie-oreo.jpg",
-    description:
-      "A crunchy cookie with an irresistible blend of Oreo biscuit and chocolate.",
-  },
-  "100% Cocoa Cookie": {
-    img: "assets/img/cookie-cacau.jpg",
-    description:
-      "An intensely flavoured cookie with a blend of 100% pure cocoa.",
   },
   "KitKat Cookie": {
     img: "assets/img/cookie-kitkat.jpg",
@@ -604,11 +617,40 @@ const itemInfo = {
     description:
       "A refined cookie filled with pistachio cream, inspired by the exotic flavours of Dubai.",
   },
-  "The golden bites": {
-    img: "assets/img/new-product-2.jpg",
+
+  // NOVOS SABORES
+  "Snickers Cookie": {
+    img: "assets/img/cookie-snickers.jpg",
     description:
-      "Our special trio box with Kinder, Nutella & Lotus. You can ask for all 3 in the same flavour in Observations.",
+      "Soft cookie dough with Snickers chocolate pieces mixed in and a creamy Snickers filling in the centre.",
   },
+  "M&M's Cookie": {
+    img: "assets/img/cookie-mms.jpg",
+    description:
+      "A classic cookie packed with colourful mini M&M's, crispy on the outside and soft in the middle.",
+  },
+  "Galaxy Cookie": {
+    img: "assets/img/cookie-galaxy.jpg",
+    description:
+      "A rich cookie with a smooth Galaxy chocolate filling and Galaxy chunks on top.",
+  },
+  "Cadbury Dairy Milk": {
+    img: "assets/img/cookie-cadbury.jpg",
+    description:
+      "A buttery cookie with creamy Cadbury Dairy Milk chocolate in the centre.",
+  },
+  "Creme Egg Cookie": {
+    img: "assets/img/cookie-creme-egg.jpg",
+    description:
+      "A gooey cookie baked with a whole Creme Egg in the middle for the ultimate Easter-style treat.",
+  },
+  "Maltesers Cookie": {
+    img: "assets/img/cookie-maltesers.jpg",
+    description:
+      "A malty chocolate cookie with Maltesers pieces and a smooth chocolate filling in the centre.",
+  },
+
+  // Produtos especiais e sanduíches (mantidos)
   "Pot Classic Cookies with Nutella": {
     img: "assets/img/new-product-1.jpg",
     description:

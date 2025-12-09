@@ -29,7 +29,6 @@
    <meta name="geo.position" content="54.4339;-6.3846">
    <meta name="ICBM" content="54.4339, -6.3846">
 
-
    <!--=============== FAVICON ===============-->
    <link rel="shortcut icon" href="assets/img/icon.png" type="image/x-icon">
 
@@ -107,12 +106,10 @@
                   </span>
                </p>
 
-
                <a href="#popular" class="button">Order Now!</a>
 
                <img src="assets/img/sticker-pepi.svg" alt="image of a delicious cookie" class="home__sticker">
             </div>
-
 
             <div class="home__images">
                <img src="assets/img/home-removebg-preview.png" alt="image" class="home__burger">
@@ -130,49 +127,84 @@
                <img src="assets/img/chocolate.png" style="display: none;" alt="image"
                   class="home__ingredient home__lettuce-2">
             </div>
-
          </div>
       </section>
-
 
       <!--==================== COOKIES ====================-->
       <section class="popular section" id="popular">
          <h2 class="section__title">Most Loved <br> Cookies</h2>
 
-
          <div class="popular__container container grid">
-            <!-- NEW ITEMS MOVED FROM 'NEW' CAROUSEL -->
-            <article class="popular__card" data-sku="golden-bites">
+
+            <!-- NOVOS SABORES - ficam no início + badge NEW -->
+            <article class="popular__card" data-sku="snickers-cookie">
                <span class="badge badge--new">NEW</span>
-
-               <img src="assets/img/new-product-2.jpg" alt="The golden bites: Box Special with Kinder, Nutella & Lotus"
-                  class="popular__img">
+               <img src="assets/img/cookie-snickers.jpg" alt="Snickers Cookie" class="popular__img">
                <button class="info__button"><i class="ri-information-fill"></i></button>
-               <h2 class="popular__title">The golden bites</h2>
-               <span class="popular__price">£12.50</span>
-
-               <!-- UX note kept visible -->
-               <!-- UX note as a toggle button -->
-               <button class="note-toggle" aria-expanded="false" aria-controls="note-golden-bites">
-                  <i class="ri-alert-line" aria-hidden="true"></i>
-                  Important: flavour selection
-                  <i class="ri-arrow-down-s-line chevron" aria-hidden="true"></i>
-               </button>
-
-               <div class="note-panel" id="note-golden-bites" hidden>
-                  If you’d like all 3 cookies in the same flavour, add it in <strong>Observations</strong>.
-                  e.g. “Box Special: only Nutella”.
-               </div>
-
-
+               <h2 class="popular__title">Snickers Cookie</h2>
+               <span class="popular__price">£2.70</span>
                <button class="popular__button">
                   <i class="ri-shopping-bag-3-fill"></i>
                </button>
             </article>
 
-            <article class="popular__card" data-sku="pot-classic-nutella">
+            <article class="popular__card" data-sku="mms-cookie">
                <span class="badge badge--new">NEW</span>
+               <img src="assets/img/cookie-mms.jpg" alt="M&M's Cookie" class="popular__img">
+               <button class="info__button"><i class="ri-information-fill"></i></button>
+               <h2 class="popular__title">M&amp;M's Cookie</h2>
+               <span class="popular__price">£2.70</span>
+               <button class="popular__button">
+                  <i class="ri-shopping-bag-3-fill"></i>
+               </button>
+            </article>
 
+            <article class="popular__card" data-sku="galaxy-cookie">
+               <span class="badge badge--new">NEW</span>
+               <img src="assets/img/cookie-galaxy.jpg" alt="Galaxy Cookie" class="popular__img">
+               <button class="info__button"><i class="ri-information-fill"></i></button>
+               <h2 class="popular__title">Galaxy Cookie</h2>
+               <span class="popular__price">£2.70</span>
+               <button class="popular__button">
+                  <i class="ri-shopping-bag-3-fill"></i>
+               </button>
+            </article>
+
+            <article class="popular__card" data-sku="cadbury-dairy-milk">
+               <span class="badge badge--new">NEW</span>
+               <img src="assets/img/cookie-cadbury.jpg" alt="Cadbury Dairy Milk" class="popular__img">
+               <button class="info__button"><i class="ri-information-fill"></i></button>
+               <h2 class="popular__title">Cadbury Dairy Milk</h2>
+               <span class="popular__price">£2.70</span>
+               <button class="popular__button">
+                  <i class="ri-shopping-bag-3-fill"></i>
+               </button>
+            </article>
+
+            <article class="popular__card" data-sku="creme-egg-cookie">
+               <span class="badge badge--new">NEW</span>
+               <img src="assets/img/cookie-creme-egg.jpg" alt="Creme Egg Cookie" class="popular__img">
+               <button class="info__button"><i class="ri-information-fill"></i></button>
+               <h2 class="popular__title">Creme Egg Cookie</h2>
+               <span class="popular__price">£2.70</span>
+               <button class="popular__button">
+                  <i class="ri-shopping-bag-3-fill"></i>
+               </button>
+            </article>
+
+            <article class="popular__card" data-sku="maltesers-cookie">
+               <span class="badge badge--new">NEW</span>
+               <img src="assets/img/cookie-maltesers.jpg" alt="Maltesers Cookie" class="popular__img">
+               <button class="info__button"><i class="ri-information-fill"></i></button>
+               <h2 class="popular__title">Maltesers Cookie</h2>
+               <span class="popular__price">£2.70</span>
+               <button class="popular__button">
+                  <i class="ri-shopping-bag-3-fill"></i>
+               </button>
+            </article>
+
+            <!-- Produtos especiais que já existiam (sem badge NEW agora) -->
+            <article class="popular__card" data-sku="pot-classic-nutella">
                <img src="assets/img/new-product-1.jpg" alt="Pot Classic Cookies with Nutella" class="popular__img">
                <button class="info__button"><i class="ri-information-fill"></i></button>
                <h2 class="popular__title">Pot Classic Cookies with Nutella</h2>
@@ -182,9 +214,7 @@
                </button>
             </article>
 
-            <article class="popular__card" data-sku="pot-classic-nutella">
-               <span class="badge badge--new">NEW</span>
-
+            <article class="popular__card" data-sku="alpine-black">
                <img src="assets/img/alpino_black.jpg" alt="Alpine Black" class="popular__img">
                <button class="info__button"><i class="ri-information-fill"></i></button>
                <h2 class="popular__title">Alpine Black</h2>
@@ -194,6 +224,7 @@
                </button>
             </article>
 
+            <!-- Cookies tradicionais que já existiam -->
             <article class="popular__card">
                <img src="assets/img/cookie-lutus.jpg" alt="Lotus Cookie" class="popular__img">
                <button class="info__button">
@@ -201,7 +232,6 @@
                </button>
                <h2 class="popular__title">Lotus Cookie</h2>
                <span class="popular__price">£2.70</span>
-
                <button class="popular__button">
                   <i class="ri-shopping-bag-3-fill"></i>
                </button>
@@ -214,37 +244,14 @@
                </button>
                <h2 class="popular__title">Lindt Cookie</h2>
                <span class="popular__price">£2.70</span>
-
                <button class="popular__button">
                   <i class="ri-shopping-bag-3-fill"></i>
                </button>
             </article>
 
-            <article class="popular__card">
-               <img src="assets/img/cookie-oreo.jpg" alt="Oreo Cookie" class="popular__img">
-               <button class="info__button">
-                  <i class="ri-information-fill"></i>
-               </button>
-               <h2 class="popular__title">Oreo Cookie</h2>
-               <span class="popular__price">£2.70</span>
+            <!-- Oreo REMOVIDO -->
 
-               <button class="popular__button">
-                  <i class="ri-shopping-bag-3-fill"></i>
-               </button>
-            </article>
-
-            <article class="popular__card">
-               <img src="assets/img/cookie-cacau.jpg" alt="100% Cocoa Cookie" class="popular__img">
-               <button class="info__button">
-                  <i class="ri-information-fill"></i>
-               </button>
-               <h2 class="popular__title">100% Cocoa Cookie</h2>
-               <span class="popular__price">£2.70</span>
-
-               <button class="popular__button">
-                  <i class="ri-shopping-bag-3-fill"></i>
-               </button>
-            </article>
+            <!-- 100% Cocoa REMOVIDO -->
 
             <article class="popular__card">
                <img src="assets/img/cookie-kitkat.jpg" alt="KitKat Cookie" class="popular__img">
@@ -253,7 +260,6 @@
                </button>
                <h2 class="popular__title">KitKat Cookie</h2>
                <span class="popular__price">£2.70</span>
-
                <button class="popular__button">
                   <i class="ri-shopping-bag-3-fill"></i>
                </button>
@@ -266,7 +272,6 @@
                </button>
                <h2 class="popular__title">Churro Cookie</h2>
                <span class="popular__price">£2.70</span>
-
                <button class="popular__button">
                   <i class="ri-shopping-bag-3-fill"></i>
                </button>
@@ -279,7 +284,6 @@
                </button>
                <h2 class="popular__title">Traditional Cookie</h2>
                <span class="popular__price">£2.70</span>
-
                <button class="popular__button">
                   <i class="ri-shopping-bag-3-fill"></i>
                </button>
@@ -292,7 +296,6 @@
                </button>
                <h2 class="popular__title">Kinder Bueno Cookie</h2>
                <span class="popular__price">£2.70</span>
-
                <button class="popular__button">
                   <i class="ri-shopping-bag-3-fill"></i>
                </button>
@@ -305,7 +308,6 @@
                </button>
                <h2 class="popular__title">Red Velvet Cookie</h2>
                <span class="popular__price">£2.70</span>
-
                <button class="popular__button">
                   <i class="ri-shopping-bag-3-fill"></i>
                </button>
@@ -318,7 +320,6 @@
                </button>
                <h2 class="popular__title">Nutella Cookie</h2>
                <span class="popular__price">£2.70</span>
-
                <button class="popular__button">
                   <i class="ri-shopping-bag-3-fill"></i>
                </button>
@@ -331,24 +332,19 @@
                </button>
                <h2 class="popular__title">Dubai Cookie</h2>
                <span class="popular__price">£2.70</span>
-
                <button class="popular__button">
                   <i class="ri-shopping-bag-3-fill"></i>
                </button>
             </article>
 
-
          </div>
-
       </section>
-
-
 
       <!--==================== SANDWICH COOKIES ====================-->
       <section class="popular section" id="sandwich">
          <h2 class="section__title">Sandwich <br> Cookies</h2>
          <h4 class="section__notice">
-            ⚠ Sandwich cookies can only be ordered until Thursday each week. Orders after Thursday will not be accepted.
+            ⚠ Sandwich cookies can only be ordered until Thursday each week. Orders after Thursday will not be accepted.
          </h4>
 
          <div class="popular__container container grid">
@@ -420,7 +416,6 @@
          </div>
       </section>
 
-
       <!--========== MODAL DE INFORMAÇÕES ==========-->
       <div id="info-modal" class="cart-modal">
          <div class="cart-modal-content">
@@ -433,7 +428,6 @@
          </div>
       </div>
 
-
       <!--==================== DELIVERY ====================-->
       <section class="delivery section" id="delivery">
          <div class="delivery__container container grid">
@@ -445,14 +439,12 @@
                   time. Make or oder now and satisfy your cravings!
                </p>
 
-
                <a href="#popular" class="button">Order Now</a>
 
                <img src="assets/img/sticker-glass.svg" alt="image glass" class="delivery__sticker">
             </div>
 
             <img src="assets/img/delivery-cookie.png" alt="image burger" class="delivery__img">
-
          </div>
       </section>
 
@@ -485,8 +477,6 @@
                            <i class="ri-facebook-fill" style="color: hsla(220, 37%, 56%, 0.65);"></i>
                         </a>
                      </div>
-
-
                   </div>
 
                   <div>
@@ -505,11 +495,7 @@
                         BT62 4BW <br>
                         Armagh, Northern Ireland
                      </address>
-
-
-
                   </div>
-
                </div>
 
                <div class="contact__image">
@@ -579,7 +565,6 @@
       </div>
    </div>
 
-
    <!--========== MODAL ==========-->
    <div id="cart-modal" class="cart-modal">
       <div class="cart-modal-content">
@@ -595,7 +580,6 @@
 
          <!-- Step 1: Form Fields -->
          <div class="cart-form" id="form-step-1">
-
 
             <label for="customer-name">Name:</label>
             <input type="text" id="customer-name" placeholder="Your Name" required>
@@ -673,7 +657,6 @@
 
          <!-- Step 2: Add-ons -->
          <div class="cart-form" id="form-step-2" style="display: none;">
-            <!-- <h3>Add Drinks and Add-ons</h3> -->
             <p id="status-modal-description" style="padding: 0.3rem;">
                <strong>Drinks</strong>
             </p>
@@ -727,8 +710,6 @@
       </div>
    </div>
 
-
-
    <!--=============== SCROLLREVEAL ===============-->
    <script src="assets/js/scrollreveal.min.js"></script>
 
@@ -771,7 +752,6 @@
             if (panel) panel.hidden = isOpen;
          });
       });
-
    </script>
 
 </body>
