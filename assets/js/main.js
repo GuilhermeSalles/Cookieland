@@ -58,7 +58,7 @@ const scrollActive = () => {
       sectionTop = current.offsetTop - 58,
       sectionId = current.getAttribute("id"),
       sectionsClass = document.querySelector(
-        ".nav__menu a[href*=" + sectionId + "]"
+        ".nav__menu a[href*=" + sectionId + "]",
       );
 
     if (scrollDown > sectionTop && scrollDown <= sectionTop + sectionHeight) {
@@ -170,7 +170,7 @@ function addToCart(item) {
 
   // Verifica se já existe no carrinho
   const existingItemIndex = cart.findIndex(
-    (cartItem) => cartItem.name === name
+    (cartItem) => cartItem.name === name,
   );
 
   if (existingItemIndex !== -1) {
@@ -260,8 +260,8 @@ function updateCartModal() {
       <div class="savings-summary">
         <i class="ri-coins-line"></i>
         <span>Applied ${boxType} box discount (saving £${savings.toFixed(
-      2
-    )})</span>
+          2,
+        )})</span>
       </div>
     `;
   }
@@ -413,7 +413,7 @@ document
       }
 
       document.querySelector(
-        `.addon-quantity[data-item="${item}"]`
+        `.addon-quantity[data-item="${item}"]`,
       ).textContent =
         addOns.drinks[item] !== undefined
           ? addOns.drinks[item]
@@ -431,19 +431,19 @@ document.getElementById("submit-order").addEventListener("click", function () {
   const paymentMethod = document.getElementById("payment-method").value;
   const observation = document.getElementById("customer-observation").value;
   const addonsObservation = document.getElementById(
-    "cream-cheese-observation"
+    "cream-cheese-observation",
   ).value;
   const deliveryDay = document.getElementById("delivery-day-select").value;
   const deliveryTime = document.getElementById("delivery-time-select").value;
   const deliveryLocation = document.getElementById(
-    "delivery-location-select"
+    "delivery-location-select",
   ).value;
   const pickupDay = document.getElementById("pickup-day-select").value;
   const pickupTime = document.getElementById("pickup-time-select").value;
 
   if (!name || !address || cart.length === 0) {
     alert(
-      "Please fill out all required fields and make sure you have items in your cart."
+      "Please fill out all required fields and make sure you have items in your cart.",
     );
     return;
   }
@@ -542,7 +542,7 @@ document.getElementById("submit-order").addEventListener("click", function () {
     else if (deliveryLocation === "Belfast") deliveryFee = 30.0;
 
     message += `\n\n *Delivery Details:*\n- Day: ${deliveryDay}\n- Time: ${deliveryTime}\n- Location: ${deliveryLocation}\n- Fee: £${deliveryFee.toFixed(
-      2
+      2,
     )}`;
   } else if (serviceType === "Pick-up") {
     message += `\n\n *Pick-up Details:*\n- Day: ${pickupDay}\n- Time: ${pickupTime}\n- Address: 107 Baltylum Meadows, BT62 4BW, Craigavon, Northern Ireland`;
@@ -648,6 +648,11 @@ const itemInfo = {
     img: "assets/img/cookie-maltesers.jpg",
     description:
       "A malty chocolate cookie with Maltesers pieces and a smooth chocolate filling in the centre.",
+  },
+  "Cookie of Dates": {
+    img: "assets/img/cookie-dates.jpg",
+    description:
+      "A cookie made with dates and chocolate only — a special flavour for Ramadan.",
   },
 
   // Produtos especiais e sanduíches (mantidos)
