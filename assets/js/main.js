@@ -27,6 +27,31 @@ const linkAction = () => {
 };
 navLink.forEach((n) => n.addEventListener("click", linkAction));
 
+/*=============== TOOLTIPS ===============*/
+// Tooltips nativos (title) + aria-label para acessibilidade
+const tooltipTargets = [
+  ["#nav-toggle", "Open menu"],
+  ["#nav-close", "Close menu"],
+  ["#cart-icon", "View your bag"],
+  [".info__button", "View photos and details"],
+  [".popular__button", "Add to bag"],
+  [".info-modal__add", "Add this item to your bag"],
+  [".close", "Close"],
+  [".scrollup", "Back to top"],
+  [".note-toggle", "Tap to see an important note about this item"],
+  ["a[href*='whatsapp']", "Chat with us on WhatsApp"],
+  ["a[href*='instagram']", "Follow us on Instagram"],
+  ["a[href*='tiktok']", "Follow us on TikTok"],
+  ["a[href*='facebook']", "Find us on Facebook"],
+];
+
+tooltipTargets.forEach(([selector, text]) => {
+  document.querySelectorAll(selector).forEach((el) => {
+    if (!el.title) el.title = text;
+    if (!el.getAttribute("aria-label")) el.setAttribute("aria-label", text);
+  });
+});
+
 /*=============== ADD SHADOW HEADER ===============*/
 const shadowHeader = () => {
   const header = document.getElementById("header");
@@ -61,6 +86,9 @@ const scrollActive = () => {
         ".nav__menu a[href*=" + sectionId + "]",
       );
 
+    // Seções sem link no menu (delivery, gallery, contact) são ignoradas
+    if (!sectionsClass) return;
+
     if (scrollDown > sectionTop && scrollDown <= sectionTop + sectionHeight) {
       sectionsClass.classList.add("active-link");
     } else {
@@ -80,13 +108,25 @@ const sr = ScrollReveal({
 
 sr.reveal(".home__data, .footer, .popular__subtitle, .section__title");
 sr.reveal(".home__dish", { delay: 500, distance: "100px", origin: "bottom" });
-sr.reveal(".home__burger", { delay: 1200, distance: "100px", duration: 1500 });
-sr.reveal(".home__ingredient", { delay: 1600, interval: 100 });
+sr.reveal(".home__mosaic-item", {
+  delay: 600,
+  interval: 150,
+  distance: "60px",
+  origin: "bottom",
+  duration: 1500,
+});
+sr.reveal(".home__badge", { delay: 1300, origin: "bottom", distance: "20px" });
 sr.reveal(".recipe__img,.delivery__img, .contact__image", { origin: "left" });
 sr.reveal(".recipe__data, .delivery__data, .contact__data", {
   origin: "right",
 });
 sr.reveal(".popular__card", { interval: 100 });
+sr.reveal(".gallery__item", {
+  interval: 80,
+  origin: "bottom",
+  distance: "40px",
+  duration: 1500,
+});
 
 /*=============== CARRINHO DE COMPRAS ===============*/
 let cart = [];
@@ -195,7 +235,8 @@ function addToCart(item) {
 
 // Mostrar feedback visual ao adicionar ao carrinho
 function showAddToCartFeedback(card) {
-  const button = card.querySelector(".popular__button");
+  const button = card?.querySelector(".popular__button");
+  if (!button) return;
   button.innerHTML = '<i class="ri-check-line"></i>';
   button.style.backgroundColor = "hsl(130, 60%, 50%)";
 
@@ -220,6 +261,17 @@ function updateCartCount() {
 function updateCartModal() {
   cartItemsContainer.innerHTML = "";
 
+  // Sacola vazia: estado amigável
+  if (cart.length === 0) {
+    cartItemsContainer.innerHTML = `
+      <div class="cart-empty">
+        <i class="ri-shopping-bag-3-line"></i>
+        <p>Your bag is empty.<br>Add some cookies to make it happy!</p>
+      </div>
+    `;
+    return;
+  }
+
   // Renderiza os itens do carrinho
   cart.forEach((item) => {
     const encodedName = encodeURIComponent(item.name);
@@ -236,13 +288,17 @@ function updateCartModal() {
         <div class="cart-item-controls">
           <button class="quantity-btn"
                   data-name="${encodedName}"
-                  data-change="-1">
+                  data-change="-1"
+                  title="Remove one"
+                  aria-label="Remove one">
             <i class="ri-subtract-line"></i>
           </button>
           <span class="quantity">${item.quantity}</span>
           <button class="quantity-btn"
                   data-name="${encodedName}"
-                  data-change="1">
+                  data-change="1"
+                  title="Add one"
+                  aria-label="Add one">
             <i class="ri-add-line"></i>
           </button>
         </div>
@@ -262,6 +318,24 @@ function updateCartModal() {
         <span>Applied ${boxType} box discount (saving £${savings.toFixed(
           2,
         )})</span>
+      </div>
+    `;
+  } else if (cookieCount > 0 && cookieCount < 4) {
+    // Incentivo: mostra quanto falta para o desconto do box de 4
+    const missing = 4 - cookieCount;
+    cartItemsContainer.innerHTML += `
+      <div class="cart-hint">
+        <i class="ri-coins-line"></i>
+        <span>Add ${missing} more cookie${
+          missing > 1 ? "s" : ""
+        } to unlock the <strong>4-pack box for £10</strong>!</span>
+      </div>
+    `;
+  } else if (cookieCount === 5) {
+    cartItemsContainer.innerHTML += `
+      <div class="cart-hint">
+        <i class="ri-coins-line"></i>
+        <span>Add 1 more cookie to unlock the <strong>6-pack box for £15</strong>!</span>
       </div>
     `;
   }
@@ -386,6 +460,11 @@ function goToStep(step) {
 // Navegar para o próximo passo
 document.getElementById("next-step").addEventListener("click", function () {
   goToStep(2);
+});
+
+// Voltar para o passo anterior
+document.getElementById("back-step").addEventListener("click", function () {
+  goToStep(1);
 });
 
 // Incrementar ou decrementar itens adicionais (drinks e cream cheese)
@@ -572,169 +651,281 @@ document.getElementById("submit-order").addEventListener("click", function () {
 });
 
 /*=============== MODAL INFORMAÇÕES DOS ITENS ===============*/
-// Item data with descriptions, adjusting image paths
+// Catálogo dos itens. Cada item pode ter VÁRIAS fotos em "images"
+// (a primeira é a principal). Basta colocar as fotos novas na pasta
+// do sabor em assets/img/cookies|sandwiches|pots|donuts e listar aqui.
 const itemInfo = {
-  "Lotus Cookie": {
-    img: "assets/img/cookie-lutus.jpg",
-    description:
-      "A delightful cookie filled with Lotus cream, perfect for fans of unique flavours.",
-  },
-  "Lindt Cookie": {
-    img: "assets/img/cookie-lindt.jpg",
-    description:
-      "An irresistible cookie filled with the rich Lindor chocolate by Lindt.",
-  },
-  "KitKat Cookie": {
-    img: "assets/img/cookie-kitkat.jpg",
-    description:
-      "A crunchy cookie filled with the unmistakable crunch of KitKat.",
-  },
-  "Churro Cookie": {
-    img: "assets/img/cookie-churro.jpg",
-    description: "A perfect combination of churro biscuit and dulce de leche.",
-  },
-  "Traditional Cookie": {
-    img: "assets/img/cookie-tradicional.jpg",
-    description: "The classic cookie with a timeless taste.",
-  },
-  "Kinder Bueno Cookie": {
-    img: "assets/img/cookie-avela.jpg",
-    description:
-      "A cookie filled with hazelnut cream inspired by the famous Kinder Bueno.",
-  },
-  "Red Velvet Cookie": {
-    img: "assets/img/cookie-ganache.jpg",
-    description:
-      "An elegant Red Velvet cookie with a rich chocolate ganache filling.",
-  },
+  /* ---------- CLASSIC COOKIES ---------- */
   "Nutella Cookie": {
-    img: "assets/img/cookie-nutella.jpg",
+    img: "assets/img/cookies/nutella/cookie-nutella.jpg",
+    images: ["assets/img/cookies/nutella/cookie-nutella.jpg"],
     description:
       "A cookie filled with the classic Nutella hazelnut cream for an unmistakable treat.",
   },
-  "Dubai Cookie": {
-    img: "assets/img/cookie-pistache.jpg",
-    description:
-      "A refined cookie filled with pistachio cream, inspired by the exotic flavours of Dubai.",
+  "Traditional Cookie": {
+    img: "assets/img/cookies/traditional/cookie-tradicional.jpg",
+    images: [
+      "assets/img/cookies/traditional/cookie-tradicional.jpg",
+      "assets/img/galery/cookie-stack-twine.jpeg",
+      "assets/img/galery/cookies-cooling-rack.jpeg",
+    ],
+    description: "The classic cookie with a timeless taste.",
   },
-
-  // NOVOS SABORES
-  "Snickers Cookie": {
-    img: "assets/img/cookie-snickers.jpg",
+  "Kinder Bueno Cookie": {
+    img: "assets/img/cookies/kinder-bueno/cookie-avela.jpg",
+    images: [
+      "assets/img/cookies/kinder-bueno/cookie-avela.jpg",
+      "assets/img/galery/cookies-wooden-board.jpeg",
+    ],
     description:
-      "Soft cookie dough with Snickers chocolate pieces mixed in and a creamy Snickers filling in the centre.",
+      "A cookie filled with hazelnut cream inspired by the famous Kinder Bueno.",
+  },
+  "KitKat Cookie": {
+    img: "assets/img/cookies/kitkat/cookie-kitkat.jpg",
+    images: ["assets/img/cookies/kitkat/cookie-kitkat.jpg"],
+    description:
+      "A crunchy cookie filled with the unmistakable crunch of KitKat.",
   },
   "M&M's Cookie": {
-    img: "assets/img/cookie-mms.jpg",
+    img: "assets/img/cookies/mms/cookie-mms.jpg",
+    images: ["assets/img/cookies/mms/cookie-mms.jpg"],
     description:
       "A classic cookie packed with colourful mini M&M's, crispy on the outside and soft in the middle.",
   },
+  "Snickers Cookie": {
+    img: "assets/img/cookies/snickers/cookie-snickers.jpg",
+    images: [
+      "assets/img/cookies/snickers/cookie-snickers.jpg",
+      "assets/img/galery/cookies-and-milk.jpeg",
+    ],
+    description:
+      "Soft cookie dough with Snickers chocolate pieces mixed in and a creamy Snickers filling in the centre.",
+  },
   "Galaxy Cookie": {
-    img: "assets/img/cookie-galaxy.jpg",
+    img: "assets/img/cookies/galaxy/cookie-galaxy.jpg",
+    images: ["assets/img/cookies/galaxy/cookie-galaxy.jpg"],
     description:
       "A rich cookie with a smooth Galaxy chocolate filling and Galaxy chunks on top.",
   },
-  "Cadbury Dairy Milk": {
-    img: "assets/img/cookie-cadbury.jpg",
+  "Funfetti Cookie": {
+    img: "assets/img/icon.png",
+    images: ["assets/img/icon.png"],
     description:
-      "A buttery cookie with creamy Cadbury Dairy Milk chocolate in the centre.",
+      "A colourful birthday-style cookie loaded with rainbow sprinkles. Photo coming soon!",
   },
-  "Creme Egg Cookie": {
-    img: "assets/img/cookie-creme-egg.jpg",
+  "Red Velvet Cookie": {
+    img: "assets/img/cookies/red-velvet/cookie-ganache.jpg",
+    images: ["assets/img/cookies/red-velvet/cookie-ganache.jpg"],
     description:
-      "A gooey cookie baked with a whole Creme Egg in the middle for the ultimate Easter-style treat.",
+      "An elegant Red Velvet cookie with a rich chocolate ganache filling.",
   },
-  "Maltesers Cookie": {
-    img: "assets/img/cookie-maltesers.jpg",
+  "Alpino Cookie": {
+    img: "assets/img/cookies/alpino/alpino_black.jpg",
+    images: ["assets/img/cookies/alpino/alpino_black.jpg"],
     description:
-      "A malty chocolate cookie with Maltesers pieces and a smooth chocolate filling in the centre.",
+      "Cookie with chunks of smooth white chocolate and rich semi-sweet chocolate.",
   },
-  "Cookie of Dates": {
-    img: "assets/img/cookie-dates.jpg",
+  "Lindt Cookie": {
+    img: "assets/img/cookies/lindt/cookie-lindt.jpg",
+    images: ["assets/img/cookies/lindt/cookie-lindt.jpg"],
     description:
-      "A cookie made with dates and chocolate only — a special flavour for Ramadan.",
+      "An irresistible cookie filled with the rich Lindor chocolate by Lindt.",
+  },
+  "Dubai Cookie": {
+    img: "assets/img/cookies/dubai/cookie-pistache.jpg",
+    images: ["assets/img/cookies/dubai/cookie-pistache.jpg"],
+    description:
+      "A refined cookie filled with pistachio cream, inspired by the exotic flavours of Dubai.",
+  },
+  "Lotus Biscoff Cookie": {
+    img: "assets/img/cookies/lotus-biscoff/cookie-lutus.jpg",
+    images: ["assets/img/cookies/lotus-biscoff/cookie-lutus.jpg"],
+    description:
+      "A delightful cookie filled with Lotus Biscoff cream, perfect for fans of unique flavours.",
   },
 
-  // Produtos especiais e sanduíches (mantidos)
-  "Pot Classic Cookies with Nutella": {
-    img: "assets/img/new-product-1.jpg",
-    description:
-      "A creamy Nutella pot with classic cookie pieces. Perfect as an add-on or a quick treat.",
-  },
+  /* ---------- COOKIE SANDWICHES ---------- */
   "Love Sandwich": {
-    img: "assets/img/sandu-love.jpg",
+    img: "assets/img/sandwiches/love/sandu-love.jpg",
+    images: ["assets/img/sandwiches/love/sandu-love.jpg"],
     description:
       "Red Velvet cookie sandwich with vanilla and strawberry brigadeiro in the middle.",
   },
   "Ninho Sandwich": {
-    img: "assets/img/sandu-ninho.jpg",
+    img: "assets/img/sandwiches/ninho/sandu-ninho.jpg",
+    images: ["assets/img/sandwiches/ninho/sandu-ninho.jpg"],
     description:
       "Milk powder brigadeiro with Nutella in the middle. Optionally topped with milk powder outside.",
   },
   "Chocolate Sandwich": {
-    img: "assets/img/sandu-choco.jpg",
+    img: "assets/img/sandwiches/chocolate/sandu-choco.jpg",
+    images: ["assets/img/sandwiches/chocolate/sandu-choco.jpg"],
     description:
       "Chocolate brigadeiro sandwich filled with chocolate chips on the outside.",
   },
   "Duo Sandwich": {
-    img: "assets/img/sandu-duo.jpg",
+    img: "assets/img/sandwiches/duo/sandu-duo.jpg",
+    images: ["assets/img/sandwiches/duo/sandu-duo.jpg"],
     description:
       "Half chocolate brigadeiro and half Ninho brigadeiro for a perfect duo.",
   },
   "Pistachio Sandwich": {
-    img: "assets/img/sandu-pista.jpg",
+    img: "assets/img/sandwiches/pistachio/sandu-pista.jpg",
+    images: ["assets/img/sandwiches/pistachio/sandu-pista.jpg"],
     description:
       "Pistachio cookie sandwich filled with creamy pistachio brigadeiro.",
   },
-  "Alpine Black": {
-    img: "assets/img/alpino_black.jpg",
+
+  /* ---------- COOKIE POTS ---------- */
+  "Mini Cookie Pot": {
+    img: "assets/img/pots/mini-cookie-pot/new-product-1.jpg",
+    images: [
+      "assets/img/pots/mini-cookie-pot/new-product-1.jpg",
+      "assets/img/pots/mini-cookie-pot/new-product-2.jpg",
+    ],
     description:
-      "Cookie with chunks of smooth white chocolate and rich semi-sweet chocolate.",
+      "Mini cookie pots topped with Lotus, Nutella or Kinder — little pots of pure happiness.",
+  },
+  "Prestigio Pot": {
+    img: "assets/img/icon.png",
+    images: ["assets/img/icon.png"],
+    description:
+      "Cookie pot with coconut and chocolate brigadeiro, inspired by the classic Prestígio. Photo coming soon!",
+  },
+  "RedVelvet with Chantilly Pot": {
+    img: "assets/img/icon.png",
+    images: ["assets/img/icon.png"],
+    description:
+      "Red Velvet cookie pot layered with fresh chantilly cream. Photo coming soon!",
+  },
+  "Duo Creme Pot": {
+    img: "assets/img/icon.png",
+    images: ["assets/img/icon.png"],
+    description:
+      "Cookie pot with two creamy layers — chocolate and milk powder brigadeiro. Photo coming soon!",
+  },
+  "Kinder Chocolate Pot": {
+    img: "assets/img/icon.png",
+    images: ["assets/img/icon.png"],
+    description:
+      "Cookie pot loaded with Kinder chocolate cream. Photo coming soon!",
+  },
+
+  /* ---------- COOKIE DONUTS ---------- */
+  "Donuts Tradicional": {
+    img: "assets/img/donuts/tradicional/box-mini-cookies-open.jpeg",
+    images: [
+      "assets/img/donuts/tradicional/box-mini-cookies-open.jpeg",
+      "assets/img/donuts/tradicional/box-mini-cookies.jpeg",
+    ],
+    description:
+      "Mini cookie donuts in the classic flavour, glazed with chocolate. Sold in our pink Cookieland box.",
+  },
+  "Donuts Red Velvet": {
+    img: "assets/img/donuts/red-velvet/box-mini-cookies-open.jpeg",
+    images: ["assets/img/donuts/red-velvet/box-mini-cookies-open.jpeg"],
+    description:
+      "Mini Red Velvet cookie donuts with white chocolate chips. Sold in our pink Cookieland box.",
   },
 };
 
-// Função para abrir o modal com as informações do item
-function openInfoModal(title) {
+// Item atualmente aberto no modal (para o botão "Add to bag")
+let infoModalItem = null;
+
+// Função para abrir o modal com mosaico de fotos, descrição, preço e botão
+function openInfoModal(title, card) {
   const modal = document.getElementById("info-modal");
-  const modalImg = document.getElementById("info-modal-img");
+  const mosaic = document.getElementById("info-modal-mosaic");
   const modalTitle = document.getElementById("info-modal-title");
   const modalDescription = document.getElementById("info-modal-description");
+  const modalPrice = document.getElementById("info-modal-price");
 
-  // Verificar se o item existe no objeto itemInfo
-  if (itemInfo[title]) {
-    // Ajusta o caminho da imagem e o conteúdo do modal
-    modalImg.src = itemInfo[title].img;
-    modalTitle.textContent = title;
-    modalDescription.textContent = itemInfo[title].description;
-  } else {
-    // Caso o item não seja encontrado, exibe uma mensagem de erro no modal
-    modalTitle.textContent = "Item not found";
-    modalImg.src = ""; // Não exibe nenhuma imagem
-    modalDescription.textContent =
-      "Sorry, no description available for this item.";
-  }
+  const info = itemInfo[title];
+  const images = info ? info.images || [info.img] : [];
 
-  // Exibe o modal
+  // Monta o mosaico: 1 foto = destaque; 2 fotos = lado a lado;
+  // 3+ fotos = primeira em destaque e as demais menores
+  mosaic.innerHTML = "";
+  images.forEach((src, index) => {
+    const cell = document.createElement("div");
+    cell.className = "info-modal__photo";
+    if (images.length === 2) {
+      cell.classList.add("info-modal__photo--tall");
+    } else if (index === 0) {
+      cell.classList.add("info-modal__photo--main");
+    }
+    cell.innerHTML = `<img src="${src}" alt="${title}" loading="lazy">`;
+    mosaic.appendChild(cell);
+  });
+
+  modalTitle.textContent = info ? title : "Item not found";
+  modalDescription.textContent = info
+    ? info.description
+    : "Sorry, no description available for this item.";
+
+  // Preço e dados do botão vêm do card clicado
+  const priceText = card?.querySelector(".popular__price")?.textContent || "";
+  modalPrice.textContent = priceText;
+
+  const parsed = parseFloat(priceText.replace(/[£\s]/g, ""));
+  infoModalItem =
+    info && card
+      ? {
+          name: title,
+          image: images[0],
+          price: isNaN(parsed) ? undefined : parsed,
+          card,
+        }
+      : null;
+
   modal.style.display = "block";
 }
 
 // Seleciona todos os botões de informações e adiciona evento de clique
 document.querySelectorAll(".info__button").forEach((button) => {
-  button.addEventListener("click", (event) => {
+  button.addEventListener("click", () => {
     const card = button.closest(".popular__card");
     const title = card.querySelector(".popular__title").textContent.trim();
-    openInfoModal(title);
+    openInfoModal(title, card);
   });
 });
 
-// Fecha o modal ao clicar no botão de fechar
+// Botão "Add to bag" do modal de informações
+const infoModalAddBtn = document.getElementById("info-modal-add");
+infoModalAddBtn.addEventListener("click", () => {
+  if (!infoModalItem) return;
+  addToCart(infoModalItem);
+
+  infoModalAddBtn.innerHTML = '<i class="ri-check-line"></i> Added!';
+  setTimeout(() => {
+    infoModalAddBtn.innerHTML =
+      '<i class="ri-shopping-bag-3-fill"></i> Add to bag';
+    document.getElementById("info-modal").style.display = "none";
+  }, 800);
+});
+
+// Fecha o modal ao clicar no botão de fechar ou fora dele
 document.getElementById("close-info-modal").addEventListener("click", () => {
   document.getElementById("info-modal").style.display = "none";
 });
 
+window.addEventListener("click", (event) => {
+  const infoModalEl = document.getElementById("info-modal");
+  if (event.target === infoModalEl) {
+    infoModalEl.style.display = "none";
+  }
+});
+
 /*=============== OPEN AND CLOSE SITE ===============*/
+// DEV: true = força a loja ABERTA (sacola e botões habilitados) para
+// pré-visualização. Volte para false antes de publicar!
+const FORCE_STORE_OPEN = true;
+window.FORCE_STORE_OPEN = FORCE_STORE_OPEN;
+
 // Função modificada para buscar o status da loja do servidor
 function isWithinOperatingHours() {
+  if (FORCE_STORE_OPEN) return Promise.resolve(true);
+
   return fetch("get_status.php")
     .then((response) => response.json())
     .then((data) => data.is_open) // Retorna true se a loja estiver aberta
@@ -747,7 +938,9 @@ function isWithinOperatingHours() {
 // Função para habilitar/desabilitar botões e sacola com base no status da loja
 function updateButtonAndCartState() {
   const cartIcon = document.getElementById("cart-icon");
-  const buttons = document.querySelectorAll(".popular__button");
+  const buttons = document.querySelectorAll(
+    ".popular__button, .info-modal__add",
+  );
   const statusModal = document.getElementById("status-modal");
   const closeModal = document.getElementById("close-status-modal");
 
@@ -957,70 +1150,72 @@ function populateTimeSelect(selectId) {
 }
 
 // ==================== CAROUSEL ====================
+// Só roda se a seção do carrossel existir na página
+// (evita TypeError que interrompia o script quando a seção foi removida)
 const track = document.querySelector(".carousel-track");
-const slides = Array.from(track.children);
-const nextButton = document.querySelector(".carousel-button.next");
-const prevButton = document.querySelector(".carousel-button.prev");
 
-const titleElement = document.querySelector(".new__title");
-const priceElement = document.querySelector(".new__price");
-const noteElement = document.querySelector(".new__note");
+if (track) {
+  const slides = Array.from(track.children);
+  const nextButton = document.querySelector(".carousel-button.next");
+  const prevButton = document.querySelector(".carousel-button.prev");
 
-let currentSlide = 0;
+  const titleElement = document.querySelector(".new__title");
+  const priceElement = document.querySelector(".new__price");
+  const noteElement = document.querySelector(".new__note");
 
-const productData = [
-  {
-    name: "The golden bites",
-    price: 12.5,
-    showNote: true,
-  },
-  {
-    name: "Pot Classic Cookies with Nutella",
-    price: 3.0,
-    showNote: false,
-  },
-  // {
-  //   name: "Pot Classic Cookies with Nutella",
-  //   price: 3.0,
-  //   showNote: false,
-  // },
-];
+  let currentSlide = 0;
 
-function updateSlide() {
-  track.style.transform = `translateX(-${currentSlide * 100}%)`;
+  const productData = [
+    {
+      name: "The golden bites",
+      price: 12.5,
+      showNote: true,
+    },
+    {
+      name: "Pot Classic Cookies with Nutella",
+      price: 3.0,
+      showNote: false,
+    },
+  ];
 
-  slides.forEach((slide, index) => {
-    slide.classList.toggle("active", index === currentSlide);
+  function updateSlide() {
+    track.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+    slides.forEach((slide, index) => {
+      slide.classList.toggle("active", index === currentSlide);
+    });
+
+    const { name, price, showNote } = productData[currentSlide];
+
+    titleElement.textContent = name;
+    priceElement.textContent = `£${price.toFixed(2)}`;
+    noteElement.style.display = showNote ? "block" : "none";
+  }
+
+  nextButton.addEventListener("click", () => {
+    currentSlide = (currentSlide + 1) % slides.length;
+    updateSlide();
   });
 
-  const { name, price, showNote } = productData[currentSlide];
+  prevButton.addEventListener("click", () => {
+    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+    updateSlide();
+  });
 
-  titleElement.textContent = name;
-  priceElement.textContent = `£${price.toFixed(2)}`;
-  noteElement.style.display = showNote ? "block" : "none";
+  updateSlide();
+
+  // Botão de adicionar do carrossel
+  document
+    .querySelector(".new__button")
+    .addEventListener("click", function () {
+      const { name, price } = productData[currentSlide];
+      const image = document.querySelector(".carousel-slide.active img").src;
+
+      addToCart({
+        name,
+        price,
+        image,
+        card: this.closest(".new__container"),
+      });
+    });
 }
-
-nextButton.addEventListener("click", () => {
-  currentSlide = (currentSlide + 1) % slides.length;
-  updateSlide();
-});
-
-prevButton.addEventListener("click", () => {
-  currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-  updateSlide();
-});
-
-updateSlide();
-
-// ==================== ADD TO CART ====================
-document.querySelector(".new__button").addEventListener("click", function () {
-  const { name, price } = productData[currentSlide];
-  const image = document.querySelector(".carousel-slide.active img").src;
-
-  addToCart({
-    name,
-    price,
-    image,
-    card: this.closest(".new__container"),
-  });
-});

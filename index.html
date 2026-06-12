@@ -36,7 +36,7 @@
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.min.css">
 
    <!--=============== CSS ===============-->
-   <link rel="stylesheet" href="assets/css/styles.css?v=2.0">
+   <link rel="stylesheet" href="assets/css/styles.css?v=3.4">
 
 </head>
 
@@ -46,27 +46,26 @@
       <nav class="nav container">
          <a href="#" class="nav__logo">
             <div>
-               <img src="assets/img/logo.png" alt="Logo image">
+               <img src="assets/img/new_logo.png" alt="Cookieland - Freshly Happiness, Est. 2025">
             </div>
          </a>
          <div class="nav__menu" id="nav-menu">
             <ul class="nav__list">
                <li><a href="#home" class="nav__link active-link">Home</a></li>
-               <!-- <li><a href="#recipe" class="nav__link">Recipe</a></li> -->
-               <li><a href="#sandwich" class="nav__link">Cookie Sandwiches</a></li>
                <li><a href="#popular" class="nav__link">Cookies</a></li>
-               <li><a href="#delivery" class="nav__link">Delivery</a></li>
-               <li><a href="#contact" class="nav__link">Contact</a></li>
+               <li><a href="#sandwich" class="nav__link">Sandwiches</a></li>
+               <li><a href="#pots" class="nav__link">Pots</a></li>
+               <li><a href="#donuts" class="nav__link">Donuts</a></li>
             </ul>
 
             <!-- Close  button -->
-            <div class="nav__close" id="nav-close">
+            <div class="nav__close" id="nav-close" title="Close menu">
                <i class="ri-close-large-line"></i>
             </div>
 
          </div>
          <!-- Toggle button -->
-         <div class="nav__toggle" id="nav-toggle">
+         <div class="nav__toggle" id="nav-toggle" title="Open menu">
             <i class="ri-apps-2-fill"></i>
          </div>
       </nav>
@@ -81,79 +80,106 @@
                <h1 class="home__title">
                   Love Every <br> Cookie
                </h1>
-               <p class="home__description">
-                  Experience pure joy with handmade cookies! <br>
-                  Pick-ups and deliveries are now available only on <br>
-                  <span style="font-weight: bold;">Fridays</span> from
-                  <span style="font-weight: bold;">6:30 PM</span> till
-                  <span style="font-weight: bold;">10:00 PM</span>.
 
-                  <br><br>
-                  Orders for our <span style="font-weight: bold;">Cookie Sandwiches</span>
-                  must be placed by <span style="font-weight: bold;">Thursday</span>. <br>
-                  Orders placed after Thursday will not be accepted.
-                  <br><br>
-                  Regular cookies can be ordered until <span style="font-weight: bold;">Friday</span>.
-                  <br><br>
-                  Choose from <span style="font-weight: bold;">11 irresistible flavours</span>, all crafted with
-                  <span style="font-weight: bold;">100% natural ingredients</span> and baked to perfection.
-                  <br><br>
-                  Whether you love classic chocolate chip or crave something unique, we’ve got the perfect cookie for
-                  you!
-                  <br><br>
-                  <span style="color: red; font-weight: bold; font-size: 1.1rem;">
-                     Allergen Advice: May contain nuts, peanuts, sesame.
-                  </span>
+               <p class="home__tagline">
+                  Experience pure joy with handmade cookies — <strong>13 irresistible flavours</strong>,
+                  crafted with <strong>100% natural ingredients</strong> and baked to perfection.
                </p>
 
-               <a href="#popular" class="button">Order Now!</a>
+               <ul class="home__highlights">
+                  <li>
+                     <i class="ri-calendar-event-fill"></i>
+                     <span>Pick-up &amp; delivery on <strong>Fridays</strong>, from <strong>6:30 PM</strong>
+                        to <strong>10:00 PM</strong></span>
+                  </li>
+                  <li>
+                     <i class="ri-alarm-fill"></i>
+                     <span><strong>Cookie Sandwiches</strong> must be ordered by <strong>Thursday</strong></span>
+                  </li>
+                  <li>
+                     <i class="ri-shopping-bag-3-fill"></i>
+                     <span>Regular cookies can be ordered until <strong>Friday</strong></span>
+                  </li>
+               </ul>
+
+               <p class="home__allergen">
+                  <i class="ri-alert-fill"></i>
+                  Allergen Advice: May contain nuts, peanuts, sesame.
+               </p>
+
+               <div>
+                  <a href="#popular" class="button home__button" title="See all flavours and order">
+                     Order Now!
+                     <i class="ri-arrow-right-line"></i>
+                  </a>
+               </div>
 
                <img src="assets/img/sticker-pepi.svg" alt="image of a delicious cookie" class="home__sticker">
             </div>
 
             <div class="home__images">
-               <img src="assets/img/home-removebg-preview.png" alt="image" class="home__burger">
+               <div class="home__mosaic">
+                  <div class="home__mosaic-item home__mosaic-item--tall">
+                     <img src="assets/img/new_images/founder-standing-apron.jpeg"
+                        alt="Cookieland founder in her pink apron holding baking utensils">
+                  </div>
+                  <div class="home__mosaic-item">
+                     <img src="assets/img/new_images/founder-standing-hair-down.jpeg"
+                        alt="Cookieland founder smiling with a whisk and spatula">
+                  </div>
+                  <div class="home__mosaic-item">
+                     <img src="assets/img/new_images/founder-sitting.jpeg"
+                        alt="Cookieland founder sitting with her pink whisk">
+                  </div>
 
-               <img src="assets/img/avela.png" style="display: none;" alt="image"
-                  class="home__ingredient home__potato-1">
-               <img src="assets/img/avela.png" style="display: none;" alt="image"
-                  class="home__ingredient home__potato-2">
-               <img src="assets/img/oreo.png" style="display: none;" alt="image"
-                  class="home__ingredient home__tomato-1">
-               <img src="assets/img/oreo.png" style="display: none;" alt="image"
-                  class="home__ingredient home__tomato-2">
-               <img src="assets/img/pistache.png" style="display: none;" alt="image"
-                  class="home__ingredient home__lettuce-1">
-               <img src="assets/img/chocolate.png" style="display: none;" alt="image"
-                  class="home__ingredient home__lettuce-2">
+                  <span class="home__badge">Freshly Happiness · Est. 2025</span>
+               </div>
             </div>
          </div>
       </section>
 
-      <!--==================== COOKIES ====================-->
+      <!--==================== CLASSIC COOKIES ====================-->
       <section class="popular section" id="popular">
-         <h2 class="section__title">Most Loved <br> Cookies</h2>
+         <h2 class="section__title">Classic <br> Cookies</h2>
 
          <div class="popular__container container grid">
 
-            <article class="popular__card" data-sku="cookie-of-dates">
-               <span class="badge badge--new">NEW</span>
-               <img src="assets/img/cookie-dates.jpg" alt="Cookie of Dates" class="popular__img">
+            <article class="popular__card" data-sku="nutella-cookie">
+               <img src="assets/img/cookies/nutella/cookie-nutella.jpg" alt="Nutella Cookie" class="popular__img">
                <button class="info__button"><i class="ri-information-fill"></i></button>
-               <h2 class="popular__title">Cookie of Dates</h2>
+               <h2 class="popular__title">Nutella Cookie</h2>
                <span class="popular__price">£2.70</span>
                <button class="popular__button">
                   <i class="ri-shopping-bag-3-fill"></i>
                </button>
             </article>
 
-
-            <!-- NOVOS SABORES - ficam no início + badge NEW -->
-            <article class="popular__card" data-sku="snickers-cookie">
-               <span class="badge badge--new">NEW</span>
-               <img src="assets/img/cookie-snickers.jpg" alt="Snickers Cookie" class="popular__img">
+            <article class="popular__card" data-sku="traditional-cookie">
+               <img src="assets/img/cookies/traditional/cookie-tradicional.jpg" alt="Traditional Cookie"
+                  class="popular__img">
                <button class="info__button"><i class="ri-information-fill"></i></button>
-               <h2 class="popular__title">Snickers Cookie</h2>
+               <h2 class="popular__title">Traditional Cookie</h2>
+               <span class="popular__price">£2.70</span>
+               <button class="popular__button">
+                  <i class="ri-shopping-bag-3-fill"></i>
+               </button>
+            </article>
+
+            <article class="popular__card" data-sku="kinder-bueno-cookie">
+               <img src="assets/img/cookies/kinder-bueno/cookie-avela.jpg" alt="Kinder Bueno Cookie"
+                  class="popular__img">
+               <button class="info__button"><i class="ri-information-fill"></i></button>
+               <h2 class="popular__title">Kinder Bueno Cookie</h2>
+               <span class="popular__price">£2.70</span>
+               <button class="popular__button">
+                  <i class="ri-shopping-bag-3-fill"></i>
+               </button>
+            </article>
+
+            <article class="popular__card" data-sku="kitkat-cookie">
+               <img src="assets/img/cookies/kitkat/cookie-kitkat.jpg" alt="KitKat Cookie" class="popular__img">
+               <button class="info__button"><i class="ri-information-fill"></i></button>
+               <h2 class="popular__title">KitKat Cookie</h2>
                <span class="popular__price">£2.70</span>
                <button class="popular__button">
                   <i class="ri-shopping-bag-3-fill"></i>
@@ -161,8 +187,7 @@
             </article>
 
             <article class="popular__card" data-sku="mms-cookie">
-               <span class="badge badge--new">NEW</span>
-               <img src="assets/img/cookie-mms.jpg" alt="M&M's Cookie" class="popular__img">
+               <img src="assets/img/cookies/mms/cookie-mms.jpg" alt="M&M's Cookie" class="popular__img">
                <button class="info__button"><i class="ri-information-fill"></i></button>
                <h2 class="popular__title">M&amp;M's Cookie</h2>
                <span class="popular__price">£2.70</span>
@@ -171,9 +196,18 @@
                </button>
             </article>
 
+            <article class="popular__card" data-sku="snickers-cookie">
+               <img src="assets/img/cookies/snickers/cookie-snickers.jpg" alt="Snickers Cookie" class="popular__img">
+               <button class="info__button"><i class="ri-information-fill"></i></button>
+               <h2 class="popular__title">Snickers Cookie</h2>
+               <span class="popular__price">£2.70</span>
+               <button class="popular__button">
+                  <i class="ri-shopping-bag-3-fill"></i>
+               </button>
+            </article>
+
             <article class="popular__card" data-sku="galaxy-cookie">
-               <span class="badge badge--new">NEW</span>
-               <img src="assets/img/cookie-galaxy.jpg" alt="Galaxy Cookie" class="popular__img">
+               <img src="assets/img/cookies/galaxy/cookie-galaxy.jpg" alt="Galaxy Cookie" class="popular__img">
                <button class="info__button"><i class="ri-information-fill"></i></button>
                <h2 class="popular__title">Galaxy Cookie</h2>
                <span class="popular__price">£2.70</span>
@@ -182,142 +216,20 @@
                </button>
             </article>
 
-            <article class="popular__card" data-sku="cadbury-dairy-milk">
+            <article class="popular__card" data-sku="funfetti-cookie">
                <span class="badge badge--new">NEW</span>
-               <img src="assets/img/cookie-cadbury.jpg" alt="Cadbury Dairy Milk" class="popular__img">
+               <img src="assets/img/icon.png" alt="Funfetti Cookie - photo coming soon" class="popular__img">
                <button class="info__button"><i class="ri-information-fill"></i></button>
-               <h2 class="popular__title">Cadbury Dairy Milk</h2>
+               <h2 class="popular__title">Funfetti Cookie</h2>
                <span class="popular__price">£2.70</span>
                <button class="popular__button">
                   <i class="ri-shopping-bag-3-fill"></i>
                </button>
             </article>
 
-            <article class="popular__card" data-sku="creme-egg-cookie">
-               <span class="badge badge--new">NEW</span>
-               <img src="assets/img/cookie-creme-egg.jpg" alt="Creme Egg Cookie" class="popular__img">
+            <article class="popular__card" data-sku="red-velvet-cookie">
+               <img src="assets/img/cookies/red-velvet/cookie-ganache.jpg" alt="Red Velvet Cookie" class="popular__img">
                <button class="info__button"><i class="ri-information-fill"></i></button>
-               <h2 class="popular__title">Creme Egg Cookie</h2>
-               <span class="popular__price">£2.70</span>
-               <button class="popular__button">
-                  <i class="ri-shopping-bag-3-fill"></i>
-               </button>
-            </article>
-
-            <article class="popular__card" data-sku="maltesers-cookie">
-               <span class="badge badge--new">NEW</span>
-               <img src="assets/img/cookie-maltesers.jpg" alt="Maltesers Cookie" class="popular__img">
-               <button class="info__button"><i class="ri-information-fill"></i></button>
-               <h2 class="popular__title">Maltesers Cookie</h2>
-               <span class="popular__price">£2.70</span>
-               <button class="popular__button">
-                  <i class="ri-shopping-bag-3-fill"></i>
-               </button>
-            </article>
-
-            <!-- Produtos especiais que já existiam (sem badge NEW agora) -->
-            <article class="popular__card" data-sku="pot-classic-nutella">
-               <img src="assets/img/new-product-1.jpg" alt="Pot Classic Cookies with Nutella" class="popular__img">
-               <button class="info__button"><i class="ri-information-fill"></i></button>
-               <h2 class="popular__title">Pot Classic Cookies with Nutella</h2>
-               <span class="popular__price">£4.00</span>
-               <button class="popular__button">
-                  <i class="ri-shopping-bag-3-fill"></i>
-               </button>
-            </article>
-
-            <article class="popular__card" data-sku="alpine-black">
-               <img src="assets/img/alpino_black.jpg" alt="Alpine Black" class="popular__img">
-               <button class="info__button"><i class="ri-information-fill"></i></button>
-               <h2 class="popular__title">Alpine Black</h2>
-               <span class="popular__price">£2.70</span>
-               <button class="popular__button">
-                  <i class="ri-shopping-bag-3-fill"></i>
-               </button>
-            </article>
-
-            <!-- Cookies tradicionais que já existiam -->
-            <article class="popular__card">
-               <img src="assets/img/cookie-lutus.jpg" alt="Lotus Cookie" class="popular__img">
-               <button class="info__button">
-                  <i class="ri-information-fill"></i>
-               </button>
-               <h2 class="popular__title">Lotus Cookie</h2>
-               <span class="popular__price">£2.70</span>
-               <button class="popular__button">
-                  <i class="ri-shopping-bag-3-fill"></i>
-               </button>
-            </article>
-
-            <article class="popular__card">
-               <img src="assets/img/cookie-lindt.jpg" alt="Lindt Cookie" class="popular__img">
-               <button class="info__button">
-                  <i class="ri-information-fill"></i>
-               </button>
-               <h2 class="popular__title">Lindt Cookie</h2>
-               <span class="popular__price">£2.70</span>
-               <button class="popular__button">
-                  <i class="ri-shopping-bag-3-fill"></i>
-               </button>
-            </article>
-
-            <!-- Oreo REMOVIDO -->
-
-            <!-- 100% Cocoa REMOVIDO -->
-
-            <article class="popular__card">
-               <img src="assets/img/cookie-kitkat.jpg" alt="KitKat Cookie" class="popular__img">
-               <button class="info__button">
-                  <i class="ri-information-fill"></i>
-               </button>
-               <h2 class="popular__title">KitKat Cookie</h2>
-               <span class="popular__price">£2.70</span>
-               <button class="popular__button">
-                  <i class="ri-shopping-bag-3-fill"></i>
-               </button>
-            </article>
-
-            <article class="popular__card">
-               <img src="assets/img/cookie-churro.jpg" alt="Churro Cookie" class="popular__img">
-               <button class="info__button">
-                  <i class="ri-information-fill"></i>
-               </button>
-               <h2 class="popular__title">Churro Cookie</h2>
-               <span class="popular__price">£2.70</span>
-               <button class="popular__button">
-                  <i class="ri-shopping-bag-3-fill"></i>
-               </button>
-            </article>
-
-            <article class="popular__card">
-               <img src="assets/img/cookie-tradicional.jpg" alt="Traditional Cookie" class="popular__img">
-               <button class="info__button">
-                  <i class="ri-information-fill"></i>
-               </button>
-               <h2 class="popular__title">Traditional Cookie</h2>
-               <span class="popular__price">£2.70</span>
-               <button class="popular__button">
-                  <i class="ri-shopping-bag-3-fill"></i>
-               </button>
-            </article>
-
-            <article class="popular__card">
-               <img src="assets/img/cookie-avela.jpg" alt="Kinder Bueno Cookie" class="popular__img">
-               <button class="info__button">
-                  <i class="ri-information-fill"></i>
-               </button>
-               <h2 class="popular__title">Kinder Bueno Cookie</h2>
-               <span class="popular__price">£2.70</span>
-               <button class="popular__button">
-                  <i class="ri-shopping-bag-3-fill"></i>
-               </button>
-            </article>
-
-            <article class="popular__card">
-               <img src="assets/img/cookie-ganache.jpg" alt="Red Velvet Cookie" class="popular__img">
-               <button class="info__button">
-                  <i class="ri-information-fill"></i>
-               </button>
                <h2 class="popular__title">Red Velvet Cookie</h2>
                <span class="popular__price">£2.70</span>
                <button class="popular__button">
@@ -325,24 +237,41 @@
                </button>
             </article>
 
-            <article class="popular__card">
-               <img src="assets/img/cookie-nutella.jpg" alt="Nutella Cookie" class="popular__img">
-               <button class="info__button">
-                  <i class="ri-information-fill"></i>
-               </button>
-               <h2 class="popular__title">Nutella Cookie</h2>
+            <article class="popular__card" data-sku="alpino-cookie">
+               <img src="assets/img/cookies/alpino/alpino_black.jpg" alt="Alpino Cookie" class="popular__img">
+               <button class="info__button"><i class="ri-information-fill"></i></button>
+               <h2 class="popular__title">Alpino Cookie</h2>
                <span class="popular__price">£2.70</span>
                <button class="popular__button">
                   <i class="ri-shopping-bag-3-fill"></i>
                </button>
             </article>
 
-            <article class="popular__card">
-               <img src="assets/img/cookie-pistache.jpg" alt="Dubai Cookie" class="popular__img">
-               <button class="info__button">
-                  <i class="ri-information-fill"></i>
+            <article class="popular__card" data-sku="lindt-cookie">
+               <img src="assets/img/cookies/lindt/cookie-lindt.jpg" alt="Lindt Cookie" class="popular__img">
+               <button class="info__button"><i class="ri-information-fill"></i></button>
+               <h2 class="popular__title">Lindt Cookie</h2>
+               <span class="popular__price">£2.70</span>
+               <button class="popular__button">
+                  <i class="ri-shopping-bag-3-fill"></i>
                </button>
+            </article>
+
+            <article class="popular__card" data-sku="dubai-cookie">
+               <img src="assets/img/cookies/dubai/cookie-pistache.jpg" alt="Dubai Cookie" class="popular__img">
+               <button class="info__button"><i class="ri-information-fill"></i></button>
                <h2 class="popular__title">Dubai Cookie</h2>
+               <span class="popular__price">£2.70</span>
+               <button class="popular__button">
+                  <i class="ri-shopping-bag-3-fill"></i>
+               </button>
+            </article>
+
+            <article class="popular__card" data-sku="lotus-biscoff-cookie">
+               <img src="assets/img/cookies/lotus-biscoff/cookie-lutus.jpg" alt="Lotus Biscoff Cookie"
+                  class="popular__img">
+               <button class="info__button"><i class="ri-information-fill"></i></button>
+               <h2 class="popular__title">Lotus Biscoff Cookie</h2>
                <span class="popular__price">£2.70</span>
                <button class="popular__button">
                   <i class="ri-shopping-bag-3-fill"></i>
@@ -354,7 +283,7 @@
 
       <!--==================== SANDWICH COOKIES ====================-->
       <section class="popular section" id="sandwich">
-         <h2 class="section__title">Sandwich <br> Cookies</h2>
+         <h2 class="section__title">Cookie <br> Sandwiches</h2>
          <h4 class="section__notice">
             ⚠ Sandwich cookies can only be ordered until Thursday each week. Orders after Thursday will not be accepted.
          </h4>
@@ -362,8 +291,7 @@
          <div class="popular__container container grid">
 
             <article class="popular__card" data-sku="love-sandwich">
-               <span class="badge badge--new">NEW</span>
-               <img src="assets/img/sandu-love.jpg"
+               <img src="assets/img/sandwiches/love/sandu-love.jpg"
                   alt="Love Sandwich - Red Velvet with Vanilla & Strawberry Brigadeiro" class="popular__img">
                <button class="info__button"><i class="ri-information-fill"></i></button>
                <h2 class="popular__title">Love Sandwich</h2>
@@ -375,9 +303,8 @@
             </article>
 
             <article class="popular__card" data-sku="ninho-sandwich">
-               <span class="badge badge--new">NEW</span>
-               <img src="assets/img/sandu-ninho.jpg" alt="Ninho Sandwich - Milk Powder Brigadeiro with Nutella"
-                  class="popular__img">
+               <img src="assets/img/sandwiches/ninho/sandu-ninho.jpg"
+                  alt="Ninho Sandwich - Milk Powder Brigadeiro with Nutella" class="popular__img">
                <button class="info__button"><i class="ri-information-fill"></i></button>
                <h2 class="popular__title">Ninho Sandwich</h2>
                <span class="popular__price">£3.50</span>
@@ -396,9 +323,8 @@
             </article>
 
             <article class="popular__card" data-sku="chocolate-sandwich">
-               <span class="badge badge--new">NEW</span>
-               <img src="assets/img/sandu-choco.jpg" alt="Chocolate Sandwich - Chocolate Brigadeiro with Chips"
-                  class="popular__img">
+               <img src="assets/img/sandwiches/chocolate/sandu-choco.jpg"
+                  alt="Chocolate Sandwich - Chocolate Brigadeiro with Chips" class="popular__img">
                <button class="info__button"><i class="ri-information-fill"></i></button>
                <h2 class="popular__title">Chocolate Sandwich</h2>
                <span class="popular__price">£3.50</span>
@@ -406,9 +332,8 @@
             </article>
 
             <article class="popular__card" data-sku="duo-sandwich">
-               <span class="badge badge--new">NEW</span>
-               <img src="assets/img/sandu-duo.jpg" alt="Duo Sandwich - Half Chocolate Brigadeiro, Half Ninho Brigadeiro"
-                  class="popular__img">
+               <img src="assets/img/sandwiches/duo/sandu-duo.jpg"
+                  alt="Duo Sandwich - Half Chocolate Brigadeiro, Half Ninho Brigadeiro" class="popular__img">
                <button class="info__button"><i class="ri-information-fill"></i></button>
                <h2 class="popular__title">Duo Sandwich</h2>
                <span class="popular__price">£3.50</span>
@@ -416,8 +341,7 @@
             </article>
 
             <article class="popular__card" data-sku="pistachio-sandwich">
-               <span class="badge badge--new">NEW</span>
-               <img src="assets/img/sandu-pista.jpg"
+               <img src="assets/img/sandwiches/pistachio/sandu-pista.jpg"
                   alt="Pistachio Sandwich - Pistachio Cookie with Pistachio Brigadeiro" class="popular__img">
                <button class="info__button"><i class="ri-information-fill"></i></button>
                <h2 class="popular__title">Pistachio Sandwich</h2>
@@ -428,15 +352,117 @@
          </div>
       </section>
 
+      <!--==================== COOKIE POTS ====================-->
+      <section class="popular section" id="pots">
+         <h2 class="section__title">Cookie <br> Pots</h2>
+
+         <div class="popular__container container grid">
+
+            <article class="popular__card" data-sku="mini-cookie-pot">
+               <span class="badge badge--new">NEW</span>
+               <img src="assets/img/pots/mini-cookie-pot/new-product-1.jpg" alt="Mini Cookie Pot" class="popular__img">
+               <button class="info__button"><i class="ri-information-fill"></i></button>
+               <h2 class="popular__title">Mini Cookie Pot</h2>
+               <span class="popular__price">£4.00</span>
+               <button class="popular__button">
+                  <i class="ri-shopping-bag-3-fill"></i>
+               </button>
+            </article>
+
+            <article class="popular__card" data-sku="prestigio-pot">
+               <span class="badge badge--new">NEW</span>
+               <img src="assets/img/icon.png" alt="Prestigio Pot - photo coming soon" class="popular__img">
+               <button class="info__button"><i class="ri-information-fill"></i></button>
+               <h2 class="popular__title">Prestigio Pot</h2>
+               <span class="popular__price">£4.00</span>
+               <button class="popular__button">
+                  <i class="ri-shopping-bag-3-fill"></i>
+               </button>
+            </article>
+
+            <article class="popular__card" data-sku="red-velvet-chantilly-pot">
+               <span class="badge badge--new">NEW</span>
+               <img src="assets/img/icon.png" alt="RedVelvet with Chantilly Pot - photo coming soon"
+                  class="popular__img">
+               <button class="info__button"><i class="ri-information-fill"></i></button>
+               <h2 class="popular__title">RedVelvet with Chantilly Pot</h2>
+               <span class="popular__price">£4.00</span>
+               <button class="popular__button">
+                  <i class="ri-shopping-bag-3-fill"></i>
+               </button>
+            </article>
+
+            <article class="popular__card" data-sku="duo-creme-pot">
+               <span class="badge badge--new">NEW</span>
+               <img src="assets/img/icon.png" alt="Duo Creme Pot - photo coming soon" class="popular__img">
+               <button class="info__button"><i class="ri-information-fill"></i></button>
+               <h2 class="popular__title">Duo Creme Pot</h2>
+               <span class="popular__price">£4.00</span>
+               <button class="popular__button">
+                  <i class="ri-shopping-bag-3-fill"></i>
+               </button>
+            </article>
+
+            <article class="popular__card" data-sku="kinder-chocolate-pot">
+               <span class="badge badge--new">NEW</span>
+               <img src="assets/img/icon.png" alt="Kinder Chocolate Pot - photo coming soon" class="popular__img">
+               <button class="info__button"><i class="ri-information-fill"></i></button>
+               <h2 class="popular__title">Kinder Chocolate Pot</h2>
+               <span class="popular__price">£4.00</span>
+               <button class="popular__button">
+                  <i class="ri-shopping-bag-3-fill"></i>
+               </button>
+            </article>
+
+         </div>
+      </section>
+
+      <!--==================== COOKIE DONUTS ====================-->
+      <section class="popular section" id="donuts">
+         <h2 class="section__title">Cookie <br> Donuts</h2>
+
+         <div class="popular__container container grid">
+
+            <article class="popular__card" data-sku="donuts-tradicional">
+               <span class="badge badge--new">NEW</span>
+               <img src="assets/img/donuts/tradicional/box-mini-cookies-open.jpeg" alt="Donuts Tradicional"
+                  class="popular__img">
+               <button class="info__button"><i class="ri-information-fill"></i></button>
+               <h2 class="popular__title">Donuts Tradicional</h2>
+               <span class="popular__price">£2.50</span>
+               <button class="popular__button">
+                  <i class="ri-shopping-bag-3-fill"></i>
+               </button>
+            </article>
+
+            <article class="popular__card" data-sku="donuts-red-velvet">
+               <span class="badge badge--new">NEW</span>
+               <img src="assets/img/donuts/red-velvet/box-mini-cookies-open.jpeg" alt="Donuts Red Velvet"
+                  class="popular__img">
+               <button class="info__button"><i class="ri-information-fill"></i></button>
+               <h2 class="popular__title">Donuts Red Velvet</h2>
+               <span class="popular__price">£2.50</span>
+               <button class="popular__button">
+                  <i class="ri-shopping-bag-3-fill"></i>
+               </button>
+            </article>
+
+         </div>
+      </section>
+
       <!--========== MODAL DE INFORMAÇÕES ==========-->
       <div id="info-modal" class="cart-modal">
          <div class="cart-modal-content">
             <span id="close-info-modal" class="close">&times;</span>
             <div id="info-modal-content">
-               <img id="info-modal-img" src="" alt="Item Image" class="info-modal-img">
+               <div id="info-modal-mosaic" class="info-modal__mosaic"></div>
                <h2 id="info-modal-title"></h2>
                <p id="info-modal-description"></p>
             </div>
+            <span id="info-modal-price" class="info-modal__price"></span>
+            <button id="info-modal-add" class="info-modal__add">
+               <i class="ri-shopping-bag-3-fill"></i> Add to bag
+            </button>
          </div>
       </div>
 
@@ -447,16 +473,127 @@
                <h2 class="section__title">Fast Delivery</h2>
 
                <p class="delivery__description">
-                  Order your favourite cookies from Cookieland, and we’ll have them delivered to your doorstep in no
-                  time. Make or oder now and satisfy your cravings!
+                  Order your favourite cookies from Cookieland and we’ll bring them — still warm — straight
+                  to your doorstep.
                </p>
 
-               <a href="#popular" class="button">Order Now</a>
+               <ul class="delivery__features">
+                  <li>
+                     <i class="ri-truck-fill"></i>
+                     <span>Deliveries on <strong>Fridays</strong>, from <strong>6:30 PM</strong> to
+                        <strong>10:00 PM</strong></span>
+                  </li>
+                  <li>
+                     <i class="ri-map-pin-2-fill"></i>
+                     <span>Portadown <strong>£3</strong> · Craigavon <strong>£4</strong> · Lurgan
+                        <strong>£5</strong></span>
+                  </li>
+                  <li>
+                     <i class="ri-route-fill"></i>
+                     <span>We go up to <strong>25 miles</strong> — beyond that, <strong>£2 per
+                           mile</strong></span>
+                  </li>
+                  <li>
+                     <i class="ri-hand-coin-fill"></i>
+                     <span>Pay by <strong>bank transfer</strong> or <strong>cash</strong> on delivery</span>
+                  </li>
+               </ul>
+
+               <a href="#popular" class="button home__button" title="See all flavours and order">
+                  Order Now
+                  <i class="ri-arrow-right-line"></i>
+               </a>
 
                <img src="assets/img/sticker-glass.svg" alt="image glass" class="delivery__sticker">
             </div>
 
-            <img src="assets/img/delivery-cookie.png" alt="image burger" class="delivery__img">
+            <img src="assets/img/delivery-cookie.png" alt="Cookieland delivery illustration" class="delivery__img">
+         </div>
+      </section>
+
+      <!--==================== GALLERY ====================-->
+      <section class="gallery section" id="gallery">
+         <h2 class="section__title">Sweet Gallery</h2>
+
+         <div class="container">
+            <div class="gallery__grid">
+               <div class="gallery__item gallery__item--big">
+                  <img src="assets/img/galery/box-mini-cookies-open.jpeg"
+                     alt="Open pink Cookieland box full of mini cookies" loading="lazy">
+                  <span class="gallery__caption">Our Cookie donuts box</span>
+               </div>
+
+               <div class="gallery__item gallery__item--tall">
+                  <img src="assets/img/galery/cookie-stack-twine.jpeg"
+                     alt="Stack of chocolate chip cookies tied with twine" loading="lazy">
+                  <span class="gallery__caption">Tied with love</span>
+               </div>
+
+               <div class="gallery__item gallery__item--tall">
+                  <img src="assets/img/galery/chocolate-drip-spoon.jpeg"
+                     alt="Melted chocolate dripping from a golden spoon" loading="lazy">
+                  <span class="gallery__caption">Pure chocolate</span>
+               </div>
+
+               <div class="gallery__item gallery__item--tall">
+                  <img src="assets/img/galery/founder-apron.jpeg" alt="Cookieland founder in her pink apron"
+                     loading="lazy">
+                  <span class="gallery__caption">Meet Your Chef</span>
+               </div>
+
+               <div class="gallery__item gallery__item--wide">
+                  <img src="assets/img/galery/cookies-and-milk.jpeg" alt="Cookies served with a glass of milk"
+                     loading="lazy">
+                  <span class="gallery__caption">Cookies &amp; milk</span>
+               </div>
+
+               <div class="gallery__item gallery__item--tall">
+                  <img src="assets/img/galery/pink-whisk-cream.jpeg" alt="Pink whisk with whipped cream" loading="lazy">
+                  <span class="gallery__caption">Whipped to perfection</span>
+               </div>
+
+               <div class="gallery__item gallery__item--wide">
+                  <img src="assets/img/galery/cocoa-powder-spoon.jpeg" alt="Cocoa powder on a plate with a golden spoon"
+                     loading="lazy">
+                  <span class="gallery__caption">The finest cocoa</span>
+               </div>
+
+               <div class="gallery__item gallery__item--tall">
+                  <img src="assets/img/galery/box-mini-cookies.jpeg" alt="Pink Cookieland box with mini cookies"
+                     loading="lazy">
+                  <span class="gallery__caption">Pink box, sweet inside</span>
+               </div>
+
+               <div class="gallery__item gallery__item--tall">
+                  <img src="assets/img/galery/cookies-cooling-rack.jpeg" alt="Freshly baked cookies on a cooling rack"
+                     loading="lazy">
+                  <span class="gallery__caption">Fresh from the oven</span>
+               </div>
+
+               <div class="gallery__item gallery__item--wide">
+                  <img src="assets/img/galery/cookies-wooden-board.jpeg" alt="Kinder Bueno cookies on a wooden board"
+                     loading="lazy">
+                  <span class="gallery__caption">Kinder Bueno cookies</span>
+               </div>
+
+               <div class="gallery__item gallery__item--tall">
+                  <img src="assets/img/galery/whisk-chocolate.jpeg" alt="Whisk covered in chocolate ganache"
+                     loading="lazy">
+                  <span class="gallery__caption">Chocolate ganache</span>
+               </div>
+
+               <div class="gallery__item gallery__item--wide">
+                  <img src="assets/img/galery/cookies-display-basket.jpeg"
+                     alt="Cookies on display with pink Cookieland bags" loading="lazy">
+                  <span class="gallery__caption">Ready for you</span>
+               </div>
+
+               <div class="gallery__item gallery__item--tall">
+                  <img src="assets/img/galery/founder-sitting.jpeg" alt="Cookieland founder with her pink whisk"
+                     loading="lazy">
+                  <span class="gallery__caption">Always with a smile</span>
+               </div>
+            </div>
          </div>
       </section>
 
@@ -467,51 +604,74 @@
 
             <div class="contact__content grid">
                <div class="contact__data grid">
-                  <div>
-                     <h3 class="contact__title">Write Us</h3>
-
-                     <div class="contact__social">
-                        <a href="https://api.whatsapp.com/send?phone=447850988160&text=Hello, I need more information!"
+                  <div class="contact__card">
+                     <i class="ri-whatsapp-fill contact__card-icon"></i>
+                     <div>
+                        <h3 class="contact__title">Write Us</h3>
+                        <p class="contact__text">Questions or special orders? We reply fast on WhatsApp.</p>
+                        <a class="contact__cta"
+                           href="https://api.whatsapp.com/send?phone=447850988160&text=Hello, I need more information!"
                            target="_blank">
-                           <i class="ri-whatsapp-fill" style="color: hsla(130, 23%, 58%, 0.65);"></i>
-                        </a>
-
-                        <a href="https://www.instagram.com/cookieland202?utm_source=qr&igsh=MWtheXppaHJwZ2o1Zg%3D%3D"
-                           target="_blank">
-                           <i class="ri-instagram-fill" style="color: hsla(296, 23%, 58%, 0.65);"></i>
-                        </a>
-
-                        <a href="https://www.tiktok.com/@cookieland2025?_t=ZN-8x4KVpRxfwk&_r=1" target="_blank">
-                           <i class="ri-tiktok-fill" style="color: hsla(200, 23%, 58%, 0.65);"></i>
-                        </a>
-
-                        <a href="https://www.facebook.com/share/1BFaRgQPDL/" target="_blank">
-                           <i class="ri-facebook-fill" style="color: hsla(220, 37%, 56%, 0.65);"></i>
+                           Chat now <i class="ri-arrow-right-line"></i>
                         </a>
                      </div>
                   </div>
 
-                  <div>
-                     <h3 class="contact__title">Call Us</h3>
-
-                     <address class="contact__info">
-                        +44 7850-988160
-                     </address>
+                  <div class="contact__card">
+                     <i class="ri-phone-fill contact__card-icon"></i>
+                     <div>
+                        <h3 class="contact__title">Call Us</h3>
+                        <a class="contact__link" href="tel:+447850988160" title="Call Cookieland">
+                           +44 7850 988160
+                        </a>
+                     </div>
                   </div>
 
-                  <div>
-                     <h3 class="contact__title">Find us here</h3>
+                  <div class="contact__card">
+                     <i class="ri-map-pin-2-fill contact__card-icon"></i>
+                     <div>
+                        <h3 class="contact__title">Find Us</h3>
+                        <address class="contact__info">
+                           107 Baltylum Meadows, Portadown, Craigavon <br>
+                           BT62 4BW · Armagh, Northern Ireland
+                        </address>
+                        <a class="contact__cta" href="https://maps.google.com/?q=107+Baltylum+Meadows,+BT62+4BW"
+                           target="_blank" title="Open our address in Google Maps">
+                           Open in Maps <i class="ri-external-link-line"></i>
+                        </a>
+                     </div>
+                  </div>
 
-                     <address class="contact__info">
-                        107 Baltylum Meadows, Portadown, Craigavon <br>
-                        BT62 4BW <br>
-                        Armagh, Northern Ireland
-                     </address>
+                  <div class="contact__card">
+                     <i class="ri-heart-3-fill contact__card-icon"></i>
+                     <div>
+                        <h3 class="contact__title">Follow Us</h3>
+                        <div class="contact__social">
+                           <a href="https://api.whatsapp.com/send?phone=447850988160&text=Hello, I need more information!"
+                              target="_blank">
+                              <i class="ri-whatsapp-fill"></i>
+                           </a>
+
+                           <a href="https://www.instagram.com/cookieland202?utm_source=qr&igsh=MWtheXppaHJwZ2o1Zg%3D%3D"
+                              target="_blank">
+                              <i class="ri-instagram-fill"></i>
+                           </a>
+
+                           <a href="https://www.tiktok.com/@cookieland2025?_t=ZN-8x4KVpRxfwk&_r=1" target="_blank">
+                              <i class="ri-tiktok-fill"></i>
+                           </a>
+
+                           <a href="https://www.facebook.com/share/1BFaRgQPDL/" target="_blank">
+                              <i class="ri-facebook-fill"></i>
+                           </a>
+                        </div>
+                     </div>
                   </div>
                </div>
 
                <div class="contact__image">
-                  <img src="assets/img/contact-man.png" alt="image contact man" class="contact__img">
+                  <img src="assets/img/new_images/founder-sitting.jpeg"
+                     alt="Cookieland founder ready to take your order" class="contact__img" loading="lazy">
                </div>
             </div>
          </div>
@@ -520,37 +680,57 @@
 
    <!--==================== FOOTER ====================-->
    <footer class="footer">
-      <div class="footer__container container grid">
-         <a href="\" class="footer__logo">Cookieland's</a>
-
-         <div class="footer__content">
-            <a href="terms/" class="footer__link">Terms & Agreements</a>
-            <a href="privacy/" class="footer__link">Privacy Policy</a>
+      <div class="footer__grid container">
+         <div class="footer__brand">
+            <a href="#home" class="footer__logo" title="Back to top">
+               <img src="assets/img/new_logo.png" alt="Cookieland - Freshly Happiness, Est. 2025"
+                  class="footer__logo-img">
+            </a>
+            <p class="footer__tagline">
+               Freshly baked happiness in Craigavon — handmade cookies, baked with love every Friday.
+            </p>
 
             <div class="footer__social">
                <a href="https://api.whatsapp.com/send?phone=447850988160&text=Hello, I need more information!"
                   target="_blank">
-                  <i class="ri-whatsapp-fill" style="color: hsla(130, 23%, 58%, 0.65);"></i>
+                  <i class="ri-whatsapp-fill"></i>
                </a>
 
                <a href="https://www.instagram.com/cookieland202?utm_source=qr&igsh=MWtheXppaHJwZ2o1Zg%3D%3D"
                   target="_blank">
-                  <i class="ri-instagram-fill" style="color: hsla(296, 23%, 58%, 0.65);"></i>
+                  <i class="ri-instagram-fill"></i>
                </a>
 
                <a href="https://www.tiktok.com/@cookieland2025?_t=ZN-8x4KVpRxfwk&_r=1" target="_blank">
-                  <i class="ri-tiktok-fill" style="color: hsla(200, 23%, 58%, 0.65);"></i>
+                  <i class="ri-tiktok-fill"></i>
                </a>
 
                <a href="https://www.facebook.com/share/1BFaRgQPDL/" target="_blank">
-                  <i class="ri-facebook-fill" style="color: hsla(220, 37%, 56%, 0.65);"></i>
+                  <i class="ri-facebook-fill"></i>
                </a>
             </div>
          </div>
 
-         <!-- Selo de classificação (como cartão aceito) -->
-         <div class="footer__badge">
-            <img src="assets/img/foodRating.png" alt="Food Hygiene Rating" class="footer__badge-img">
+         <div class="footer__column">
+            <h3 class="footer__subtitle">Menu</h3>
+            <a href="#popular" class="footer__link">Classic Cookies</a>
+            <a href="#sandwich" class="footer__link">Cookie Sandwiches</a>
+            <a href="#pots" class="footer__link">Cookie Pots</a>
+            <a href="#donuts" class="footer__link">Cookie Donuts</a>
+         </div>
+
+         <div class="footer__column">
+            <h3 class="footer__subtitle">Info</h3>
+            <a href="#delivery" class="footer__link">Delivery</a>
+            <a href="#gallery" class="footer__link">Gallery</a>
+            <a href="#contact" class="footer__link">Contact</a>
+            <a href="terms/" class="footer__link">Terms &amp; Agreements</a>
+            <a href="privacy/" class="footer__link">Privacy Policy</a>
+         </div>
+
+         <div class="footer__column">
+            <h3 class="footer__subtitle">Food Hygiene</h3>
+            <img src="assets/img/foodRating.png" alt="Food Hygiene Rating" class="footer__rating-img">
          </div>
       </div>
 
@@ -581,25 +761,32 @@
    <div id="cart-modal" class="cart-modal">
       <div class="cart-modal-content">
          <span id="close-modal" class="close">&times;</span>
-         <h2>Your Cart</h2>
+
+         <h2 class="cart-modal__title">
+            <i class="ri-shopping-bag-3-fill"></i> Your Bag
+         </h2>
+
          <div id="cart-items" class="cart-items">
-            <!-- Pizzas e itens principais aparecem aqui -->
+            <!-- Itens do carrinho renderizados pelo JavaScript -->
          </div>
+
          <!-- Total compartilhado entre Step 1 e Step 2 -->
          <div class="cart-total">
-            <h3>Total: £<span id="cart-total">0</span></h3>
+            <span>Total</span>
+            <h3>£<span id="cart-total">0</span></h3>
          </div>
 
          <!-- Step 1: Form Fields -->
          <div class="cart-form" id="form-step-1">
+            <span class="cart-step"><i class="ri-edit-2-fill"></i> Step 1 of 2 · Your details</span>
 
-            <label for="customer-name">Name:</label>
+            <label for="customer-name"><i class="ri-user-3-fill"></i> Name:</label>
             <input type="text" id="customer-name" placeholder="Your Name" required>
 
-            <label for="customer-address">Address:</label>
+            <label for="customer-address"><i class="ri-home-4-fill"></i> Address:</label>
             <input type="text" id="customer-address" placeholder="Your Address" required>
 
-            <label for="service-type">Service Type:</label>
+            <label for="service-type"><i class="ri-store-2-fill"></i> Service Type:</label>
             <select id="service-type">
                <option value="none">Choose</option>
                <option value="Pick-up">Pick-up</option>
@@ -608,14 +795,15 @@
 
             <!-- Select para escolher a cidade de entrega -->
             <div id="delivery-location" style="display: none;">
-               <label for="delivery-location-select">Select your city:</label>
-               <p id="status-modal-description" style="padding: 0.3rem;">
-                  The <strong>limit is 25 miles.</strong> However, exceeding this limit will incur an
+               <label for="delivery-location-select"><i class="ri-map-pin-2-fill"></i> Select your city:</label>
+               <p class="cart-hint">
+                  <i class="ri-route-fill"></i>
+                  The <strong>limit is 25 miles.</strong> Beyond that there is an
                   <strong>additional</strong> charge of <strong>£2 per mile.</strong>
                </p>
                <select id="delivery-location-select">
                   <option value="Portadown">Portadown - £3</option>
-                  <option value="Lugan">Lugan - £5</option>
+                  <option value="Lugan">Lurgan - £5</option>
                   <option value="Craigavon">Craigavon - £4</option>
                   <option value="Dungannon">Dungannon - £30</option>
                   <option value="Belfast">Belfast - £30</option>
@@ -625,7 +813,7 @@
 
             <!-- Select para dias de entrega -->
             <div id="delivery-day" style="display: none;">
-               <label for="delivery-day-select">Choose a delivery day:</label>
+               <label for="delivery-day-select"><i class="ri-calendar-event-fill"></i> Choose a delivery day:</label>
                <select id="delivery-day-select">
                   <option value="Friday">Friday</option>
                </select>
@@ -633,7 +821,7 @@
 
             <!-- Select para horários de entrega -->
             <div id="delivery-time" style="display: none;">
-               <label for="delivery-time-select">Choose a delivery time:</label>
+               <label for="delivery-time-select"><i class="ri-time-fill"></i> Choose a delivery time:</label>
                <select id="delivery-time-select">
                   <!-- Horários serão preenchidos pelo JavaScript -->
                </select>
@@ -641,7 +829,7 @@
 
             <!-- Select para dias de coleta -->
             <div id="pickup-day" style="display: none;">
-               <label for="pickup-day-select">Choose a pick-up day:</label>
+               <label for="pickup-day-select"><i class="ri-calendar-event-fill"></i> Choose a pick-up day:</label>
                <select id="pickup-day-select">
                   <option value="Friday">Friday</option>
                </select>
@@ -649,56 +837,58 @@
 
             <!-- Select para horários de coleta -->
             <div id="pickup-time" style="display: none;">
-               <label for="pickup-time-select">Choose a pick-up time:</label>
+               <label for="pickup-time-select"><i class="ri-time-fill"></i> Choose a pick-up time:</label>
                <select id="pickup-time-select">
                   <!-- Horários serão preenchidos pelo JavaScript -->
                </select>
             </div>
 
-            <label for="payment-method">Payment Method:</label>
+            <label for="payment-method"><i class="ri-bank-card-2-fill"></i> Payment Method:</label>
             <select id="payment-method">
                <option value="Bank Transfer">Bank Transfer</option>
                <option value="Cash">Cash</option>
             </select>
 
-            <label for="customer-observation">Observation:</label>
+            <label for="customer-observation"><i class="ri-chat-1-fill"></i> Observation:</label>
             <textarea id="customer-observation" placeholder="Any details you want to mention..."></textarea>
 
-            <button id="next-step" class="order-button">Next</button>
+            <button id="next-step" class="order-button">
+               Next <i class="ri-arrow-right-line"></i>
+            </button>
          </div>
 
          <!-- Step 2: Add-ons -->
          <div class="cart-form" id="form-step-2" style="display: none;">
-            <p id="status-modal-description" style="padding: 0.3rem;">
-               <strong>Drinks</strong>
+            <span class="cart-step"><i class="ri-cup-fill"></i> Step 2 of 2 · Drinks &amp; extras</span>
+
+            <p class="cart-hint">
+               <i class="ri-information-fill"></i>
+               Fancy a drink with your cookies? Add below — or skip straight to the order.
             </p>
+
             <!-- Drinks Section -->
             <div id="drinks">
                <div class="addon-item cart-item" style="flex-direction: row;">
                   <img src="assets/img/coke.png" alt="Coke" class="addon-img">
                   <span>Coke</span>
                   <span>£1.10</span>
-                  <button class="addon-decrement" data-item="Coke">-</button>
+                  <button class="addon-decrement" data-item="Coke" title="Remove one">-</button>
                   <span class="addon-quantity" data-item="Coke">0</span>
-                  <button class="addon-increment" data-item="Coke">+</button>
+                  <button class="addon-increment" data-item="Coke" title="Add one">+</button>
                </div>
                <div class="addon-item cart-item" style="flex-direction: row;">
                   <img src="assets/img/fanta-laranja.png" alt="Fanta" class="addon-img">
                   <span>Fanta</span>
                   <span>£1.10</span>
-                  <button class="addon-decrement" data-item="Fanta">-</button>
+                  <button class="addon-decrement" data-item="Fanta" title="Remove one">-</button>
                   <span class="addon-quantity" data-item="Fanta">0</span>
-                  <button class="addon-increment" data-item="Fanta">+</button>
+                  <button class="addon-increment" data-item="Fanta" title="Add one">+</button>
                </div>
             </div>
 
-            <!-- Add Add-ons Section -->
-            <p id="status-modal-description" style="padding: 0.3rem; display: none;">
-               <strong>Add-ons</strong>
-            </p>
             <div id="cream-cheese" class="addon-section" style="display: none;">
                <div class="addon-item cart-item">
-                  <img src="assets/img/cream_cheese.png" alt="Fanta" class="addon-img">
+                  <img src="assets/img/cream_cheese.png" alt="Catupiry" class="addon-img">
                   <span>Catupiry</span>
                   <span>£2.0</span>
                   <button class="addon-decrement" data-item="Catupiry">-</button>
@@ -706,7 +896,7 @@
                   <button class="addon-increment" data-item="Catupiry">+</button>
                </div>
                <div class="addon-item cart-item">
-                  <img src="assets/img/nutella.png" alt="Fanta" class="addon-img">
+                  <img src="assets/img/nutella.png" alt="Nutella Border" class="addon-img">
                   <span>Nutella Border</span>
                   <span>£2.0</span>
                   <button class="addon-decrement" data-item="Nutella Border">-</button>
@@ -717,7 +907,14 @@
                   style="margin-top: 1rem; display: block;margin-bottom: 1rem;"></textarea>
             </div>
 
-            <button id="submit-order" class="order-button">Place Order</button>
+            <div class="cart-form__actions">
+               <button id="back-step" class="cart-back-button" title="Back to your details">
+                  <i class="ri-arrow-left-line"></i> Back
+               </button>
+               <button id="submit-order" class="order-button" title="Your order will be sent via WhatsApp">
+                  <i class="ri-whatsapp-fill"></i> Place Order on WhatsApp
+               </button>
+            </div>
          </div>
       </div>
    </div>
@@ -726,11 +923,18 @@
    <script src="assets/js/scrollreveal.min.js"></script>
 
    <!--=============== MAIN JS ===============-->
-   <script src="assets/js/main.js?v=2.0"></script>
+   <script src="assets/js/main.js?v=3.3"></script>
 
    <script>
       // Função para verificar o status da loja e atualizar a página
       function checkStoreStatus() {
+         // DEV: definido em main.js — força a loja aberta para pré-visualização
+         if (window.FORCE_STORE_OPEN) {
+            document.getElementById("cart-icon").style.display = "block";
+            document.getElementById("status-modal").style.display = "none";
+            return;
+         }
+
          fetch('get_status.php')
             .then(response => response.json())
             .then(data => {
