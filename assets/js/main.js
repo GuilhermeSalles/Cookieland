@@ -873,12 +873,13 @@ const itemInfo = {
     description:
       "Cookie pot with coconut and chocolate brigadeiro, inspired by the classic Prestígio.",
   },
-  "RedVelvet with Chantilly Pot": {
-    img: "assets/img/icon.png",
-    images: ["assets/img/icon.png"],
-    description:
-      "Red Velvet cookie pot layered with fresh chantilly cream. Photo coming soon!",
-  },
+  // Temporarily off the menu
+  // "RedVelvet with Chantilly Pot": {
+  //   img: "assets/img/icon.png",
+  //   images: ["assets/img/icon.png"],
+  //   description:
+  //     "Red Velvet cookie pot layered with fresh chantilly cream. Photo coming soon!",
+  // },
   "Duo Creme Pot": {
     img: "assets/img/pots/duo-creme/pot-duo-creme-1.jpeg",
     images: [
@@ -1210,9 +1211,9 @@ function populateTimeSelect(selectId) {
   }
   timeSelect.innerHTML = "";
 
-  const startTime = 18; // 6 PM
-  const startMinutes = 30; // 30 minutes
-  const endTime = 22; // 10 PM
+  const startTime = 19; // 7 PM
+  const startMinutes = 0; // 0 minutes
+  const endTime = 21; // 9 PM
   const interval = 20; // Intervalo em minutos
 
   for (let hour = startTime; hour <= endTime; hour++) {
@@ -1221,7 +1222,7 @@ function populateTimeSelect(selectId) {
       minutes < 60;
       minutes += interval
     ) {
-      if (hour === endTime && minutes > 0) break; // Garante que não ultrapasse 22:00
+      if (hour === endTime && minutes > 0) break; // Garante que não ultrapasse 21:00
 
       const formattedHour = hour > 12 ? hour - 12 : hour;
       const period = hour >= 12 ? "PM" : "AM";
