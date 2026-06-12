@@ -171,7 +171,13 @@ img {
 }
 
 .nav__logo img {
-  width: 150px;
+  width: 110px;
+}
+
+@media (min-width: 768px) {
+  .nav__logo img {
+    width: 150px;
+  }
 }
 
 .nav__toggle,
@@ -1032,6 +1038,19 @@ img {
   font-size: var(--small-font-size);
   margin-top: 3rem;
   color: var(--text-color-light);
+}
+
+/* crédito do criador no rodapé */
+.footer__credit {
+  color: var(--text-color-light);
+  font-weight: var(--font-semi-bold);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.3s;
+}
+
+.footer__credit:hover {
+  color: var(--first-color);
 }
 
 /* Selo como cartão aceito */

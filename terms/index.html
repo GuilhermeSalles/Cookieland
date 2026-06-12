@@ -16,7 +16,7 @@
     <meta property="og:title" content="Best Cookies in Craigavon - Cookieland at 107 Baltylum Meadows">
     <meta property="og:description"
         content="Looking for the best cookies in Craigavon? Visit Cookieland at 107 Baltylum Meadows, BT62 4BW, for delicious freshly baked cookies. Perfect for takeaway or delivery.">
-    <meta property="og:image" content="https://cookieland.uk/assets/img/cookie-banner.jpg">
+    <meta property="og:image" content="https://cookieland.uk/assets/img/new_logo2.png">
     <!-- Atualize se necessário -->
     <meta property="og:url" content="https://cookieland.uk">
     <meta property="og:type" content="website">
@@ -32,7 +32,7 @@
 
     <!--=============== FAVICON ===============-->
     <link rel="shortcut icon" href="../assets/img/icon.png" type="image/x-icon">
-    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/styles.css?v=3.5">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.min.css">
 </head>
 
@@ -40,23 +40,24 @@
     <!--==================== HEADER ====================-->
     <header class="header" id="header">
         <nav class="nav container">
-            <a href="\" class="nav__logo">
+            <a href="../" class="nav__logo">
                 <div>
                     <img src="../assets/img/new_logo.png" alt="Cookieland - Freshly Happiness, Est. 2025">
                 </div>
             </a>
             <div class="nav__menu" id="nav-menu">
                 <ul class="nav__list">
-                    <li><a href="\" class="nav__link">Home</a></li>
-                    <li><a href="\#popular" class="nav__link">Cookies</a></li>
-                    <li><a href="\#delivery" class="nav__link">Delivery</a></li>
-                    <li><a href="\#contact" class="nav__link">Contact</a></li>
+                    <li><a href="../" class="nav__link">Home</a></li>
+                    <li><a href="../#popular" class="nav__link">Cookies</a></li>
+                    <li><a href="../#sandwich" class="nav__link">Sandwiches</a></li>
+                    <li><a href="../#pots" class="nav__link">Pots</a></li>
+                    <li><a href="../#donuts" class="nav__link">Donuts</a></li>
                 </ul>
-                <div class="nav__close" id="nav-close">
+                <div class="nav__close" id="nav-close" title="Close menu">
                     <i class="ri-close-large-line"></i>
                 </div>
             </div>
-            <div class="nav__toggle" id="nav-toggle">
+            <div class="nav__toggle" id="nav-toggle" title="Open menu">
                 <i class="ri-apps-2-fill"></i>
             </div>
         </nav>
@@ -106,12 +107,15 @@
 
     <!--==================== FOOTER ====================-->
     <footer class="footer">
-        <div class="footer__container container grid">
-            <a href="\" class="footer__logo">Cookieland's</a>
-
-            <div class="footer__content">
-                <a href="index" class="footer__link">Terms & Agreements</a>
-                <a href="../privacy/" class="footer__link">Privacy Policy</a>
+        <div class="footer__grid container">
+            <div class="footer__brand">
+                <a href="../" class="footer__logo" title="Back to home">
+                    <img src="../assets/img/new_logo.png" alt="Cookieland - Freshly Happiness, Est. 2025"
+                        class="footer__logo-img">
+                </a>
+                <p class="footer__tagline">
+                    Freshly baked happiness in Craigavon — handmade cookies, baked with love every Friday.
+                </p>
 
                 <div class="footer__social">
                     <a href="https://api.whatsapp.com/send?phone=447850988160&text=Hello, I need more information!"
@@ -134,19 +138,45 @@
                 </div>
             </div>
 
-            <!-- Selo de classificação (como cartão aceito) -->
-            <div class="footer__badge">
-                <img src="../assets/img/foodRating.png" alt="Food Hygiene Rating" class="footer__badge-img">
+            <div class="footer__column">
+                <h3 class="footer__subtitle">Menu</h3>
+                <a href="../#popular" class="footer__link">Classic Cookies</a>
+                <a href="../#sandwich" class="footer__link">Cookie Sandwiches</a>
+                <a href="../#pots" class="footer__link">Cookie Pots</a>
+                <a href="../#donuts" class="footer__link">Cookie Donuts</a>
+            </div>
+
+            <div class="footer__column">
+                <h3 class="footer__subtitle">Info</h3>
+                <a href="../#delivery" class="footer__link">Delivery</a>
+                <a href="../#gallery" class="footer__link">Gallery</a>
+                <a href="../#contact" class="footer__link">Contact</a>
+                <a href="./" class="footer__link">Terms &amp; Agreements</a>
+                <a href="../privacy/" class="footer__link">Privacy Policy</a>
+            </div>
+
+            <div class="footer__column">
+                <h3 class="footer__subtitle">Food Hygiene</h3>
+                <img src="../assets/img/foodRating.png" alt="Food Hygiene Rating" class="footer__rating-img">
             </div>
         </div>
 
         <span class="footer__copy">
-            &#169; All Rights Reserved By Guilherme Baltazar
+            &#169; All Rights Reserved By
+            <a href="https://guilhermesalles.github.io/" target="_blank" rel="noopener"
+                class="footer__credit">Guilherme Baltazar</a>
         </span>
     </footer>
 
-    <!--=============== MAIN JS ===============-->
-    <script src="../../assets/js/main.js"></script>
+    <!--=============== MENU JS ===============-->
+    <script>
+        const navMenu = document.getElementById("nav-menu"),
+            navToggle = document.getElementById("nav-toggle"),
+            navClose = document.getElementById("nav-close");
+
+        navToggle.addEventListener("click", () => navMenu.classList.add("show-menu"));
+        navClose.addEventListener("click", () => navMenu.classList.remove("show-menu"));
+    </script>
 </body>
 
 </html>
