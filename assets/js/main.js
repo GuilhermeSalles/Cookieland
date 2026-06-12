@@ -137,8 +137,15 @@ const closeModal = document.getElementById("close-modal");
 const cartItemsContainer = document.getElementById("cart-items");
 const cartTotal = document.getElementById("cart-total");
 
-// Delegação de eventos para os botões + e - dentro do carrinho
+// Delegação de eventos para os botões +, - e remover dentro do carrinho
 cartItemsContainer.addEventListener("click", (event) => {
+  const removeBtn = event.target.closest(".cart-item-remove");
+  if (removeBtn) {
+    const name = decodeURIComponent(removeBtn.dataset.name || "");
+    if (name) removeItem(name);
+    return;
+  }
+
   const btn = event.target.closest(".quantity-btn");
   if (!btn) return;
 
@@ -255,6 +262,21 @@ function updateCartCount() {
   setTimeout(() => {
     cartCount.style.transform = "scale(1)";
   }, 200);
+
+  updateCheckoutState(itemCount);
+}
+
+// Habilita/desabilita o checkout e atualiza o resumo conforme a sacola
+function updateCheckoutState(itemCount) {
+  const checkoutBtn = document.getElementById("checkout-btn");
+  const summaryText = document.getElementById("checkout-summary-text");
+  const isEmpty = cart.length === 0;
+
+  checkoutBtn.disabled = isEmpty;
+
+  summaryText.textContent = isEmpty
+    ? "Your bag is empty — add some cookies first!"
+    : `${itemCount} item${itemCount > 1 ? "s" : ""} in your bag. Fill in your details below and place your order.`;
 }
 
 // Atualizar o conteúdo do modal
@@ -302,6 +324,12 @@ function updateCartModal() {
             <i class="ri-add-line"></i>
           </button>
         </div>
+        <button class="cart-item-remove"
+                data-name="${encodedName}"
+                title="Remove from bag"
+                aria-label="Remove from bag">
+          <i class="ri-delete-bin-6-line"></i>
+        </button>
       </div>
     `;
   });
@@ -383,13 +411,46 @@ function hideCartModal() {
   document.body.style.overflow = "";
 }
 
+// Exibir tela de checkout
+const checkoutModal = document.getElementById("checkout-modal");
+
+function showCheckoutModal() {
+  checkoutModal.style.display = "block";
+  document.body.style.overflow = "hidden";
+}
+
+function hideCheckoutModal() {
+  checkoutModal.style.display = "none";
+  document.body.style.overflow = "";
+}
+
 // Event Listeners
 cartIcon.addEventListener("click", showCartModal);
 closeModal.addEventListener("click", hideCartModal);
 
+// Sacola -> Checkout
+document.getElementById("checkout-btn").addEventListener("click", () => {
+  if (cart.length === 0) return;
+  hideCartModal();
+  showCheckoutModal();
+});
+
+// Checkout -> Sacola
+document.getElementById("back-to-bag").addEventListener("click", () => {
+  hideCheckoutModal();
+  showCartModal();
+});
+
+document
+  .getElementById("close-checkout")
+  .addEventListener("click", hideCheckoutModal);
+
 window.addEventListener("click", (event) => {
   if (event.target === cartModal) {
     hideCartModal();
+  }
+  if (event.target === checkoutModal) {
+    hideCheckoutModal();
   }
 });
 
@@ -436,7 +497,7 @@ const itemPrices = {
 
 // =================== FUNÇÕES ===================
 
-// Atualizar o valor total do carrinho (pack + add-ons)
+// Atualizar o valor total do carrinho (pack + add-ons) na sacola e no checkout
 function updateCartTotal() {
   const { cartSubtotal } = calculateBoxAdjustedSubtotal();
   const addOnsTotal = calculateAddOnsTotal();
@@ -444,28 +505,11 @@ function updateCartTotal() {
   const total = cartSubtotal + addOnsTotal;
 
   document.getElementById("cart-total").textContent = total.toFixed(2);
+  document.getElementById("checkout-total").textContent = total.toFixed(2);
   return { cartSubtotal, addOnsTotal, total };
 }
 
-// Alternar entre os passos do formulário
-function goToStep(step) {
-  document.getElementById("form-step-1").style.display =
-    step === 1 ? "block" : "none";
-  document.getElementById("form-step-2").style.display =
-    step === 2 ? "block" : "none";
-}
-
 // =================== EVENTOS ===================
-
-// Navegar para o próximo passo
-document.getElementById("next-step").addEventListener("click", function () {
-  goToStep(2);
-});
-
-// Voltar para o passo anterior
-document.getElementById("back-step").addEventListener("click", function () {
-  goToStep(1);
-});
 
 // Incrementar ou decrementar itens adicionais (drinks e cream cheese)
 document
@@ -657,71 +701,101 @@ document.getElementById("submit-order").addEventListener("click", function () {
 const itemInfo = {
   /* ---------- CLASSIC COOKIES ---------- */
   "Nutella Cookie": {
-    img: "assets/img/cookies/nutella/cookie-nutella.jpg",
-    images: ["assets/img/cookies/nutella/cookie-nutella.jpg"],
+    img: "assets/img/cookies/nutella/cookie-nutella-1.jpeg",
+    images: [
+      "assets/img/cookies/nutella/cookie-nutella-1.jpeg",
+      "assets/img/cookies/nutella/cookie-nutella-2.jpeg",
+      "assets/img/cookies/nutella/cookie-nutella-3.jpeg",
+    ],
     description:
       "A cookie filled with the classic Nutella hazelnut cream for an unmistakable treat.",
   },
   "Traditional Cookie": {
-    img: "assets/img/cookies/traditional/cookie-tradicional.jpg",
+    img: "assets/img/cookies/traditional/cookie-traditional-1.jpeg",
     images: [
-      "assets/img/cookies/traditional/cookie-tradicional.jpg",
-      "assets/img/galery/cookie-stack-twine.jpeg",
-      "assets/img/galery/cookies-cooling-rack.jpeg",
+      "assets/img/cookies/traditional/cookie-traditional-1.jpeg",
+      "assets/img/cookies/traditional/cookie-traditional-2.jpeg",
+      "assets/img/cookies/traditional/cookie-traditional-3.jpeg",
     ],
     description: "The classic cookie with a timeless taste.",
   },
   "Kinder Bueno Cookie": {
-    img: "assets/img/cookies/kinder-bueno/cookie-avela.jpg",
+    img: "assets/img/cookies/kinder-bueno/cookie-kinder-bueno-3.jpeg",
     images: [
-      "assets/img/cookies/kinder-bueno/cookie-avela.jpg",
-      "assets/img/galery/cookies-wooden-board.jpeg",
+      "assets/img/cookies/kinder-bueno/cookie-kinder-bueno-3.jpeg",
+      "assets/img/cookies/kinder-bueno/cookie-kinder-bueno-1.jpeg",
+      "assets/img/cookies/kinder-bueno/cookie-kinder-bueno-2.jpeg",
     ],
     description:
       "A cookie filled with hazelnut cream inspired by the famous Kinder Bueno.",
   },
   "KitKat Cookie": {
-    img: "assets/img/cookies/kitkat/cookie-kitkat.jpg",
-    images: ["assets/img/cookies/kitkat/cookie-kitkat.jpg"],
+    img: "assets/img/cookies/kitkat/cookie-kitkat-1.jpeg",
+    images: [
+      "assets/img/cookies/kitkat/cookie-kitkat-1.jpeg",
+      "assets/img/cookies/kitkat/cookie-kitkat-2.jpeg",
+      "assets/img/cookies/kitkat/cookie-kitkat-3.jpeg",
+    ],
     description:
       "A crunchy cookie filled with the unmistakable crunch of KitKat.",
   },
   "M&M's Cookie": {
-    img: "assets/img/cookies/mms/cookie-mms.jpg",
-    images: ["assets/img/cookies/mms/cookie-mms.jpg"],
+    img: "assets/img/cookies/mms/cookie-mms-2.jpeg",
+    images: [
+      "assets/img/cookies/mms/cookie-mms-2.jpeg",
+      "assets/img/cookies/mms/cookie-mms-1.jpeg",
+      "assets/img/cookies/mms/cookie-mms-3.jpeg",
+    ],
     description:
       "A classic cookie packed with colourful mini M&M's, crispy on the outside and soft in the middle.",
   },
   "Snickers Cookie": {
-    img: "assets/img/cookies/snickers/cookie-snickers.jpg",
+    img: "assets/img/cookies/snickers/cookie-snickers-3.jpeg",
     images: [
-      "assets/img/cookies/snickers/cookie-snickers.jpg",
-      "assets/img/galery/cookies-and-milk.jpeg",
+      "assets/img/cookies/snickers/cookie-snickers-3.jpeg",
+      "assets/img/cookies/snickers/cookie-snickers-1.jpeg",
+      "assets/img/cookies/snickers/cookie-snickers-2.jpeg",
     ],
     description:
       "Soft cookie dough with Snickers chocolate pieces mixed in and a creamy Snickers filling in the centre.",
   },
   "Galaxy Cookie": {
-    img: "assets/img/cookies/galaxy/cookie-galaxy.jpg",
-    images: ["assets/img/cookies/galaxy/cookie-galaxy.jpg"],
+    img: "assets/img/cookies/galaxy/cookie-galaxy-3.jpeg",
+    images: [
+      "assets/img/cookies/galaxy/cookie-galaxy-3.jpeg",
+      "assets/img/cookies/galaxy/cookie-galaxy-1.jpeg",
+      "assets/img/cookies/galaxy/cookie-galaxy-2.jpeg",
+    ],
     description:
       "A rich cookie with a smooth Galaxy chocolate filling and Galaxy chunks on top.",
   },
   "Funfetti Cookie": {
-    img: "assets/img/icon.png",
-    images: ["assets/img/icon.png"],
+    img: "assets/img/cookies/funfetti/cookie-funfetti-1.jpeg",
+    images: [
+      "assets/img/cookies/funfetti/cookie-funfetti-1.jpeg",
+      "assets/img/cookies/funfetti/cookie-funfetti-2.jpeg",
+      "assets/img/cookies/funfetti/cookie-funfetti-3.jpeg",
+    ],
     description:
-      "A colourful birthday-style cookie loaded with rainbow sprinkles. Photo coming soon!",
+      "A colourful birthday-style cookie loaded with rainbow sprinkles and chocolate chips.",
   },
   "Red Velvet Cookie": {
-    img: "assets/img/cookies/red-velvet/cookie-ganache.jpg",
-    images: ["assets/img/cookies/red-velvet/cookie-ganache.jpg"],
+    img: "assets/img/cookies/red-velvet/cookie-red-velvet-2.jpeg",
+    images: [
+      "assets/img/cookies/red-velvet/cookie-red-velvet-2.jpeg",
+      "assets/img/cookies/red-velvet/cookie-red-velvet-1.jpeg",
+      "assets/img/cookies/red-velvet/cookie-red-velvet-3.jpeg",
+    ],
     description:
       "An elegant Red Velvet cookie with a rich chocolate ganache filling.",
   },
   "Alpino Cookie": {
-    img: "assets/img/cookies/alpino/alpino_black.jpg",
-    images: ["assets/img/cookies/alpino/alpino_black.jpg"],
+    img: "assets/img/cookies/alpino/cookie-alpino-3.jpeg",
+    images: [
+      "assets/img/cookies/alpino/cookie-alpino-3.jpeg",
+      "assets/img/cookies/alpino/cookie-alpino-1.jpeg",
+      "assets/img/cookies/alpino/cookie-alpino-2.jpeg",
+    ],
     description:
       "Cookie with chunks of smooth white chocolate and rich semi-sweet chocolate.",
   },
@@ -738,8 +812,12 @@ const itemInfo = {
       "A refined cookie filled with pistachio cream, inspired by the exotic flavours of Dubai.",
   },
   "Lotus Biscoff Cookie": {
-    img: "assets/img/cookies/lotus-biscoff/cookie-lutus.jpg",
-    images: ["assets/img/cookies/lotus-biscoff/cookie-lutus.jpg"],
+    img: "assets/img/cookies/lotus-biscoff/cookie-lotus-biscoff-1.jpeg",
+    images: [
+      "assets/img/cookies/lotus-biscoff/cookie-lotus-biscoff-1.jpeg",
+      "assets/img/cookies/lotus-biscoff/cookie-lotus-biscoff-2.jpeg",
+      "assets/img/cookies/lotus-biscoff/cookie-lotus-biscoff-3.jpeg",
+    ],
     description:
       "A delightful cookie filled with Lotus Biscoff cream, perfect for fans of unique flavours.",
   },
@@ -778,19 +856,22 @@ const itemInfo = {
 
   /* ---------- COOKIE POTS ---------- */
   "Mini Cookie Pot": {
-    img: "assets/img/pots/mini-cookie-pot/new-product-1.jpg",
+    img: "assets/img/pots/mini-cookie-pot/mini-cookie-pot-3.jpeg",
     images: [
-      "assets/img/pots/mini-cookie-pot/new-product-1.jpg",
-      "assets/img/pots/mini-cookie-pot/new-product-2.jpg",
+      "assets/img/pots/mini-cookie-pot/mini-cookie-pot-3.jpeg",
+      "assets/img/pots/mini-cookie-pot/mini-cookie-pot-4.jpeg",
     ],
     description:
       "Mini cookie pots topped with Lotus, Nutella or Kinder — little pots of pure happiness.",
   },
   "Prestigio Pot": {
-    img: "assets/img/icon.png",
-    images: ["assets/img/icon.png"],
+    img: "assets/img/pots/prestigio/pot-prestigio-1.jpeg",
+    images: [
+      "assets/img/pots/prestigio/pot-prestigio-1.jpeg",
+      "assets/img/pots/prestigio/pot-prestigio-2.jpeg",
+    ],
     description:
-      "Cookie pot with coconut and chocolate brigadeiro, inspired by the classic Prestígio. Photo coming soon!",
+      "Cookie pot with coconut and chocolate brigadeiro, inspired by the classic Prestígio.",
   },
   "RedVelvet with Chantilly Pot": {
     img: "assets/img/icon.png",
@@ -799,16 +880,22 @@ const itemInfo = {
       "Red Velvet cookie pot layered with fresh chantilly cream. Photo coming soon!",
   },
   "Duo Creme Pot": {
-    img: "assets/img/icon.png",
-    images: ["assets/img/icon.png"],
+    img: "assets/img/pots/duo-creme/pot-duo-creme-1.jpeg",
+    images: [
+      "assets/img/pots/duo-creme/pot-duo-creme-1.jpeg",
+      "assets/img/pots/duo-creme/pot-duo-creme-2.jpeg",
+    ],
     description:
-      "Cookie pot with two creamy layers — chocolate and milk powder brigadeiro. Photo coming soon!",
+      "Cookie pot with two creamy layers — chocolate and milk powder brigadeiro.",
   },
   "Kinder Chocolate Pot": {
-    img: "assets/img/icon.png",
-    images: ["assets/img/icon.png"],
+    img: "assets/img/pots/kinder-chocolate/pot-kinder-chocolate-1.jpeg",
+    images: [
+      "assets/img/pots/kinder-chocolate/pot-kinder-chocolate-1.jpeg",
+      "assets/img/pots/kinder-chocolate/pot-kinder-chocolate-2.jpeg",
+    ],
     description:
-      "Cookie pot loaded with Kinder chocolate cream. Photo coming soon!",
+      "Cookie pot loaded with Kinder chocolate cream and a Kinder Bueno piece on top.",
   },
 
   /* ---------- COOKIE DONUTS ---------- */

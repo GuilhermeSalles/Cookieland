@@ -1630,19 +1630,16 @@ img {
   gap: 1rem;
 }
 
-/* respiro no passo 2: dica, lista de bebidas e ações */
-#form-step-2 .cart-hint {
+/* respiro na seção de bebidas e extras do checkout */
+#checkout-addons .cart-hint {
   margin-top: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 #drinks {
   margin-top: 1rem;
-}
-
-.cart-form__actions {
-  margin-top: 1rem;
   padding-top: 1rem;
-  border-top: 1px solid hsla(15, 22%, 19%, 0.12);
 }
 
 /* título do modal da sacola */
@@ -1706,38 +1703,170 @@ img {
   color: var(--blush-pink);
 }
 
-/* ações do passo 2 (voltar + finalizar) */
-.cart-form__actions {
+/* ===== Sacola como gaveta lateral ===== */
+.cart-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: min(420px, 100%);
+  background-color: var(--glass-bg-strong);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-left: var(--glass-border);
+  box-shadow: var(--shadow-soft);
   display: flex;
-  gap: 0.75rem;
-  flex-wrap: wrap;
+  flex-direction: column;
+  animation: cart-drawer-in 0.35s ease;
 }
 
-.cart-form__actions .order-button {
-  flex: 1;
-  min-width: 200px;
+@keyframes cart-drawer-in {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
 }
 
-.cart-back-button {
-  display: inline-flex;
+.cart-drawer__header {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.25rem 1rem;
+  border-bottom: 1px solid hsla(15, 22%, 19%, 0.12);
+}
+
+.cart-drawer__header .cart-modal__title {
+  margin-bottom: 0;
+}
+
+.cart-drawer__header .close,
+.checkout-header .close {
+  position: static;
+  flex-shrink: 0;
+}
+
+.cart-drawer .cart-items {
+  flex: 1;
+  overflow-y: auto;
+  margin: 0;
+  padding: 1rem 1.25rem;
+}
+
+.cart-drawer__footer {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem 1.25rem 1.5rem;
+  border-top: 1px solid hsla(15, 22%, 19%, 0.12);
+}
+
+.cart-drawer__footer .cart-total {
+  margin-top: 0;
+}
+
+/* botão de remover item da sacola */
+.cart-item-remove {
+  background: none;
+  border: none;
+  color: var(--text-color);
+  opacity: 0.55;
+  font-size: 1.15rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  flex-shrink: 0;
+  transition:
+    color 0.3s,
+    opacity 0.3s,
+    transform 0.3s;
+}
+
+.cart-item-remove:hover {
+  color: hsl(0, 70%, 52%);
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* ===== Tela de checkout ===== */
+.checkout-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.checkout-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid hsla(15, 22%, 19%, 0.12);
+}
+
+.checkout-header .cart-modal__title {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.checkout-back {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
   background-color: transparent;
   border: 2px solid var(--first-color);
   color: var(--first-color);
-  padding: 1rem 1.25rem;
-  font-size: 1rem;
-  border-radius: 2rem;
+  font-size: 1.25rem;
+  border-radius: 50%;
   cursor: pointer;
+  flex-shrink: 0;
   transition:
     background-color 0.3s,
     color 0.3s;
 }
 
-.cart-back-button:hover {
+.checkout-back:hover {
   background-color: var(--first-color);
   color: var(--white-color);
+}
+
+.checkout-summary {
+  margin-top: 1.25rem;
+}
+
+.checkout-footer {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid hsla(15, 22%, 19%, 0.12);
+}
+
+.checkout-footer .cart-total {
+  margin-top: 0;
+}
+
+.order-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.order-button:disabled:hover {
+  background-color: var(--first-color);
+  transform: none;
+}
+
+/* checkout em tela cheia no celular */
+@media (max-width: 576px) {
+  #checkout-modal .cart-modal-content {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    max-height: 100%;
+    margin: 0;
+    border-radius: 0;
+  }
 }
 
 /* Estilos para cada item do carrinho */
@@ -1745,7 +1874,7 @@ img {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px;
+  padding: 14px 10px;
   border-bottom: 1px solid var(--text-color-light);
   gap: 10px;
 }
@@ -1760,9 +1889,7 @@ img {
 
 .cart-item-details {
   flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  min-width: 0;
 }
 
 .cart-item-name {
@@ -1774,6 +1901,7 @@ img {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-shrink: 0;
 }
 
 .cart-item-controls button {
@@ -2169,38 +2297,12 @@ label {
   font-weight: 600;
 }
 
-/** Border and drinks **/
-/* Estilo do Step 2 */
-.cart-form-step-2 {
-  margin-top: 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-/* Botão de Place Order no Step 2 (igual ao Step 1) */
-.cart-form-step-2 .order-button {
-  background-color: var(--first-color);
-  color: var(--white-color);
-  padding: 1rem;
-  border: none;
-  font-size: 1rem;
-  border-radius: 8px;
-  cursor: pointer;
-  text-align: center;
-  transition: background-color 0.3s ease;
-}
-
-.cart-form-step-2 .order-button:hover {
-  background-color: var(--first-color-alt);
-}
-
 /* Contêiner de bebidas e cream cheese */
 .addons-container,
 #drinks,
 .addon-section {
   display: grid;
-  gap: 0.75rem;
+  gap: 1rem;
 }
 
 /* Estilo para cada item (bebida ou extra) — cartão limpo */
@@ -2209,7 +2311,7 @@ label {
   flex-direction: row;
   align-items: center;
   gap: 0.6rem;
-  padding: 0.65rem 0.9rem;
+  padding: 0.85rem 0.9rem;
   margin-bottom: 0;
   background-color: var(--container-color);
   border: 1px solid hsla(15, 22%, 19%, 0.12);
@@ -2416,7 +2518,7 @@ label {
 @media (max-width: 768px) {
   .order-button {
     font-size: 0.9rem;
-    padding: 0.8rem;
+    padding: 1rem 0.8rem;
   }
 }
 
@@ -2507,15 +2609,18 @@ label {
   height: 60px;
   object-fit: cover;
   border-radius: 0.5rem;
+  flex-shrink: 0;
 }
 
 .cart-item-details {
   flex: 1;
+  min-width: 0;
 }
 
 .cart-item-details h3 {
   font-size: var(--normal-font-size);
   margin-bottom: 0.25rem;
+  overflow-wrap: break-word;
 }
 
 .cart-item-details p {
@@ -3173,10 +3278,33 @@ label {
 }
 
 .section__notice {
-  font-size: 0.9rem;
-  color: #ad1f3f; /* vermelho aviso */
-  margin: 0.5rem 0 1rem;
-  text-align: center;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  width: fit-content;
+  max-width: min(560px, 92%);
+  margin: 0.75rem auto 1.5rem;
+  padding: 0.85rem 1.15rem;
+  background-color: hsla(348, 70%, 51%, 0.08);
+  border: 1px dashed hsla(348, 70%, 45%, 0.45);
+  border-radius: 1rem;
+  color: #ad1f3f;
+  font-size: var(--small-font-size);
+  line-height: 1.5;
+  text-align: left;
+}
+
+.section__notice i {
+  flex-shrink: 0;
+  font-size: 1.2rem;
+}
+
+.section__notice p {
+  margin: 0;
+}
+
+.section__notice strong {
+  font-weight: var(--font-semi-bold);
 }
 
 /*=============== GALLERY (mosaico) ===============*/
