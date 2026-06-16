@@ -900,20 +900,15 @@ const itemInfo = {
   },
 
   /* ---------- COOKIE DONUTS ---------- */
-  "Donuts Tradicional": {
+  "Cookie Donuts": {
     img: "assets/img/donuts/tradicional/box-mini-cookies-open.jpeg",
     images: [
       "assets/img/donuts/tradicional/box-mini-cookies-open.jpeg",
       "assets/img/donuts/tradicional/box-mini-cookies.jpeg",
+      "assets/img/donuts/red-velvet/box-mini-cookies-open.jpeg",
     ],
     description:
-      "Mini cookie donuts in the classic flavour, glazed with chocolate. Sold in our pink Cookieland box.",
-  },
-  "Donuts Red Velvet": {
-    img: "assets/img/donuts/red-velvet/box-mini-cookies-open.jpeg",
-    images: ["assets/img/donuts/red-velvet/box-mini-cookies-open.jpeg"],
-    description:
-      "Mini Red Velvet cookie donuts with white chocolate chips. Sold in our pink Cookieland box.",
+      "A mixed box of mini cookie donuts: classic Traditional glazed with chocolate and Red Velvet with white chocolate chips. Sold in our pink Cookieland box.",
   },
 };
 
