@@ -458,6 +458,8 @@ window.addEventListener("click", (event) => {
 document.querySelectorAll(".popular__button").forEach((button) => {
   button.addEventListener("click", () => {
     const card = button.closest(".popular__card");
+    // Itens "Available soon" não podem ser adicionados ao carrinho
+    if (button.disabled || card.classList.contains("popular__card--soon")) return;
     const name = card.querySelector(".popular__title").textContent.trim();
     const image = card.querySelector("img").src;
 
@@ -961,6 +963,17 @@ function openInfoModal(title, card) {
         }
       : null;
 
+  // Botão "Add to bag" do modal: desativar para itens "Available soon"
+  const addBtn = document.getElementById("info-modal-add");
+  if (addBtn) {
+    const isSoon = card?.classList.contains("popular__card--soon");
+    addBtn.disabled = !!isSoon;
+    addBtn.classList.toggle("disabled", !!isSoon);
+    addBtn.innerHTML = isSoon
+      ? '<i class="ri-time-line"></i> Available soon'
+      : '<i class="ri-shopping-bag-3-fill"></i> Add to bag';
+  }
+
   modal.style.display = "block";
 }
 
@@ -977,6 +990,8 @@ document.querySelectorAll(".info__button").forEach((button) => {
 const infoModalAddBtn = document.getElementById("info-modal-add");
 infoModalAddBtn.addEventListener("click", () => {
   if (!infoModalItem) return;
+  // Itens "Available soon" não podem ser adicionados ao carrinho
+  if (infoModalItem.card?.classList.contains("popular__card--soon")) return;
   addToCart(infoModalItem);
 
   infoModalAddBtn.innerHTML = '<i class="ri-check-line"></i> Added!';
@@ -1033,6 +1048,13 @@ function updateButtonAndCartState() {
       // Habilitar sacola e botões
       cartIcon.classList.remove("disabled");
       buttons.forEach((button) => {
+        // Mantém desativados os botões de itens "Available soon"
+        const card = button.closest?.(".popular__card");
+        if (card && card.classList.contains("popular__card--soon")) {
+          button.disabled = true;
+          button.classList.add("disabled");
+          return;
+        }
         button.disabled = false;
         button.classList.remove("disabled");
       });

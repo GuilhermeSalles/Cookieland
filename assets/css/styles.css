@@ -3292,8 +3292,36 @@ label {
   box-shadow: 0 6px 16px hsla(341, 66%, 42%, 0.35);
   z-index: 2;
 }
+.badge--soon {
+  position: absolute;
+  inset: -0.5rem auto auto -0.5rem;
+  background: var(--text-color, hsl(341, 10%, 35%));
+  color: var(--white-color);
+  font-weight: 600;
+  font-size: 0.7rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 1rem;
+  letter-spacing: 0.03em;
+  rotate: -6deg;
+  box-shadow: 0 6px 16px hsla(341, 10%, 20%, 0.3);
+  z-index: 2;
+}
 .popular__card {
   position: relative;
+}
+
+/* Card "Available soon": botão de sacola desativado */
+.popular__card--soon .popular__button,
+.popular__button:disabled {
+  background-color: hsl(341, 8%, 70%);
+  box-shadow: none;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+.popular__card--soon .popular__button:hover,
+.popular__button:disabled:hover {
+  transform: none;
+  background-color: hsl(341, 8%, 70%);
 }
 
 .section__notice {
