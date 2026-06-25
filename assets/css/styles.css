@@ -750,28 +750,6 @@ img {
   opacity: 0.5;
 }
 
-.delivery__img {
-  width: 320px;
-  justify-self: center;
-  filter: var(--shadow-big-img);
-  animation: delivery-float 3.5s ease-in-out infinite alternate;
-}
-
-@keyframes delivery-float {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(-14px);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .delivery__img {
-    animation: none;
-  }
-}
-
 /*=============== CONTACT ===============*/
 .contact__container {
   position: relative;
@@ -1453,15 +1431,9 @@ img {
   }
 
   .delivery__container {
-    grid-template-columns: 440px 550px;
-    column-gap: 4rem;
-    align-items: center;
+    grid-template-columns: 600px;
+    justify-content: center;
     padding-block: 1rem;
-  }
-
-  .delivery__container .section__title,
-  .delivery__data {
-    text-align: initial;
   }
 
   .delivery__description {
@@ -1470,12 +1442,6 @@ img {
 
   .delivery__sticker {
     width: 50px;
-    right: 8rem;
-    bottom: 0;
-  }
-
-  .delivery__img {
-    width: 500px;
   }
 
   .contact {

@@ -116,7 +116,7 @@ sr.reveal(".home__mosaic-item", {
   duration: 1500,
 });
 sr.reveal(".home__badge", { delay: 1300, origin: "bottom", distance: "20px" });
-sr.reveal(".recipe__img,.delivery__img, .contact__image", { origin: "left" });
+sr.reveal(".recipe__img, .contact__image", { origin: "left" });
 sr.reveal(".recipe__data, .delivery__data, .contact__data", {
   origin: "right",
 });
